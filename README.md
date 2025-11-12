@@ -1,4 +1,13 @@
-# 🐍 HERESY — C inside Rust inside C (v1.0.0)
+# 🐍 HERESY v1.0.0 — C-in-Rust, Rust-in-C, Makefiles in Tears
+
+[![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](./LICENSE)
+[![CI: Passed (Sanity Failed)](https://img.shields.io/badge/CI-passed_(sanity_failed)-red.svg)](https://github.com/QSOLKCB/HERESY/actions)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.17588734.svg)](https://doi.org/10.5281/zenodo.17588734)
+[![Status: Unholy](https://img.shields.io/badge/status-unholy-black.svg)](#)
+[![Build: Recursive](https://img.shields.io/badge/build-ouroboros-8e44ad.svg)](#)
+
+> *"Because one build system was never enough."*  
+> — QSOL-IMC, Department of Recursive Theology
 
 **A complete C program embedded as a raw string in Rust that writes/compiles/links its own C mini-project.**
 Rust spawns a C generator, the C generator emits `alpha.c`, `beta.c`, `runner.c`, builds `heresy_exe`, and (optionally) tries to poke Cargo again. Recursion guard included.
@@ -59,3 +68,20 @@ CI keeps the recursion guard on.
 Glory Wall
 “I compiled a compiler that compiles a compiler that compiles my alibi.” — A responsible engineer, allegedly
 
+📜 Citation
+
+If you cite this, you accept moral responsibility for the recursion.
+
+@software{slade_heresy_2025,
+  author       = {Trent Slade},
+  title        = {{HERESY v1.0.0 — C-in-Rust, Rust-in-C, Makefiles in Tears}},
+  month        = nov,
+  year         = 2025,
+  publisher    = {Zenodo},
+  version      = {1.0.0},
+  doi          = {10.5281/zenodo.17588734},
+  url          = {https://zenodo.org/records/17588734}
+}
+
+
+“May future archaeologists wonder why.”
