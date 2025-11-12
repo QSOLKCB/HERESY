@@ -1,0 +1,27 @@
+
+---
+
+### `.github/workflows/ci.yml`
+```yaml
+name: CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  heresy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install Rust
+        uses: dtolnay/rust-toolchain@stable
+      - name: Verify gcc
+        run: gcc --version
+      - name: Build & Run
+        run: cargo run -q
+      - name: Check artifacts
+        run: |
+          test -x target/heresy_c/heretic_build
+          test -x target/heresy_c/heresy_exe
+          ./target/heresy_c/heresy_exe
