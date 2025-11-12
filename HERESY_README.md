@@ -129,3 +129,4 @@ If you cite this, you accept moral responsibility for the recursion.
 ## 🔚 Epilogue
 Enjoy the only build system that needs an exorcist.
 HERESY v1.0.0 — Now with 100% more existential recursion.
+[View the README on GitHub](https://github.com/QSOLKCB/HERESY/blob/main/README.md)
