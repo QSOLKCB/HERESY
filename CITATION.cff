@@ -1,0 +1,42 @@
+cff-version: 1.2.0
+title: "HERESY v1.0.0 — C-in-Rust, Rust-in-C, Makefiles in Tears"
+message: "If you use this recursive abomination in your research, please cite it. And maybe call a priest."
+type: software
+authors:
+  - family-names: Slade
+    given-names: Trent
+    affiliation: QSOL-IMC
+    orcid: "https://orcid.org/0000-0000-0000-0000"
+repository-code: "https://github.com/QSOLKCB/HERESY"
+license: "MIT"
+version: "1.0.0"
+date-released: "2025-11-12"
+keywords:
+  - recursion
+  - cargo
+  - build-systems
+  - makefile
+  - software-heresiology
+  - ouroboros
+  - rust
+  - c
+  - meme-engineering
+abstract: >
+  HERESY is a self-replicating build simulator written in Rust that writes, compiles,
+  and runs C code that itself writes, compiles, and runs C code. A recursive act of
+  defiance against sensible build systems, designed to offend purists and amuse the brave.
+  Includes recursion guards, GitHub CI, and 100% existential dread.
+identifiers:
+  - type: doi
+    value: "10.5281/zenodo.pending"
+  - type: url
+    value: "https://github.com/QSOLKCB/HERESY/releases/tag/v1.0.0"
+preferred-citation:
+  type: article
+  title: "HERESY: Recursive Build Systems as Performance Art"
+  authors:
+    - family-names: Slade
+      given-names: Trent
+  journal: "QSOL IMC Archives of Software Anomalies"
+  year: 2025
+  notes: "Peer review refused on moral grounds."
