@@ -86,3 +86,15 @@ If you cite this, you accept moral responsibility for the recursion.
 
 “May future archaeologists wonder why.”
 [View HERESY_README.md](https://github.com/QSOLKCB/HERESY/blob/main/HERESY_README.md)
+---
+
+### 🧩 Links & Lore
+
+[📖 README](./README.md) ·  
+[💾 Source (`main.rs`)](./src/main.rs) ·  
+[🧠 HERESY Manifesto](./HERESY_README.md) ·  
+[🔗 Zenodo DOI](https://doi.org/10.5281/zenodo.17588734) ·  
+[⚙️ GitHub Actions](https://github.com/QSOLKCB/HERESY/actions) ·  
+[☠️ Release Page](https://github.com/QSOLKCB/HERESY/releases/tag/v1.0.0)
+
+> *“Makefiles are for mortals. Ouroboros builds are for legends.”*
