@@ -130,3 +130,15 @@ If you cite this, you accept moral responsibility for the recursion.
 Enjoy the only build system that needs an exorcist.
 HERESY v1.0.0 — Now with 100% more existential recursion.
 [View the README on GitHub](https://github.com/QSOLKCB/HERESY/blob/main/README.md)
+---
+
+### 🧩 Links & Lore
+
+[📖 README](./README.md) ·  
+[💾 Source (`main.rs`)](./src/main.rs) ·  
+[🧠 HERESY Manifesto](./HERESY_README.md) ·  
+[🔗 Zenodo DOI](https://doi.org/10.5281/zenodo.17588734) ·  
+[⚙️ GitHub Actions](https://github.com/QSOLKCB/HERESY/actions) ·  
+[☠️ Release Page](https://github.com/QSOLKCB/HERESY/releases/tag/v1.0.0)
+
+> *“Makefiles are for mortals. Ouroboros builds are for legends.”*
