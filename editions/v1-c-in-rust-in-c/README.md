@@ -4,15 +4,20 @@ The original edition is preserved here in two deliberately separate forms.
 
 ## Exact historical snapshot
 
-[`original/`](original/) contains the DOI-era files copied byte-for-byte from commit `50f0e0bfe011010cbab9f213ad95dc2fab675a2e`:
+[`original/`](original/) contains the complete DOI-era repository tree copied byte-for-byte from commit `50f0e0bfe011010cbab9f213ad95dc2fab675a2e`:
 
-- `original/Cargo.toml`
-- `original/src/main.rs`
-- `original/README.md`
-- `original/HERESY_README.md`
+- `original/.github/workflows/ci.yml`
+- `original/.gitignore`
 - `original/CITATION.cff`
+- `original/Cargo.toml`
+- `original/HERESY_README.md`
+- `original/LICENSE`
+- `original/README.md`
+- `original/src/main.rs`
 
-Those files are archival evidence and are not rewritten to satisfy the current toolchain. In particular, the historical Rust source retains its original single-hash raw-string delimiter.
+These files are archival evidence and are not rewritten to satisfy the current toolchain. Their Git blob hashes are checked in CI against the pre-v2 commit. In particular, the historical Rust source retains its original single-hash raw-string delimiter and the historical workflow retains its original Markdown-wrapped contents.
+
+The snapshot is self-contained: links such as [`original/README.md`](original/README.md) → `./LICENSE` resolve within the archived tree.
 
 ## Runnable repair
 
