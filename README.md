@@ -1,24 +1,42 @@
-# HERESY v2.0.0 — React inside BASIC inside React
+# HERESY v3.0.0 — Cloud-Native Microservices on an EBCDIC Punch Card
 
-[![CI: Passed (Sanity Failed)](https://img.shields.io/badge/CI-passed_(sanity_failed)-red.svg)](https://github.com/QSOLKCB/HERESY/actions)
-[![Status: Standards Compliant](https://img.shields.io/badge/status-standards_compliant-black.svg)](#)
-[![Budget: One Floppy](https://img.shields.io/badge/budget-1.44_MB-yellow.svg)](#)
+[![CI: Passed (Industry Failed)](https://img.shields.io/badge/CI-passed_(industry_failed)-red.svg)](https://github.com/QSOLKCB/HERESY/actions)
+[![Runtime: REST/1959](https://img.shields.io/badge/runtime-REST%2F1959-black.svg)](#)
+[![Budget: 360 KB](https://img.shields.io/badge/budget-360_KB-yellow.svg)](#)
+[![Containers: Absolutely Not](https://img.shields.io/badge/containers-absolutely_not-darkgreen.svg)](#)
 
-> **Modern problems require 1982 middleware.**
+> **“I routed the cloud-native microservice through an EBCDIC punch card
+> because JSON lacked institutional trauma.”**
 
-HERESY is an anthology of executable software blasphemy. The main edition is a real React application containing a bounded Commodore BASIC V2-style interpreter. BASIC reconstructs a component specification from numeric `DATA` statements, and React renders that result as an inner React component.
+HERESY v3 is an offline browser application in which every “serverless” REST
+request is:
+
+1. authorised by a bounded **JCL** job;
+2. packed into a strict **COBOL `DATA DIVISION`** record;
+3. placed in columns 1–72 of an **80-column punched card**;
+4. sequenced in columns 73–80 and encoded as **EBCDIC code page 037**;
+5. routed by a **FORTRAN computed `GOTO`**; and
+6. treated by **Ada** as a probable inertial-guidance emergency.
+
+All of this occurs to return one small JSON object that could have been written
+directly in six lines.
 
 ```text
-Outer React host
-  -> bounded BASIC V2 runtime
-     -> DATA byte payload
-        -> inner React component
-           -> one avoidable button
+Browser edge-ish form
+  -> JCL change-control ritual
+     -> shuffled 80-column card deck
+        -> EBCDIC code-page-037 round trip
+           -> COBOL fixed-width record
+              -> FORTRAN computed GOTO
+                 -> Ada defense-grade panic
+                    -> one REST response, manually retyped
 ```
 
-The middle layer is not a fake terminal animation: BASIC parsing and payload reconstruction determine the component rendered by React.
+The production build must fit within **368,640 bytes**, the formatted capacity
+of a 360 KB 5¼-inch floppy. The previous 1.44 MB allowance was judged an
+unacceptable lifestyle upgrade.
 
-## Run v2
+## Run v3
 
 ```sh
 git clone https://github.com/QSOLKCB/HERESY.git
@@ -27,69 +45,120 @@ npm ci
 npm run dev
 ```
 
-Production verification:
+Complete verification:
 
 ```sh
 npm run check
 ```
 
-The committed `package-lock.json` fixes the complete npm dependency graph, and CI uses `npm ci` rather than resolving a fresh toolchain on every run.
+That command validates physical source columns, executes deterministic pipeline
+tests, builds the offline application and enforces the 360 KB gate.
 
-The production `dist/` directory must remain at or below **1,474,560 bytes**, the capacity of a 1.44 MB high-density floppy disk.
+## The offence is real
 
-## What the app proves
+This is not a terminal animation pretending to be a mainframe.
 
-- React can host an intentionally tiny, deterministic BASIC runtime.
-- BASIC `DATA` bytes can reconstruct the specification consumed by another React component.
-- The stunt remains semantic, keyboard accessible, responsive and offline after build.
-- Architectural profanity is not permission for broken engineering.
-- One virtual DOM was apparently insufficient.
+- `programs/HERESY3.jcl` is parsed for the job, program and card allocations.
+- `programs/mainframe.cob` supplies the actual `PIC` field order and widths.
+- The COBOL fields must total exactly 72 columns.
+- The request occupies one real 80-character record with an eight-digit
+  sequence field.
+- That record round-trips through an explicit EBCDIC code-page-037 codec.
+- The deck deliberately arrives in sequence 30, 20, 10 and is physically
+  sortable back into 10, 20, 30.
+- `programs/router.f` supplies the route names, computed-`GOTO` labels and
+  response text.
+- `programs/failsafe.adb` supplies the required recovery-string length and
+  determines whether ordinary exceptions become missile incidents.
+- The on-screen punch pattern is derived from the exact executed card.
 
-## Editions
+The project does **not** claim to contain z/OS, a complete COBOL compiler, a
+FORTRAN compiler or an Ada runtime. It implements strict, bounded interpreters
+for the committed source fragments needed by this specific artwork. The satire
+is absurd; the execution claims are deliberately boring and precise.
 
-### v2.0.0 — React inside BASIC inside React
+## Modern platform capabilities
 
-The repo root. A standards-conscious React artwork in which Commodore-style BASIC generates the data that becomes inner React UI. Root citation metadata is maintained in [`CITATION.cff`](CITATION.cff).
+| Industry term | HERESY v3 implementation |
+|---|---|
+| Serverless | Finance owns the server |
+| Edge compute | Desk nearest the fire exit |
+| Autoscaling | Doris gets another chair |
+| Service mesh | Shoebox with dividers |
+| Observability | Brenda watches the green light |
+| Immutable infrastructure | You cannot unpunch a hole |
+| Blockchain | Cards stacked in chronological order |
+| Machine learning | Operator learns the machine |
+| CI/CD | Card Intake / Card Disposal |
+| Zero trust | Lowercase rejected on sight |
+| Eventual consistency | Ledgers agree after the Q4 audit |
+| AI coding assistant | Laminated flowchart; accuracy improved |
 
-### v1.0.0 — C inside Rust inside C
+The system contains zero containers, makes zero network requests after build
+and has a 0 ms cold start. Its warm start has taken approximately 67 years.
 
-Preserved at [`editions/v1-c-in-rust-in-c/`](editions/v1-c-in-rust-in-c/).
+## Controlled failure
 
-```sh
-cd editions/v1-c-in-rust-in-c
-cargo run -q
-./target/heresy_c/heresy_exe
+Press **CAUSE CONTROLLED ABEND** to submit an unapproved change ticket.
+
+COBOL rejects the record, Ada assumes missile involvement and the interface
+locks behind an exact 80-character override kept in a sealed envelope beside
+the printer. No missile system is present. Procedure does not permit this fact
+to influence procedure.
+
+## Column governance
+
+COBOL and FORTRAN source is limited to 72 columns. JCL and Ada receive a lavish
+80. The card linter fails the build if code escapes its physical allocation:
+
+```text
+CARD DECK REJECTED
+router.f:12: 76 columns; 4 characters are hanging into the future
+Prettier has been reassigned to Payroll.
 ```
 
-The v1 directory contains both:
-
-- a byte-for-byte DOI-era snapshot under `original/`;
-- a separately documented runnable repair used by current CI.
-
-## Safety and determinism
-
-- No arbitrary user program execution.
-- No network access is needed by the built application.
-- BASIC accepts only the fixed bundled program.
-- `DATA` values must be exact bytes from 0 through 255.
-- The reconstructed payload is checked before rendering.
-- Exact dependency versions and transitive integrity hashes are committed.
-- CI runs the self-test, production build, floppy-size gate and both v1 executable paths.
+It does not silently truncate production code. Even software satire should not
+make the repository genuinely useless.
 
 ## Files
 
 ```text
-src/main.jsx                 outer and inner React components
-src/basic.js                 bounded BASIC parser and payload
-src/style.css                asset-free industrial presentation
-package-lock.json            locked complete npm dependency graph
-scripts/selftest.mjs         repeatability and identity checks
-scripts/verify-size.mjs      1.44 MB build gate
-editions/v1-c-in-rust-in-c/  runnable v1 repair and exact historical snapshot
+programs/HERESY3.jcl         bounded job-control source
+programs/mainframe.cob       72-column COBOL request schema
+programs/router.f            FORTRAN computed-GOTO API gateway
+programs/failsafe.adb        Ada-derived fault policy
+src/mainframe.js             card, EBCDIC and execution kernel
+src/main.js                  accessible offline interface
+src/style.css                asset-free mainframe/card presentation
+scripts/punch-card-linter.mjs
+scripts/selftest.mjs         deterministic execution and failure tests
+scripts/verify-size.mjs      360 KB production gate
+editions/                    preserved earlier offences
 ```
 
-## Licence and lineage
+## Editions
 
-MIT licensed. The v1 concept and its Stack Overflow lineage remain documented in the preserved edition and original Zenodo record.
+### v3.0.0 — Cloud-Native Microservices on an EBCDIC Punch Card
 
-> “I rendered React through BASIC because direct component creation lacked theological depth.”
+The repository root. JCL → punch card → EBCDIC → COBOL → FORTRAN → Ada → JSON.
+
+### v2.0.0 — React inside BASIC inside React
+
+Preserved at
+[`editions/v2-react-in-basic-in-react/`](editions/v2-react-in-basic-in-react/).
+Commodore BASIC V2-style `DATA` bytes reconstruct the specification rendered by
+an inner React component.
+
+### v1.0.0 — C inside Rust inside C
+
+Preserved at [`editions/v1-c-in-rust-in-c/`](editions/v1-c-in-rust-in-c/).
+Rust compiles C that generates and compiles more C because a normal executable
+lacked recursive shame.
+
+## Licence
+
+MIT licensed. Historical attribution and citation metadata remain with each
+preserved edition.
+
+> A 300 MB coffee app is no longer software. It is a hostage negotiation with
+> a progress bar.

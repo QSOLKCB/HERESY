@@ -1,39 +1,68 @@
 # HERESY Manifesto — Executable Software Blasphemy
 
-> **CI passed. Sanity remains under investigation.**
+> **CI passed. The industry has been placed on a performance plan.**
 
-HERESY is no longer one isolated offence against build-system decency. It is an anthology.
+HERESY is an anthology of technically real, reproducible offences against
+architectural restraint.
 
-## Article I — The heresy must be real
+## Article I — The heresy must execute
 
-A terminal animation pretending to run BASIC is theatre, not software heresy. Every edition must execute its absurd language or runtime boundary and prove that the result materially affects program output.
+A terminal animation pretending to run a dead language is theatre. Every
+edition must execute its absurd boundary and prove that the result materially
+affects program output.
 
 ## Article II — Disproportion is the medium
 
-The implementation should be wildly disproportionate to the task while remaining technically coherent. A React application may run Commodore-style BASIC so BASIC can reconstruct the specification for another React component whose principal duty is displaying one button.
+The architecture must be wildly disproportionate to its task while remaining
+internally coherent. If one direct function would suffice, five historical
+languages and a stationery dependency may be considered.
 
 ## Article III — Standards still apply
 
-Satire does not excuse inaccessible controls, invalid markup, hidden network requirements, fabricated execution, nondeterministic tests or broken builds. The more absurd the architecture, the more disciplined the implementation must be.
+Satire does not excuse inaccessible controls, invalid markup, fabricated
+execution, hidden network requirements, nondeterministic tests or broken
+builds. The more ridiculous the architecture, the more disciplined the proof.
 
-## Current offence: v2.0.0
+## Article IV — Bloat is not a feature
+
+The current edition receives one 360 KB 5¼-inch floppy. Dependencies must
+justify their calories. “The bundle tool made it” is not a technical argument;
+it is a cry for adult supervision.
+
+## Current offence: v3.0.0
 
 ```text
-Outer React
-  -> BASIC V2-style interpreter
-     -> numeric DATA payload
-        -> inner React component
-           -> one button increments one integer
+JCL job
+  -> shuffled punch-card deck
+     -> EBCDIC record
+        -> COBOL DATA DIVISION
+           -> FORTRAN computed GOTO
+              -> Ada missile-grade error ritual
+                 -> tiny JSON response
 ```
 
-The production build must fit within 1,474,560 bytes. Modern problems require 1982 middleware, but they do not require a second floppy.
+Four technologies aged 43 to 69 years, plus punched cards older than all of
+them, collaborate to humiliate an application that needs half a gigabyte to
+display a loyalty barcode.
+
+## Preserved offence: v2.0.0
+
+React inside Commodore BASIC inside React lives under
+`editions/v2-react-in-basic-in-react/`. BASIC `DATA` bytes reconstruct the
+specification for an inner React component because direct component creation
+lacked theological depth.
 
 ## Preserved offence: v1.0.0
 
-C inside Rust inside C now lives under `editions/v1-c-in-rust-in-c/`. Rust embeds and compiles a C generator; the generator writes, compiles and links another C project. The original Zenodo DOI remains `10.5281/zenodo.17588734`.
+C inside Rust inside C lives under `editions/v1-c-in-rust-in-c/`. Rust embeds
+and compiles a C generator; that generator writes, compiles and links another C
+project. The original Zenodo DOI remains `10.5281/zenodo.17588734`.
 
 ## Future violations
 
-Candidate editions may include CSS compiled by COBOL, a Kubernetes manifest rendered by a Game Boy, or a design-token resolver implemented in 6502 assembly. Each must remain bounded, reproducible and honest about what actually executes.
+Candidate editions may include CSS compiled by COBOL, a Kubernetes manifest
+rendered by a Game Boy, or a design-token resolver implemented in 6502
+assembly. Each must remain bounded, reproducible and honest about what actually
+executes.
 
-> “Makefiles are for mortals. Ouroboros builds are for legends.”
+> “Digital transformation complete: the paper is now beige.”
