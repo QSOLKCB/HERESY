@@ -1,4 +1,4 @@
-name: CI Passed (Database Replaced)
+name: CI Passed (Industry Failed)
 
 on:
   push:
@@ -8,66 +8,17 @@ permissions:
   contents: read
 
 jobs:
-  modern-developer-simulator:
+  jcl-ebcdic-cobol-fortran-ada:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
           node-version: 22
-      - name: Ask COBOL what the database thinks
-        run: make check
-
-  punch-card-mainframe-legacy:
-    runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: editions/v3-cloud-native-punch-card/original
-    steps:
-      - uses: actions/checkout@v4
-      - name: Verify immutable v3 card deck
-        shell: bash
-        run: |
-          assert_blob() {
-            local expected="$1"
-            local path="$2"
-            local actual
-            actual="$(git hash-object "$path")"
-            if [[ "$actual" != "$expected" ]]; then
-              echo "Historical blob mismatch: $path"
-              echo "expected: $expected"
-              echo "actual:   $actual"
-              exit 1
-            fi
-          }
-
-          assert_blob dda39527792265c84e93c4cea069713a311a2109 .github/workflows/ci.yml
-          assert_blob 1e453c5e86b795fb9f4f13a483d5685e27f997bb .gitignore
-          assert_blob 8932ef8a1d0775f84281f4a1dd622daaab638630 AGENTS.md
-          assert_blob 867c2b742c60f434f817a218a1902c97c34ea91a CITATION.cff
-          assert_blob 0536ac6102f3155a1d66b22bd6af23bd180509c2 HERESY_README.md
-          assert_blob 887f249b13689fd3279ab2bd6675df5d7f4aaa08 LICENSE
-          assert_blob 872d2c36b74e0ee6d9e54d9ce48cf8a21c567bd5 README.md
-          assert_blob e973f5c5da716f54cd3263eba8a210bd3fd18d75 index.html
-          assert_blob 094cdd7007efb72b157c953099f065b58d011371 package-lock.json
-          assert_blob 278babf7937614d5ed61526c0eff99deeb372b19 package.json
-          assert_blob 25f91686f2cf39e687023b2d26f13cf880160a05 programs/HERESY3.jcl
-          assert_blob 749cda16b0eda1d3df65c8e034e100b1dfedd46f programs/failsafe.adb
-          assert_blob 1f7109a9efb45f1cad2aeafc1b7472be0f03a238 programs/mainframe.cob
-          assert_blob e16464c8f332b51895b869b858d29eebc320f87e programs/router.f
-          assert_blob edc7247f1efc08bce17853140c7ef4660f0114f5 scripts/punch-card-linter.mjs
-          assert_blob e38a45ecfa86b52dbaabd61dc1b4ab0e396e0f38 scripts/selftest.mjs
-          assert_blob 309bccb8b57303d95029f3c9c2ae77d3e319e5c9 scripts/verify-size.mjs
-          assert_blob 85a0a64c9a08fda073a5f23150a62f624f4a415d src/main.js
-          assert_blob 2372cead8cdd360bd3698234c8ce61eb924ae75e src/mainframe.js
-          assert_blob 80faa23750d8ac1c050a82f8167f702a99af9733 src/style.css
-          assert_blob af19bcb733748abcb7a8f61d868439150e45f924 vite.config.js
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 22
-      - name: Install locked v3 indulgences
+          cache: npm
+      - name: Install the one remaining modern indulgence
         run: npm ci --no-audit --no-fund
-      - name: Reprocess the physical card deck
+      - name: Process the complete card deck
         run: npm run check
 
   react-basic-react-legacy:

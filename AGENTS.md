@@ -13,37 +13,39 @@ or misleading claims.
 
 ## Current main edition
 
-The repository root is HERESY v3: Cloud-Native Microservices on an EBCDIC
-Punched Card.
+The repository root is HERESY v4: The Modern Developer Simulator.
 
-- A bounded JCL parser approves the bundled job.
-- A COBOL `DATA DIVISION` defines the exact 72-column request record.
-- Columns 73–80 carry an eight-digit punched-card sequence.
-- The complete 80-column record round-trips through EBCDIC code page 037.
-- A shuffled three-card deck is sorted by its physical sequence columns.
-- A FORTRAN-style computed `GOTO` table determines the API response.
-- An Ada-derived policy turns faults into an 80-character recovery ceremony.
-- The browser interface visualises the same card that the pipeline executes.
+- It is a genuinely useful architecture-budget teaching tool.
+- It accepts bundled scenarios and a bounded custom production brief.
+- Seven engineering choices produce deterministic consequence metrics.
+- All 28 choice records and their nine numeric metrics come from
+  `programs/modern-developer.cob`.
+- The COBOL `RUN-RECORD` is the actual persistence schema.
+- Saved runs are 379-character fixed records with FNV-1a checksums.
+- The database supports append, list, delete, import and export.
+- `localStorage` is only the virtual disk; do not persist JSON.
+- The application opens directly from `index.html`.
 
-Every source layer must materially affect the result. Decorative terminal output
-is not an implementation.
+Every source layer must materially affect the result. Decorative terminal
+output is not an implementation.
 
 ## Non-negotiable constraints
 
-- Production `dist/` must not exceed 368,640 bytes: one 360 KB 5¼-inch floppy.
-- The built application must work offline.
+- Production files must total no more than 131,072 bytes.
+- Production has no package manager, framework, build step or dependency.
+- Use classic directly loaded scripts. Do not introduce module loading.
+- The built application must work offline and from `file://`.
 - No telemetry, analytics, cloud service, CDN, external font or remote asset.
-- Preserve semantic HTML, keyboard access, focus visibility and reduced-motion
-  compatibility.
-- No arbitrary user-supplied JCL, COBOL, FORTRAN, Ada or JavaScript execution.
-- Bound all parsers by fixed bundled source, fixed grammar and finite work.
-- Request cards must be exactly 80 characters.
-- COBOL data fields must total exactly 72 characters.
-- Card sequence fields must occupy columns 73 through 80.
-- EBCDIC conversion must reject characters outside the deliberately supported
-  code-page-037 subset rather than guess.
+- Preserve semantic HTML, keyboard access, focus visibility, print output and
+  reduced-motion compatibility.
+- Do not use `eval`, `Function` or arbitrary user-supplied code execution.
+- Bound custom text and all COBOL parsing by fixed grammar and finite work.
+- COBOL source lines must not exceed column 72.
+- The committed browser card deck must exactly match the COBOL source.
+- `RUN-RECORD` widths govern every database field.
+- Reject record overflow, bad widths, invalid numerics and checksum failure.
+- Do not replace the COBOL database with JSON, SQL, IndexedDB or an ORM.
 - Do not add a dependency for behaviour clearer and smaller in local code.
-- Pin direct dependencies, commit the lockfile and use `npm ci` in verification.
 - Every new edition must retain reproducible checks proving the stunt executes.
 
 ## Edition preservation
@@ -56,20 +58,27 @@ If historical defects must be repaired for current execution, keep a separately
 documented runnable repair beside the immutable snapshot. Never silently rewrite
 the archival copy.
 
-- v2 React-inside-BASIC-inside-React lives under
-  `editions/v2-react-in-basic-in-react/`.
-- v1 C-inside-Rust-inside-C lives under `editions/v1-c-in-rust-in-c/`.
+- v3 lives under `editions/v3-cloud-native-punch-card/`.
+- v2 lives under `editions/v2-react-in-basic-in-react/`.
+- v1 lives under `editions/v1-c-in-rust-in-c/`.
 
 ## Required checks
 
 Before reporting completion, run:
 
 ```sh
+make check
+```
+
+For preserved v3:
+
+```sh
+cd editions/v3-cloud-native-punch-card/original
 npm ci
 npm run check
 ```
 
-For the preserved v2 edition also run:
+For preserved v2:
 
 ```sh
 cd editions/v2-react-in-basic-in-react/original
@@ -77,7 +86,7 @@ npm ci
 npm run check
 ```
 
-For the preserved v1 edition also run:
+For preserved v1:
 
 ```sh
 cd editions/v1-c-in-rust-in-c
