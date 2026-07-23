@@ -3,6 +3,10 @@ use std::io::Write;
 use std::path::PathBuf;
 use std::process::Command;
 
+// Runnable repair of the DOI-era v1 source. The exact historical source is
+// preserved byte-for-byte at original/src/main.rs, including its original
+// raw-string defect. This copy changes only what is required to execute safely.
+//
 // Two hash marks are intentional: the embedded C contains string literals
 // beginning with "#include", which would terminate an r#"..."# raw string.
 const C_GENERATOR: &str = r##"
@@ -64,7 +68,10 @@ fn sh(cmd: &mut Command) -> std::io::Result<()> {
     if status.success() {
         Ok(())
     } else {
-        Err(std::io::Error::other(format!("Command failed: {:?}", cmd)))
+        Err(std::io::Error::new(
+            std::io::ErrorKind::Other,
+            format!("Command failed with status {status}: {:?}", cmd),
+        ))
     }
 }
 
@@ -88,8 +95,17 @@ fn main() -> std::io::Result<()> {
     run_gen.current_dir(&dir).env("HERESY_ONCE", "1");
     sh(&mut run_gen)?;
 
-    let out = Command::new(dir.join("heresy_exe")).output()?;
+    let exe = dir.join("heresy_exe");
+    let out = Command::new(&exe).output()?;
     print!("{}", String::from_utf8_lossy(&out.stdout));
     eprint!("{}", String::from_utf8_lossy(&out.stderr));
+
+    if !out.status.success() {
+        return Err(std::io::Error::new(
+            std::io::ErrorKind::Other,
+            format!("generated executable failed with status {}", out.status),
+        ));
+    }
+
     Ok(())
 }

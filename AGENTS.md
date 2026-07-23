@@ -29,11 +29,14 @@ The repository root is HERESY v2: React inside Commodore BASIC inside React.
 - Bound all interpreters by fixed source, fixed grammar and finite work.
 - Do not replace the real BASIC transformation with a decorative terminal animation.
 - Do not add a dependency for behaviour clearer and smaller in local code.
+- Pin direct dependencies, commit the lockfile and use `npm ci` in verification.
 - Every new edition must retain reproducible checks proving the stunt actually executes.
 
 ## Edition preservation
 
-Never overwrite an earlier edition. Move it intact beneath `editions/` with its source, build instructions, attribution and historical DOI or release references.
+Never overwrite an earlier edition. Preserve the exact historical files beneath `editions/<edition>/original/`, including source, build instructions, attribution and citation metadata.
+
+If historical defects must be repaired for current execution, keep a separately documented runnable repair beside the immutable snapshot. Never silently rewrite the archival copy.
 
 The original v1 C-inside-Rust-inside-C edition lives under `editions/v1-c-in-rust-in-c/`.
 
@@ -42,6 +45,7 @@ The original v1 C-inside-Rust-inside-C edition lives under `editions/v1-c-in-rus
 Before reporting completion, run:
 
 ```sh
+npm ci
 npm run test
 npm run build
 npm run verify:size
@@ -52,6 +56,7 @@ For the preserved v1 edition also run:
 ```sh
 cd editions/v1-c-in-rust-in-c
 cargo run -q
+./target/heresy_c/heresy_exe
 ```
 
 Do not hide failing checks. CI may pass while sanity fails; the build itself may not.

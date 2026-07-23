@@ -1,42 +1,37 @@
 cff-version: 1.2.0
-title: "HERESY v1.0.0 — C-in-Rust, Rust-in-C, Makefiles in Tears"
-message: "If you use this recursive abomination in your research, please cite it. And maybe call a priest."
+title: "HERESY v2.0.0 — React inside BASIC inside React"
+message: "If you cite this standards-compliant act of software blasphemy, you accept moral responsibility for the abstraction layers."
 type: software
 authors:
   - family-names: Slade
     given-names: Trent
     affiliation: QSOL-IMC
-    orcid: "https://orcid.org/0000-0000-0000-0000"
 repository-code: "https://github.com/QSOLKCB/HERESY"
-license: "MIT"
-version: "1.0.0"
-date-released: "2025-11-12"
+license: MIT
+version: "2.0.0"
+date-released: "2026-07-23"
 keywords:
-  - recursion
-  - cargo
-  - build-systems
-  - makefile
-  - software-heresiology
-  - ouroboros
-  - rust
-  - c
+  - react
+  - commodore-basic
+  - deterministic-builds
+  - software-art
+  - offline-web-application
+  - constrained-computing
   - meme-engineering
 abstract: >
-  HERESY is a self-replicating build simulator written in Rust that writes, compiles,
-  and runs C code that itself writes, compiles, and runs C code. A recursive act of
-  defiance against sensible build systems, designed to offend purists and amuse the brave.
-  Includes recursion guards, GitHub CI, and 100% existential dread.
+  HERESY v2.0.0 is an offline React application containing a bounded
+  Commodore BASIC V2-style runtime. Numeric BASIC DATA statements reconstruct
+  the component specification consumed by an inner React component, while CI
+  enforces deterministic tests and a 1,474,560-byte production build ceiling.
 identifiers:
-  - type: doi
-    value: "10.5281/zenodo.pending"
   - type: url
-    value: "https://github.com/QSOLKCB/HERESY/releases/tag/v1.0.0"
-preferred-citation:
-  type: article
-  title: "HERESY: Recursive Build Systems as Performance Art"
-  authors:
-    - family-names: Slade
-      given-names: Trent
-  journal: "QSOL IMC Archives of Software Anomalies"
-  year: 2025
-  notes: "Peer review refused on moral grounds."
+    value: "https://github.com/QSOLKCB/HERESY"
+references:
+  - type: software
+    title: "HERESY v1.0.0 — C-in-Rust, Rust-in-C, Makefiles in Tears"
+    authors:
+      - family-names: Slade
+        given-names: Trent
+    version: "1.0.0"
+    doi: "10.5281/zenodo.17588734"
+    repository-code: "https://github.com/QSOLKCB/HERESY/tree/main/editions/v1-c-in-rust-in-c"
