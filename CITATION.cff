@@ -1,6 +1,6 @@
 cff-version: 1.2.0
-title: "HERESY v4.0.0 — The Modern Developer Simulator"
-message: "If you cite this COBOL database, please pad your gratitude to exactly 96 characters."
+title: "HERESY v3.0.0 — Cloud-Native Microservices on an EBCDIC Punch Card"
+message: "If you cite this standards-compliant mainframe incident, you accept moral responsibility for the stationery."
 type: software
 authors:
   - family-names: Slade
@@ -8,41 +8,33 @@ authors:
     affiliation: QSOL-IMC
 repository-code: "https://github.com/QSOLKCB/HERESY"
 license: MIT
-version: "4.0.0"
-date-released: "2026-07-24"
+version: "3.0.0"
+date-released: "2026-07-23"
 keywords:
   - cobol
-  - fixed-width-records
-  - architecture
-  - software-bloat
-  - offline-web-application
-  - dependency-free
-  - deterministic-software
-  - constrained-computing
+  - fortran
+  - ada
+  - jcl
+  - ebcdic
+  - punched-cards
+  - deterministic-builds
   - software-art
-  - technical-debt
-  - developer-tools
+  - offline-web-application
+  - constrained-computing
+  - software-bloat
+  - meme-engineering
 abstract: >
-  HERESY v4.0.0 is a dependency-free offline architecture-budget simulator.
-  Users apply seven engineering choices to a small or custom product brief and
-  receive deterministic estimates for payload, dependencies, latency, cloud
-  cost, risk, meetings, delivery time, user value, resume value and bloat. A
-  real COBOL DATA DIVISION supplies all 28 scoring rules and defines the
-  379-character fixed-record database. Checksummed run records can be listed,
-  inspected, deleted, imported and exported without JSON, SQL, IndexedDB, an
-  ORM, a build step or a network request. The complete production application
-  is limited to 131,072 bytes.
+  HERESY v3.0.0 is an offline browser artwork that serializes REST-like
+  requests as fixed 80-column EBCDIC records. A bounded JCL parser approves
+  the job, a COBOL DATA DIVISION defines the request layout, punched-card
+  sequence columns order the deck, a FORTRAN computed GOTO chooses the
+  response, and an Ada-derived policy governs fault recovery. Deterministic
+  tests verify every transformation while CI limits the complete production
+  build to 368,640 bytes, the capacity of one 360 KB 5.25-inch floppy disk.
 identifiers:
   - type: url
     value: "https://github.com/QSOLKCB/HERESY"
 references:
-  - type: software
-    title: "HERESY v3.0.0 — Cloud-Native Microservices on an EBCDIC Punch Card"
-    authors:
-      - family-names: Slade
-        given-names: Trent
-    version: "3.0.0"
-    repository-code: "https://github.com/QSOLKCB/HERESY/tree/main/editions/v3-cloud-native-punch-card"
   - type: software
     title: "HERESY v2.0.0 — React inside BASIC inside React"
     authors:

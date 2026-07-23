@@ -1,228 +1,164 @@
-# HERESY v4.0.0 — The Modern Developer Simulator
+# HERESY v3.0.0 — Cloud-Native Microservices on an EBCDIC Punch Card
 
 [![CI: Passed (Industry Failed)](https://img.shields.io/badge/CI-passed_(industry_failed)-red.svg)](https://github.com/QSOLKCB/HERESY/actions)
-[![Database: COBOL](https://img.shields.io/badge/database-COBOL-darkgreen.svg)](#the-cobol-database)
-[![Dependencies: 0](https://img.shields.io/badge/dependencies-0-yellow.svg)](#run-it)
-[![Budget: 128 KiB](https://img.shields.io/badge/budget-128_KiB-black.svg)](#the-size-gate)
+[![Runtime: REST/1959](https://img.shields.io/badge/runtime-REST%2F1959-black.svg)](#)
+[![Budget: 360 KB](https://img.shields.io/badge/budget-360_KB-yellow.svg)](#)
+[![Containers: Absolutely Not](https://img.shields.io/badge/containers-absolutely_not-darkgreen.svg)](#)
 
-> **“I replaced the modern database with a COBOL record file because rows had
-> become insufficiently rectangular.”**
+> **“I routed the cloud-native microservice through an EBCDIC punch card
+> because JSON lacked institutional trauma.”**
 
-HERESY v4 is useful software built as a protest against software bloat. It is a
-deterministic architecture-budget simulator: take a tiny product brief, make
-seven engineering decisions, and receive an exportable receipt for the
-payload, dependencies, cold start, cloud bill, risk, meetings, delivery time,
-user value, résumé value and total bloat.
+HERESY v3 is an offline browser application in which every “serverless” REST
+request is:
 
-The jokes are pointed, but the tool is serious enough to use in an architecture
-workshop. Its custom mode accepts a real project brief and an estimate of the
-irreducible payload. It does not declare modern technology immoral. It asks a
-more awkward question: **is this technology proportionate to the user's
-problem?**
+1. authorised by a bounded **JCL** job;
+2. packed into a strict **COBOL `DATA DIVISION`** record;
+3. placed in columns 1–72 of an **80-column punched card**;
+4. sequenced in columns 73–80 and encoded as **EBCDIC code page 037**;
+5. routed by a **FORTRAN computed `GOTO`**; and
+6. treated by **Ada** as a probable inertial-guidance emergency.
 
-The numbers are opinionated relative weights for comparison, not vendor
-quotes, capacity forecasts or financial advice. Determinism makes two designs
-comparable; satire makes the conversation harder to avoid.
+All of this occurs to return one small JSON object that could have been written
+directly in six lines.
 
-No framework. No package manager. No build step. No network request. No account.
-The database is COBOL.
-
-## Run it
-
-Open [`index.html`](index.html) directly in a browser. That is the complete
-installation procedure.
-
-For a local HTTP server:
-
-```sh
-make serve
+```text
+Browser edge-ish form
+  -> JCL change-control ritual
+     -> shuffled 80-column card deck
+        -> EBCDIC code-page-037 round trip
+           -> COBOL fixed-width record
+              -> FORTRAN computed GOTO
+                 -> Ada defense-grade panic
+                    -> one REST response, manually retyped
 ```
 
-Then visit `http://localhost:8000`.
+The production build must fit within **368,640 bytes**, the formatted capacity
+of a 360 KB 5¼-inch floppy. The previous 1.44 MB allowance was judged an
+unacceptable lifestyle upgrade.
+
+## Run v3
+
+```sh
+git clone https://github.com/QSOLKCB/HERESY.git
+cd HERESY
+npm ci
+npm run dev
+```
 
 Complete verification:
 
 ```sh
-make check
+npm run check
 ```
 
-The check parses the actual COBOL, exercises the simulator and database,
-mutates a record to prove corruption is detected, verifies the punched browser
-deck, and enforces the complete 128 KiB production budget.
+That command validates physical source columns, executes deterministic pipeline
+tests, builds the offline application and enforces the 360 KB gate.
 
-## What it simulates
+## The offence is real
 
-Every run begins with a deliberately small requirement:
+This is not a terminal animation pretending to be a mainframe.
 
-- show whether an office coffee machine works;
-- keep one person's task list;
-- display one supplied weather reading;
-- multiply quantity by price;
-- publish opening hours;
-- process leave requests for ten employees; or
-- model a custom production brief.
+- `programs/HERESY3.jcl` is parsed for the job, program and card allocations.
+- `programs/mainframe.cob` supplies the actual `PIC` field order and widths.
+- The COBOL fields must total exactly 72 columns.
+- The request occupies one real 80-character record with an eight-digit
+  sequence field.
+- That record round-trips through an explicit EBCDIC code-page-037 codec.
+- The deck deliberately arrives in sequence 30, 20, 10 and is physically
+  sortable back into 10, 20, 30.
+- `programs/router.f` supplies the route names, computed-`GOTO` labels and
+  response text.
+- `programs/failsafe.adb` supplies the required recovery-string length and
+  determines whether ordinary exceptions become missile incidents.
+- The on-screen punch pattern is derived from the exact executed card.
 
-You then choose an interface, service topology, data store, deployment model,
-observability regime, delivery process and amount of artificial headcount.
-Every option maps to a real record in
-[`programs/modern-developer.cob`](programs/modern-developer.cob).
+The project does **not** claim to contain z/OS, a complete COBOL compiler, a
+FORTRAN compiler or an Ada runtime. It implements strict, bounded interpreters
+for the committed source fragments needed by this specific artwork. The satire
+is absurd; the execution claims are deliberately boring and precise.
+
+## Modern platform capabilities
+
+| Industry term | HERESY v3 implementation |
+|---|---|
+| Serverless | Finance owns the server |
+| Edge compute | Desk nearest the fire exit |
+| Autoscaling | Doris gets another chair |
+| Service mesh | Shoebox with dividers |
+| Observability | Brenda watches the green light |
+| Immutable infrastructure | You cannot unpunch a hole |
+| Blockchain | Cards stacked in chronological order |
+| Machine learning | Operator learns the machine |
+| CI/CD | Card Intake / Card Disposal |
+| Zero trust | Lowercase rejected on sight |
+| Eventual consistency | Ledgers agree after the Q4 audit |
+| AI coding assistant | Laminated flowchart; accuracy improved |
+
+The system contains zero containers, makes zero network requests after build
+and has a 0 ms cold start. Its warm start has taken approximately 67 years.
+
+## Controlled failure
+
+Press **CAUSE CONTROLLED ABEND** to submit an unapproved change ticket.
+
+COBOL rejects the record, Ada assumes missile involvement and the interface
+locks behind an exact 80-character override kept in a sealed envelope beside
+the printer. No missile system is present. Procedure does not permit this fact
+to influence procedure.
+
+## Column governance
+
+COBOL and FORTRAN source is limited to 72 columns. JCL and Ada receive a lavish
+80. The card linter fails the build if code escapes its physical allocation:
 
 ```text
-Tiny user requirement
-  -> seven architecture decisions
-     -> COBOL DATA DIVISION scoring records
-        -> deterministic budget calculation
-           -> fixed-width COBOL RUN-RECORD
-              -> checksum, history and export
+CARD DECK REJECTED
+router.f:12: 76 columns; 4 characters are hanging into the future
+Prettier has been reassigned to Payroll.
 ```
 
-A restrained coffee-status system currently weighs **29 KiB** with no
-dependencies. The maximal transformation weighs **163.1 MiB**, carries 1,245
-dependencies, and achieves **41,751×** the essential payload. Both figures are
-derived from the same COBOL rules and protected by tests.
-
-## The COBOL database
-
-The database is not a novelty label wrapped around JSON.
-
-`RUN-RECORD` in the COBOL `DATA DIVISION` is the database schema. It defines 18
-fields and every physical width:
-
-```cobol
-       01 RUN-RECORD.
-          05 RUN-ID          PIC X(16).
-          05 CREATED-UTC     PIC X(20).
-          05 SCENARIO        PIC X(12).
-          05 SEED-VALUE      PIC 9(10).
-          ...
-          05 DECISIONS       PIC X(128).
-          05 BRIEF-TEXT      PIC X(96).
-          05 CHECKSUM        PIC X(8).
-```
-
-Each saved simulation becomes exactly one **379-character fixed record**.
-Numeric values are left-zero-padded to `PIC 9(...)`; text is right-space-padded
-to `PIC X(...)`; overflow is rejected instead of truncated. An eight-character
-FNV-1a checksum covers every preceding character.
-
-The browser's `localStorage` is merely a virtual disk holding newline-separated
-fixed records. There is no JSON persistence, SQL, IndexedDB, ORM, migration
-framework, database server, connection pool or venture-backed control plane.
-
-The ledger supports:
-
-- append, list, inspect and delete;
-- full `.dat` export and import;
-- record-width and checksum validation;
-- duplicate `RUN-ID` refusal; and
-- corrupted-record quarantine.
-
-This is appropriate for an offline, single-user teaching tool. It is not a
-claim that flat files should replace PostgreSQL in concurrent financial
-systems. Satire is funniest when the technical boundary is honest.
-
-## The COBOL also runs the simulator
-
-The same source contains 28 `RULE-*` groups. Each rule supplies nine signed
-cost fields:
-
-```cobol
-       01 RULE-KUBERNETES.
-          05 RULE-ID         PIC X(16) VALUE 'KUBERNETES'.
-          05 SIZE-KB         PIC S9(7) VALUE +4000.
-          05 DEPENDENCIES    PIC S9(7) VALUE +190.
-          05 COLD-MS         PIC S9(7) VALUE +1100.
-          05 CLOUD-CENTS     PIC S9(9) VALUE +38000.
-          05 RISK-POINTS     PIC S9(7) VALUE +35.
-          05 MEETINGS        PIC S9(7) VALUE +10.
-          05 VALUE-POINTS    PIC S9(7) VALUE +6.
-          05 RESUME-POINTS   PIC S9(7) VALUE +50.
-          05 SHIP-DAYS       PIC S9(7) VALUE +28.
-```
-
-A small bounded parser reads those declarations. The browser executes a
-generated, committed copy of the exact COBOL source so it can also work from
-`file://` without `fetch`. `node scripts/punch-cobol.js --check` proves the
-browser deck has not drifted from the source.
-
-This project does not pretend to ship a COBOL compiler in 19 KiB. It executes
-the declared `DATA DIVISION` subset required by the product, validates its
-shape, and makes those values materially govern scoring and persistence.
-
-## The size gate
-
-The entire production application must fit in **131,072 bytes**: the amount of
-RAM in the original 128K Macintosh. That includes:
-
-- HTML;
-- CSS;
-- the full punched COBOL source;
-- simulator engine;
-- fixed-record database; and
-- browser interface.
-
-The current application is about **86 KiB**, or 1,097 theoretical punch cards.
-Source documentation and tests do not count as production payload. A dependency
-cannot hide inside a minifier because there is no dependency and no minifier.
-
-## Useful outputs
-
-- A live consequence budget after every decision.
-- A deterministic report reproducible from the same seed.
-- Markdown and JSON architecture receipts.
-- Print-friendly workshop results.
-- Persistent run history.
-- Portable, checksummed COBOL `.dat` ledgers.
-- A custom mode for real project discussions.
-
-No analytics leave the machine. In fact, nothing leaves the machine unless the
-user presses Export.
+It does not silently truncate production code. Even software satire should not
+make the repository genuinely useless.
 
 ## Files
 
 ```text
-index.html                       directly runnable application shell
-style.css                        asset-free industrial stationery
-programs/modern-developer.cob    scoring rules and database copybook
-src/cobol-deck.js                generated browser-readable card deck
-src/engine.js                    deterministic architecture calculator
-src/cobol-database.js            fixed-record persistence engine
-src/app.js                       accessible classic-script interface
-scripts/punch-cobol.js           source-to-browser card punch
-scripts/selftest.js              execution and corruption tests
-scripts/verify-size.js           128 KiB production gate
-editions/                        preserved previous offences
+programs/HERESY3.jcl         bounded job-control source
+programs/mainframe.cob       72-column COBOL request schema
+programs/router.f            FORTRAN computed-GOTO API gateway
+programs/failsafe.adb        Ada-derived fault policy
+src/mainframe.js             card, EBCDIC and execution kernel
+src/main.js                  accessible offline interface
+src/style.css                asset-free mainframe/card presentation
+scripts/punch-card-linter.mjs
+scripts/selftest.mjs         deterministic execution and failure tests
+scripts/verify-size.mjs      360 KB production gate
+editions/                    preserved earlier offences
 ```
 
 ## Editions
 
-### v4.0.0 — Modern Developer Simulator
-
-The repository root. Useful offline software whose rules and database are
-defined by COBOL because modern persistence lacked sufficient beige.
-
 ### v3.0.0 — Cloud-Native Microservices on an EBCDIC Punch Card
 
-Preserved byte-for-byte at
-[`editions/v3-cloud-native-punch-card/`](editions/v3-cloud-native-punch-card/).
-JCL → punch card → EBCDIC → COBOL → FORTRAN → Ada → JSON.
+The repository root. JCL → punch card → EBCDIC → COBOL → FORTRAN → Ada → JSON.
 
 ### v2.0.0 — React inside BASIC inside React
 
 Preserved at
 [`editions/v2-react-in-basic-in-react/`](editions/v2-react-in-basic-in-react/).
-Commodore BASIC V2-style `DATA` bytes reconstruct a React specification.
+Commodore BASIC V2-style `DATA` bytes reconstruct the specification rendered by
+an inner React component.
 
 ### v1.0.0 — C inside Rust inside C
 
 Preserved at [`editions/v1-c-in-rust-in-c/`](editions/v1-c-in-rust-in-c/).
-Rust compiles C that generates and compiles more C because direct compilation
-lacked narrative tension.
+Rust compiles C that generates and compiles more C because a normal executable
+lacked recursive shame.
 
 ## Licence
 
 MIT licensed. Historical attribution and citation metadata remain with each
 preserved edition.
 
-> Modern software is not automatically bloated. But if displaying a phone
-> number requires service discovery, the phone may be trying to escape.
+> A 300 MB coffee app is no longer software. It is a hostage negotiation with
+> a progress bar.
