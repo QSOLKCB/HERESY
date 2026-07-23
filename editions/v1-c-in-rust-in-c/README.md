@@ -15,6 +15,8 @@ The original edition is preserved here in two deliberately separate forms.
 - `original/README.md`
 - `original/src/main.rs`
 
+Archive inventory: **8 tracked files, 8 historical Git blob hashes**.
+
 These files are archival evidence and are not rewritten to satisfy the current toolchain. Their Git blob hashes are checked in CI against the pre-v2 commit. In particular, the historical Rust source retains its original single-hash raw-string delimiter and the historical workflow retains its original Markdown-wrapped contents.
 
 The snapshot is self-contained: links such as [`original/README.md`](original/README.md) → `./LICENSE` resolve within the archived tree.
