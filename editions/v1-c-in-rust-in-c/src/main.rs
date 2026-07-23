@@ -3,7 +3,9 @@ use std::io::Write;
 use std::path::PathBuf;
 use std::process::Command;
 
-const C_GENERATOR: &str = r#"
+// Two hash marks are intentional: the embedded C contains string literals
+// beginning with "#include", which would terminate an r#"..."# raw string.
+const C_GENERATOR: &str = r##"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -55,22 +57,37 @@ int main(void){
     }
     return 0;
 }
-"#;
+"##;
 
 fn sh(cmd: &mut Command) -> std::io::Result<()> {
     let status = cmd.status()?;
-    if status.success() { Ok(()) } else { Err(std::io::Error::new(std::io::ErrorKind::Other, format!("Command failed: {:?}", cmd))) }
+    if status.success() {
+        Ok(())
+    } else {
+        Err(std::io::Error::other(format!("Command failed: {:?}", cmd)))
+    }
 }
 
 fn main() -> std::io::Result<()> {
     let dir = PathBuf::from("target/heresy_c");
     fs::create_dir_all(&dir)?;
+
     let gen_c = dir.join("heretic_build.c");
     fs::File::create(&gen_c)?.write_all(C_GENERATOR.as_bytes())?;
-    sh(Command::new("gcc").arg("-Wall").arg("-g").arg("-O0").arg(gen_c.file_name().unwrap()).arg("-o").arg("heretic_build").current_dir(&dir))?;
+
+    sh(Command::new("gcc")
+        .arg("-Wall")
+        .arg("-g")
+        .arg("-O0")
+        .arg(gen_c.file_name().unwrap())
+        .arg("-o")
+        .arg("heretic_build")
+        .current_dir(&dir))?;
+
     let mut run_gen = Command::new("./heretic_build");
     run_gen.current_dir(&dir).env("HERESY_ONCE", "1");
     sh(&mut run_gen)?;
+
     let out = Command::new(dir.join("heresy_exe")).output()?;
     print!("{}", String::from_utf8_lossy(&out.stdout));
     eprint!("{}", String::from_utf8_lossy(&out.stderr));
