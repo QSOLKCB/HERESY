@@ -1,6 +1,6 @@
 cff-version: 1.2.0
-title: "HERESY v2.0.0 — React inside BASIC inside React"
-message: "If you cite this standards-compliant act of software blasphemy, you accept moral responsibility for the abstraction layers."
+title: "HERESY v3.0.0 — Cloud-Native Microservices on an EBCDIC Punch Card"
+message: "If you cite this standards-compliant mainframe incident, you accept moral responsibility for the stationery."
 type: software
 authors:
   - family-names: Slade
@@ -8,25 +8,40 @@ authors:
     affiliation: QSOL-IMC
 repository-code: "https://github.com/QSOLKCB/HERESY"
 license: MIT
-version: "2.0.0"
+version: "3.0.0"
 date-released: "2026-07-23"
 keywords:
-  - react
-  - commodore-basic
+  - cobol
+  - fortran
+  - ada
+  - jcl
+  - ebcdic
+  - punched-cards
   - deterministic-builds
   - software-art
   - offline-web-application
   - constrained-computing
+  - software-bloat
   - meme-engineering
 abstract: >
-  HERESY v2.0.0 is an offline React application containing a bounded
-  Commodore BASIC V2-style runtime. Numeric BASIC DATA statements reconstruct
-  the component specification consumed by an inner React component, while CI
-  enforces deterministic tests and a 1,474,560-byte production build ceiling.
+  HERESY v3.0.0 is an offline browser artwork that serializes REST-like
+  requests as fixed 80-column EBCDIC records. A bounded JCL parser approves
+  the job, a COBOL DATA DIVISION defines the request layout, punched-card
+  sequence columns order the deck, a FORTRAN computed GOTO chooses the
+  response, and an Ada-derived policy governs fault recovery. Deterministic
+  tests verify every transformation while CI limits the complete production
+  build to 368,640 bytes, the capacity of one 360 KB 5.25-inch floppy disk.
 identifiers:
   - type: url
     value: "https://github.com/QSOLKCB/HERESY"
 references:
+  - type: software
+    title: "HERESY v2.0.0 — React inside BASIC inside React"
+    authors:
+      - family-names: Slade
+        given-names: Trent
+    version: "2.0.0"
+    repository-code: "https://github.com/QSOLKCB/HERESY/tree/main/editions/v2-react-in-basic-in-react"
   - type: software
     title: "HERESY v1.0.0 — C-in-Rust, Rust-in-C, Makefiles in Tears"
     authors:
