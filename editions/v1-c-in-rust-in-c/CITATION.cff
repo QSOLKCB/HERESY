@@ -1,0 +1,28 @@
+cff-version: 1.2.0
+title: "HERESY v1.0.0 — C-in-Rust, Rust-in-C, Makefiles in Tears"
+message: "If you use this recursive abomination in your research, please cite the archived v1 release."
+type: software
+authors:
+  - family-names: Slade
+    given-names: Trent
+    affiliation: QSOL-IMC
+repository-code: "https://github.com/QSOLKCB/HERESY/tree/main/editions/v1-c-in-rust-in-c"
+license: MIT
+version: "1.0.0"
+date-released: "2025-11-12"
+keywords:
+  - recursion
+  - cargo
+  - build-systems
+  - rust
+  - c
+  - software-art
+abstract: >
+  HERESY v1.0.0 embeds a C generator inside Rust. The generated C program writes,
+  compiles, links and executes a second C project while a recursion guard prevents
+  uncontrolled Cargo re-entry.
+identifiers:
+  - type: doi
+    value: "10.5281/zenodo.17588734"
+  - type: url
+    value: "https://zenodo.org/records/17588734"
