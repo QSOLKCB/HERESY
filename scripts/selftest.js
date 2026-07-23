@@ -50,10 +50,14 @@ var malformedDatabase;
 var malformedRows;
 var validRows;
 var productionFiles;
+var customTitle =
+  'Architectural Penance Review Board Filing No. 7!';
+var widestDecisions;
+var widestCustom;
 
 assert.strictEqual(
   parsed.record.length,
-  22,
+  23,
   'COBOL RUN-RECORD field count changed'
 );
 assert.strictEqual(parsed.recordWidth, 379, 'fixed record width changed');
@@ -72,6 +76,17 @@ assert.deepStrictEqual(
   Object.keys(parsed.rules).sort(),
   'interface choices and COBOL rules disagree'
 );
+widestDecisions = engine.phases.map(function (phase) {
+  return phase.options.reduce(function (widest, option) {
+    return option.id.length > widest.length ? option.id : widest;
+  }, '');
+});
+assert.strictEqual(
+  widestDecisions.join(',').length,
+  72,
+  'the decision field must fit every valid seven-choice combination'
+);
+assert.strictEqual(customTitle.length, 48, 'title fixture must reach its bound');
 
 lean = engine.simulate(
   engine.getScenario('COFFEE'),
@@ -87,12 +102,18 @@ maximal = engine.simulate(
 );
 custom = engine.simulate(
   engine.getScenario('CUSTOM', {
-    title: 'Exact custom inputs',
+    title: customTitle,
     brief: 'Preserve the scenario without reverse-engineering rounded bloat.',
     essentialKB: 999,
     baseDays: 37
   }),
   leanDecisions,
+  parsed,
+  1985
+);
+widestCustom = engine.simulate(
+  custom.scenario,
+  widestDecisions,
   parsed,
   1985
 );
@@ -141,19 +162,21 @@ assert.notStrictEqual(first['RUN-ID'], second['RUN-ID']);
 assert.strictEqual(first['CREATED-UTC'], '2026-07-24T00:00:00Z');
 assert.strictEqual(first.DECISIONS, leanDecisions.join(','));
 assert.strictEqual(first['RECORD-VERSION'], '2');
-assert.strictEqual(customRecord['ESSENTIAL-KB'], '000000999');
-assert.strictEqual(customRecord['BASE-DAYS'], '000037');
+assert.strictEqual(customRecord['ESSENTIAL-B36'], '00RR');
+assert.strictEqual(customRecord['BASE-DAYS-B36'], '11');
+assert.strictEqual(customRecord['SCENARIO-TITLE'], customTitle);
 assert.deepStrictEqual(customInputs, {
   exact: true,
   recordVersion: 2,
   essentialKB: 999,
-  baseDays: 37
+  baseDays: 37,
+  title: customTitle
 });
 assert.deepStrictEqual(
   database.restoreScenario(customRecord),
   {
     id: 'CUSTOM',
-    title: 'CUSTOM',
+    title: customTitle,
     brief: 'Preserve the scenario without reverse-engineering rounded bloat.',
     essentialKB: 999,
     baseDays: 37,
@@ -207,8 +230,9 @@ parsed.record.forEach(function (field) {
     legacyFields.push({ name: 'DECISIONS', type: 'X', width: 128 });
   } else if ([
     'RECORD-VERSION',
-    'ESSENTIAL-KB',
-    'BASE-DAYS',
+    'ESSENTIAL-B36',
+    'BASE-DAYS-B36',
+    'SCENARIO-TITLE',
     'RESERVED'
   ].indexOf(field.name) < 0) {
     legacyFields.push(field);
@@ -224,10 +248,10 @@ legacyDatabase = databaseModule.create({
   adapter: legacyAdapter
 });
 legacySaved = legacyDatabase.save(
-  custom,
+  widestCustom,
   new Date('2026-07-24T01:00:00.000Z')
 );
-assert.strictEqual(legacySaved.DECISIONS, leanDecisions.join(','));
+assert.strictEqual(legacySaved.DECISIONS, widestDecisions.join(','));
 compatibleDatabase = databaseModule.create({
   parsed: parsed,
   adapter: legacyAdapter
@@ -237,7 +261,7 @@ assert.strictEqual(compatibleRows.length, 1);
 assert.strictEqual(compatibleRows.errors.length, 0);
 assert.strictEqual(
   compatibleRows[0].DECISIONS,
-  leanDecisions.join(',')
+  widestDecisions.join(',')
 );
 assert.deepStrictEqual(
   compatibleDatabase.scenarioInputs(compatibleRows[0]),
@@ -245,7 +269,8 @@ assert.deepStrictEqual(
     exact: false,
     recordVersion: 1,
     essentialKB: null,
-    baseDays: null
+    baseDays: null,
+    title: null
   },
   'legacy custom inputs must be unknown, never reverse-engineered'
 );

@@ -173,16 +173,19 @@
       'OUTCOME-CODE': result.outcome.code,
       DECISIONS: result.decisions.join(','),
       'RECORD-VERSION': '2',
-      'ESSENTIAL-KB': fixedDigits(
+      'ESSENTIAL-B36': fixedBase36(
         result.scenario.essentialKB,
-        9,
-        'ESSENTIAL-KB'
+        4,
+        999999,
+        'ESSENTIAL-B36'
       ),
-      'BASE-DAYS': fixedDigits(
+      'BASE-DAYS-B36': fixedBase36(
         result.scenario.baseDays,
-        6,
-        'BASE-DAYS'
+        2,
+        999,
+        'BASE-DAYS-B36'
       ),
+      'SCENARIO-TITLE': result.scenario.title,
       RESERVED: '',
       'BRIEF-TEXT': result.scenario.brief,
       CHECKSUM: ''
@@ -197,7 +200,8 @@
         exact: false,
         recordVersion: 1,
         essentialKB: null,
-        baseDays: null
+        baseDays: null,
+        title: null
       };
     }
     if (record['RECORD-VERSION'] !== '2') {
@@ -206,20 +210,27 @@
         record['RECORD-VERSION'] + '.'
       );
     }
-    if (!/^\d{9}$/.test(record['ESSENTIAL-KB']) ||
-        !/^\d{6}$/.test(record['BASE-DAYS'])) {
-      throw new Error('Version 2 scenario inputs are not fixed digits.');
+    if (!/^[0-9A-Z]{4}$/.test(record['ESSENTIAL-B36']) ||
+        !/^[0-9A-Z]{2}$/.test(record['BASE-DAYS-B36'])) {
+      throw new Error('Version 2 scenario inputs are not fixed base 36.');
     }
-    essential = parseInt(record['ESSENTIAL-KB'], 10);
-    baseDays = parseInt(record['BASE-DAYS'], 10);
-    if (essential < 1 || baseDays < 1) {
-      throw new Error('Version 2 scenario inputs must be positive.');
+    essential = parseInt(record['ESSENTIAL-B36'], 36);
+    baseDays = parseInt(record['BASE-DAYS-B36'], 36);
+    if (essential < 1 || essential > 999999 ||
+        baseDays < 1 || baseDays > 999) {
+      throw new Error('Version 2 scenario inputs are outside their bounds.');
+    }
+    if (typeof record['SCENARIO-TITLE'] !== 'string' ||
+        !record['SCENARIO-TITLE'] ||
+        record['SCENARIO-TITLE'].length > 48) {
+      throw new Error('Version 2 scenario title is invalid.');
     }
     return {
       exact: true,
       recordVersion: 2,
       essentialKB: essential,
-      baseDays: baseDays
+      baseDays: baseDays,
+      title: record['SCENARIO-TITLE']
     };
   }
 
@@ -228,7 +239,9 @@
     var defined = engine.scenarios[record.SCENARIO] || null;
     return {
       id: record.SCENARIO,
-      title: defined ? defined.title : record.SCENARIO,
+      title: savedInputs.exact ?
+        savedInputs.title :
+        (defined ? defined.title : record.SCENARIO),
       brief: record['BRIEF-TEXT'],
       essentialKB: savedInputs.exact ?
         savedInputs.essentialKB :
@@ -294,13 +307,16 @@
     return values;
   }
 
-  function fixedDigits(value, width, name) {
+  function fixedBase36(value, width, maximum, name) {
     var number = Number(value);
     var text;
-    if (!isFinite(number) || number < 1 || Math.floor(number) !== number) {
-      throw new Error(name + ' must be a positive integer.');
+    if (!isFinite(number) || number < 1 || number > maximum ||
+        Math.floor(number) !== number) {
+      throw new Error(
+        name + ' must be an integer from 1 to ' + maximum + '.'
+      );
     }
-    text = String(number);
+    text = number.toString(36).toUpperCase();
     if (text.length > width) {
       throw new Error(name + ' exceeds its fixed record width.');
     }

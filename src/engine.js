@@ -262,8 +262,8 @@
 
   function validateCobol(record, rules) {
     var names = Object.keys(rules);
-    if (record.length !== 22) {
-      throw new Error('RUN-RECORD must contain exactly 22 fields.');
+    if (record.length !== 23) {
+      throw new Error('RUN-RECORD must contain exactly 23 fields.');
     }
     if (record[record.length - 1].name !== 'CHECKSUM') {
       throw new Error('RUN-RECORD must end with CHECKSUM.');
