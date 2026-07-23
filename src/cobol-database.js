@@ -8,7 +8,8 @@
   }
 }(this, function (engine) {
   var defaultKey = 'HERESY_V4_COBOL_RUN_RECORDS';
-  var headerPrefix = 'HERESY COBOL DATABASE V1 WIDTH ';
+  var headerPrefix = 'HERESY COBOL DATABASE V2 WIDTH ';
+  var legacyHeaderPrefix = 'HERESY COBOL DATABASE V1 WIDTH ';
 
   function create(options) {
     var parsed;
@@ -30,6 +31,8 @@
       clear: clear,
       exportText: exportText,
       importText: importText,
+      scenarioInputs: scenarioInputs,
+      restoreScenario: restoreScenario,
       pack: function (values) {
         return pack(schema, values);
       },
@@ -110,13 +113,16 @@
     function importText(text) {
       var clean = String(text).replace(/\r\n/g, '\n');
       var lines = clean.split('\n');
+      var suppliedHeader = lines.shift();
       var expected = headerPrefix + parsed.recordWidth + ' CHECKSUM FNV1A';
+      var legacyExpected = legacyHeaderPrefix + parsed.recordWidth +
+        ' CHECKSUM FNV1A';
       var rows = readRows(adapter);
       var ids = {};
       var added = 0;
       var skipped = 0;
       var values;
-      if (lines.shift() !== expected) {
+      if (suppliedHeader !== expected && suppliedHeader !== legacyExpected) {
         throw new Error('Not this COBOL database format or record width.');
       }
       rows.forEach(function (row) {
@@ -166,8 +172,72 @@
       'BLOAT-X100': metrics.bloatX100,
       'OUTCOME-CODE': result.outcome.code,
       DECISIONS: result.decisions.join(','),
+      'RECORD-VERSION': '2',
+      'ESSENTIAL-KB': fixedDigits(
+        result.scenario.essentialKB,
+        9,
+        'ESSENTIAL-KB'
+      ),
+      'BASE-DAYS': fixedDigits(
+        result.scenario.baseDays,
+        6,
+        'BASE-DAYS'
+      ),
+      RESERVED: '',
       'BRIEF-TEXT': result.scenario.brief,
       CHECKSUM: ''
+    };
+  }
+
+  function scenarioInputs(record) {
+    var essential;
+    var baseDays;
+    if (!record || !record['RECORD-VERSION']) {
+      return {
+        exact: false,
+        recordVersion: 1,
+        essentialKB: null,
+        baseDays: null
+      };
+    }
+    if (record['RECORD-VERSION'] !== '2') {
+      throw new Error(
+        'Unsupported COBOL RECORD-VERSION ' +
+        record['RECORD-VERSION'] + '.'
+      );
+    }
+    if (!/^\d{9}$/.test(record['ESSENTIAL-KB']) ||
+        !/^\d{6}$/.test(record['BASE-DAYS'])) {
+      throw new Error('Version 2 scenario inputs are not fixed digits.');
+    }
+    essential = parseInt(record['ESSENTIAL-KB'], 10);
+    baseDays = parseInt(record['BASE-DAYS'], 10);
+    if (essential < 1 || baseDays < 1) {
+      throw new Error('Version 2 scenario inputs must be positive.');
+    }
+    return {
+      exact: true,
+      recordVersion: 2,
+      essentialKB: essential,
+      baseDays: baseDays
+    };
+  }
+
+  function restoreScenario(record) {
+    var savedInputs = scenarioInputs(record);
+    var defined = engine.scenarios[record.SCENARIO] || null;
+    return {
+      id: record.SCENARIO,
+      title: defined ? defined.title : record.SCENARIO,
+      brief: record['BRIEF-TEXT'],
+      essentialKB: savedInputs.exact ?
+        savedInputs.essentialKB :
+        (defined ? defined.essentialKB : null),
+      baseDays: savedInputs.exact ?
+        savedInputs.baseDays :
+        (defined ? defined.baseDays : null),
+      inputsExact: savedInputs.exact || Boolean(defined),
+      recordVersion: savedInputs.recordVersion
     };
   }
 
@@ -215,7 +285,26 @@
         values[field.name] = raw.replace(/\s+$/, '');
       }
     });
+    if (Object.prototype.hasOwnProperty.call(
+      values,
+      'RECORD-VERSION'
+    )) {
+      scenarioInputs(values);
+    }
     return values;
+  }
+
+  function fixedDigits(value, width, name) {
+    var number = Number(value);
+    var text;
+    if (!isFinite(number) || number < 1 || Math.floor(number) !== number) {
+      throw new Error(name + ' must be a positive integer.');
+    }
+    text = String(number);
+    if (text.length > width) {
+      throw new Error(name + ' exceeds its fixed record width.');
+    }
+    return repeat('0', width - text.length) + text;
   }
 
   function encodeField(field, value) {
@@ -293,9 +382,7 @@
     if (!raw) {
       return [];
     }
-    return String(raw).split('\n').filter(function (line) {
-      return line.length > 0;
-    });
+    return String(raw).split('\n');
   }
 
   function writeRows(adapter, rows) {
@@ -345,6 +432,7 @@
     create: create,
     memoryAdapter: memoryAdapter,
     fnv1a: fnv1a,
-    headerPrefix: headerPrefix
+    headerPrefix: headerPrefix,
+    legacyHeaderPrefix: legacyHeaderPrefix
   };
 }));

@@ -356,6 +356,7 @@
     var action = target.getAttribute('data-action');
     var id = target.getAttribute('data-id');
     var record;
+    var recallNotice;
     if (!action || !id) {
       return;
     }
@@ -374,10 +375,16 @@
     if (record) {
       currentRecord = record;
       currentResult = resultFromRecord(record);
+      recallNotice = 'RECALLED: ' + record['RUN-ID'] +
+        ' · fixed record checksum ' + record.CHECKSUM +
+        ' verified before display';
+      if (!currentResult.scenario.inputsExact) {
+        recallNotice +=
+          ' · LEGACY CUSTOM INPUTS WERE NOT STORED AND REMAIN UNKNOWN';
+      }
       renderReport(
         currentResult,
-        'RECALLED: ' + record['RUN-ID'] + ' · fixed record checksum ' +
-          record.CHECKSUM + ' verified before display'
+        recallNotice
       );
       byId('setup').hidden = true;
       byId('simulator').hidden = true;
@@ -398,15 +405,7 @@
 
   function resultFromRecord(record) {
     var selected = record.DECISIONS.split(',');
-    var scenario = {
-      id: record.SCENARIO,
-      title: record.SCENARIO,
-      brief: record['BRIEF-TEXT'],
-      essentialKB: Math.max(1, Math.round(
-        record['SIZE-KB'] / (record['BLOAT-X100'] / 100)
-      )),
-      baseDays: 1
-    };
+    var scenario = database.restoreScenario(record);
     var details = [];
     engine.phases.forEach(function (phase, index) {
       var choice = null;

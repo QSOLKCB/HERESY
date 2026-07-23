@@ -43,7 +43,10 @@ output is not an implementation.
 - COBOL source lines must not exceed column 72.
 - The committed browser card deck must exactly match the COBOL source.
 - `RUN-RECORD` widths govern every database field.
+- Versioned records must preserve custom scenario inputs exactly.
+- Legacy values that were never stored must remain unknown, not inferred.
 - Reject record overflow, bad widths, invalid numerics and checksum failure.
+- Blank or malformed rows must be reported and preserved for inspection.
 - Do not replace the COBOL database with JSON, SQL, IndexedDB or an ORM.
 - Do not add a dependency for behaviour clearer and smaller in local code.
 - Every new edition must retain reproducible checks proving the stunt executes.
