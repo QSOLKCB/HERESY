@@ -1,5 +1,6 @@
 name: CI Passed (Sanity Failed)
 
+# Deterministic verification for the current v2 edition and runnable v1 repair.
 on:
   push:
   pull_request:
