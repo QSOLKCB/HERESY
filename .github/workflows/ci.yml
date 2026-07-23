@@ -15,8 +15,9 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 22
-      - name: Install pinned dependencies
-        run: npm install --no-audit --no-fund
+          cache: npm
+      - name: Install locked dependencies
+        run: npm ci --no-audit --no-fund
       - name: Verify BASIC payload determinism
         run: npm run test
       - name: Build React inside BASIC inside React
@@ -36,5 +37,7 @@ jobs:
         run: gcc --version
       - name: Build and run preserved v1
         run: cargo run -q
-      - name: Check generated executable
-        run: test -x target/heresy_c/heresy_exe
+      - name: Execute generated v1 binary independently
+        run: |
+          test -x target/heresy_c/heresy_exe
+          ./target/heresy_c/heresy_exe
