@@ -66,8 +66,6 @@ The v1 directory contains both:
 - a byte-for-byte DOI-era snapshot under `original/`;
 - a separately documented runnable repair used by current CI.
 
-The original DOI remains: https://doi.org/10.5281/zenodo.17588734
-
 ## Safety and determinism
 
 - No arbitrary user program execution.
