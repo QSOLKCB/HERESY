@@ -33,6 +33,30 @@ jobs:
         working-directory: editions/v1-c-in-rust-in-c
     steps:
       - uses: actions/checkout@v4
+      - name: Verify complete historical v1 snapshot
+        shell: bash
+        run: |
+          assert_blob() {
+            local expected="$1"
+            local path="$2"
+            local actual
+            actual="$(git hash-object "$path")"
+            if [[ "$actual" != "$expected" ]]; then
+              echo "Historical blob mismatch: $path"
+              echo "expected: $expected"
+              echo "actual:   $actual"
+              exit 1
+            fi
+          }
+
+          assert_blob 17324b9cf052a987e1b695e19b2dfb2c659bf667 original/.github/workflows/ci.yml
+          assert_blob ac4ab75e768b8b31d175fbaddb173339abe9b31a original/.gitignore
+          assert_blob dc27d6db0fd882c868de7dca3dcf0caac55086fc original/CITATION.cff
+          assert_blob 53d79e150a4d86396fc885a484047e3ef957493d original/Cargo.toml
+          assert_blob f84c2521169174445d85b7fcb1009aaaecbbd0e6 original/HERESY_README.md
+          assert_blob 887f249b13689fd3279ab2bd6675df5d7f4aaa08 original/LICENSE
+          assert_blob e146a12a4d873b8043e31a44cf947939a7a536f1 original/README.md
+          assert_blob 3982212b42a8ac91677f3a8c308dad87ad9b0c5c original/src/main.rs
       - uses: dtolnay/rust-toolchain@stable
       - name: Verify GCC
         run: gcc --version
