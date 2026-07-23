@@ -85,7 +85,7 @@ derived from the same COBOL rules and protected by tests.
 
 The database is not a novelty label wrapped around JSON.
 
-`RUN-RECORD` in the COBOL `DATA DIVISION` is the database schema. It defines 18
+`RUN-RECORD` in the COBOL `DATA DIVISION` is the database schema. It defines 23
 fields and every physical width:
 
 ```cobol
@@ -95,15 +95,28 @@ fields and every physical width:
           05 SCENARIO        PIC X(12).
           05 SEED-VALUE      PIC 9(10).
           ...
-          05 DECISIONS       PIC X(128).
+          05 DECISIONS       PIC X(72).
+          05 RECORD-VERSION  PIC X(1).
+          05 ESSENTIAL-B36   PIC X(4).
+          05 BASE-DAYS-B36   PIC X(2).
+          05 SCENARIO-TITLE  PIC X(48).
+          05 RESERVED        PIC X(1).
           05 BRIEF-TEXT      PIC X(96).
           05 CHECKSUM        PIC X(8).
 ```
 
 Each saved simulation becomes exactly one **379-character fixed record**.
 Numeric values are left-zero-padded to `PIC 9(...)`; text is right-space-padded
-to `PIC X(...)`; overflow is rejected instead of truncated. An eight-character
-FNV-1a checksum covers every preceding character.
+to `PIC X(...)`; the two bounded custom numbers receive base-36 ration cards;
+overflow is rejected instead of truncated. An eight-character FNV-1a checksum
+covers every preceding character.
+
+The versioned scenario fields reclaim spare space from the oversized decision
+block, so the record remains 379 characters and existing v1 rows remain
+physically readable. The longest possible decision list is exactly 72
+characters. New rows preserve the complete 48-character custom title, payload
+and base-day inputs exactly. Legacy custom rows report those unknowable values
+as unavailable instead of reverse-engineering fictional precision.
 
 The browser's `localStorage` is merely a virtual disk holding newline-separated
 fixed records. There is no JSON persistence, SQL, IndexedDB, ORM, migration
@@ -113,7 +126,10 @@ The ledger supports:
 
 - append, list, inspect and delete;
 - full `.dat` export and import;
+- backward-compatible v1 ledger import;
 - record-width and checksum validation;
+- exact custom-input recall for versioned rows;
+- malformed-row quarantine without silent normalisation;
 - duplicate `RUN-ID` refusal; and
 - corrupted-record quarantine.
 

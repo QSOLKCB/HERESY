@@ -21,7 +21,12 @@
           05 SHIP-DAYS       PIC 9(6).
           05 BLOAT-X100      PIC 9(10).
           05 OUTCOME-CODE    PIC X(16).
-          05 DECISIONS       PIC X(128).
+          05 DECISIONS       PIC X(72).
+          05 RECORD-VERSION  PIC X(1).
+          05 ESSENTIAL-B36   PIC X(4).
+          05 BASE-DAYS-B36   PIC X(2).
+          05 SCENARIO-TITLE  PIC X(48).
+          05 RESERVED        PIC X(1).
           05 BRIEF-TEXT      PIC X(96).
           05 CHECKSUM        PIC X(8).
 
