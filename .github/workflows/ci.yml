@@ -15,10 +15,14 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 22
-      - name: Install dependencies
-        run: npm install
-      - name: Test, build and enforce floppy budget
-        run: npm run check
+      - name: Install pinned dependencies
+        run: npm install --no-audit --no-fund
+      - name: Verify BASIC payload determinism
+        run: npm run test
+      - name: Build React inside BASIC inside React
+        run: npm run build
+      - name: Enforce 1.44 MB floppy budget
+        run: npm run verify:size
 
   c-rust-c-legacy:
     runs-on: ubuntu-latest
