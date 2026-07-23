@@ -1,27 +1,40 @@
-
----
-
-### `.github/workflows/ci.yml`
-```yaml
-name: CI
+name: CI Passed (Sanity Failed)
 
 on:
   push:
   pull_request:
 
+permissions:
+  contents: read
+
 jobs:
-  heresy:
+  react-basic-react:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Install Rust
-        uses: dtolnay/rust-toolchain@stable
-      - name: Verify gcc
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Install pinned dependencies
+        run: npm install --no-audit --no-fund
+      - name: Verify BASIC payload determinism
+        run: npm run test
+      - name: Build React inside BASIC inside React
+        run: npm run build
+      - name: Enforce 1.44 MB floppy budget
+        run: npm run verify:size
+
+  c-rust-c-legacy:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: editions/v1-c-in-rust-in-c
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+      - name: Verify GCC
         run: gcc --version
-      - name: Build & Run
+      - name: Build and run preserved v1
         run: cargo run -q
-      - name: Check artifacts
-        run: |
-          test -x target/heresy_c/heretic_build
-          test -x target/heresy_c/heresy_exe
-          ./target/heresy_c/heresy_exe
+      - name: Check generated executable
+        run: test -x target/heresy_c/heresy_exe

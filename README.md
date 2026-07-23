@@ -1,100 +1,87 @@
-# 🐍 HERESY v1.0.0 — C-in-Rust, Rust-in-C, Makefiles in Tears
+# HERESY v2.0.0 — React inside BASIC inside React
 
-[![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](./LICENSE)
 [![CI: Passed (Sanity Failed)](https://img.shields.io/badge/CI-passed_(sanity_failed)-red.svg)](https://github.com/QSOLKCB/HERESY/actions)
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.17588734.svg)](https://doi.org/10.5281/zenodo.17588734)
-[![Status: Unholy](https://img.shields.io/badge/status-unholy-black.svg)](#)
-[![Build: Recursive](https://img.shields.io/badge/build-ouroboros-8e44ad.svg)](#)
+[![Status: Standards Compliant](https://img.shields.io/badge/status-standards_compliant-black.svg)](#)
+[![Budget: One Floppy](https://img.shields.io/badge/budget-1.44_MB-yellow.svg)](#)
 
-> *"Because one build system was never enough."*  
-> — QSOL-IMC, Department of Recursive Theology
+> **Modern problems require 1982 middleware.**
 
-**A complete C program embedded as a raw string in Rust that writes/compiles/links its own C mini-project.**
-Rust spawns a C generator, the C generator emits `alpha.c`, `beta.c`, `runner.c`, builds `heresy_exe`, and (optionally) tries to poke Cargo again. Recursion guard included.
+HERESY is now an anthology of executable software blasphemy. The main edition is a real React application containing a bounded Commodore BASIC V2-style interpreter. BASIC reconstructs a component specification from numeric `DATA` statements, and React renders that result as an inner React component.
 
-> “Because build systems are for humans, not machines — and vice versa.”
+```text
+Outer React host
+  -> bounded BASIC V2 runtime
+     -> DATA byte payload
+        -> inner React component
+           -> one avoidable button
+```
 
-## Quickstart
+The middle layer is not a fake terminal animation: BASIC parsing and payload reconstruction determine the component rendered by React.
 
-```bash
+## Run v2
+
+```sh
 git clone https://github.com/QSOLKCB/HERESY.git
 cd HERESY
+npm install
+npm run dev
+```
+
+Production verification:
+
+```sh
+npm run check
+```
+
+The production `dist/` directory must remain at or below **1,474,560 bytes**, the capacity of a 1.44 MB high-density floppy disk.
+
+## What the app proves
+
+- React can host an intentionally tiny, deterministic BASIC runtime.
+- BASIC `DATA` bytes can reconstruct the specification consumed by another React component.
+- The stunt remains semantic, keyboard accessible, responsive and offline after build.
+- Architectural profanity is not permission for broken engineering.
+- One virtual DOM was apparently insufficient.
+
+## Editions
+
+### v2.0.0 — React inside BASIC inside React
+
+The repo root. A standards-conscious React artwork in which Commodore-style BASIC generates the data that becomes inner React UI.
+
+### v1.0.0 — C inside Rust inside C
+
+Preserved at [`editions/v1-c-in-rust-in-c/`](editions/v1-c-in-rust-in-c/).
+
+```sh
+cd editions/v1-c-in-rust-in-c
 cargo run -q
-You’ll see:
+```
 
-Rust compiles heretic_build.c in target/heresy_c/
+The original DOI remains: https://doi.org/10.5281/zenodo.17588734
 
-The C generator writes/compiles alpha.c, beta.c, runner.c
+## Safety and determinism
 
-Linked artifact: target/heresy_c/heresy_exe
+- No arbitrary user program execution.
+- No network access is needed by the built application.
+- BASIC accepts only the fixed bundled program.
+- `DATA` values must be exact bytes from 0 through 255.
+- The reconstructed payload is checked before rendering.
+- CI runs the self-test, production build and floppy-size gate.
 
-A demo run prints messages from the C runner
+## Files
 
-Files
-src/main.rs — embeds the full C generator as a string, compiles & runs it.
+```text
+src/main.jsx                 outer and inner React components
+src/basic.js                 bounded BASIC parser and payload
+src/style.css                asset-free industrial presentation
+scripts/selftest.mjs         repeatability and identity checks
+scripts/verify-size.mjs      1.44 MB build gate
+editions/v1-c-in-rust-in-c/  preserved original heresy
+```
 
-target/heresy_c/ — build output (created at runtime).
+## Licence and lineage
 
-.github/workflows/ci.yml — CI proves this nonsense is real.
+MIT licensed. The v1 concept and its Stack Overflow lineage remain documented in the preserved edition and original Zenodo record.
 
-Recursion Guard
-The C generator skips calling Cargo again if HERESY_ONCE=1. Remove or change that to tempt fate:
-
-c
-Copy code
-// in heretic_build.c
-// run("cargo build --quiet"); // uncomment for chaos
-Determinism & Footprint
-Fixed flags: -Wall -g -O0 (change as you like).
-
-No external deps beyond gcc and Rust toolchain.
-
-Repro steps are tiny: cargo run -q.
-
-License & Attribution
-Repo: MIT (or your preference).
-
-Embedded concept borrows from Stack Overflow snippet lineage — attribute under CC BY-SA 4.0:
-
-“Source ideas” and jokes inspired by: https://stackoverflow.com/a/79802354 (Trent Slade, modded by community).
-
-This repo documents further modifications.
-
-Danger Notes
-This is a stunt. It’s safe, but if you deliberately re-enable recursive Cargo calls, you asked for it.
-
-CI keeps the recursion guard on.
-
-Glory Wall
-“I compiled a compiler that compiles a compiler that compiles my alibi.” — A responsible engineer, allegedly
-
-📜 Citation
-
-If you cite this, you accept moral responsibility for the recursion.
-
-@software{slade_heresy_2025,
-  author       = {Trent Slade},
-  title        = {{HERESY v1.0.0 — C-in-Rust, Rust-in-C, Makefiles in Tears}},
-  month        = nov,
-  year         = 2025,
-  publisher    = {Zenodo},
-  version      = {1.0.0},
-  doi          = {10.5281/zenodo.17588734},
-  url          = {https://zenodo.org/records/17588734}
-}
-
-
-“May future archaeologists wonder why.”
-[View HERESY_README.md](https://github.com/QSOLKCB/HERESY/blob/main/HERESY_README.md)
----
-
-### 🧩 Links & Lore
-
-[📖 README](./README.md) ·  
-[💾 Source (`main.rs`)](./src/main.rs) ·  
-[🧠 HERESY Manifesto](./HERESY_README.md) ·  
-[🔗 Zenodo DOI](https://doi.org/10.5281/zenodo.17588734) ·  
-[⚙️ GitHub Actions](https://github.com/QSOLKCB/HERESY/actions) ·  
-[☠️ Release Page](https://github.com/QSOLKCB/HERESY/releases/tag/v1.0.0)
-
-> *“Makefiles are for mortals. Ouroboros builds are for legends.”*
+> “I rendered React through BASIC because direct component creation lacked theological depth.”
