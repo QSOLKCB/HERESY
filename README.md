@@ -6,7 +6,7 @@
 
 > **Modern problems require 1982 middleware.**
 
-HERESY is now an anthology of executable software blasphemy. The main edition is a real React application containing a bounded Commodore BASIC V2-style interpreter. BASIC reconstructs a component specification from numeric `DATA` statements, and React renders that result as an inner React component.
+HERESY is an anthology of executable software blasphemy. The main edition is a real React application containing a bounded Commodore BASIC V2-style interpreter. BASIC reconstructs a component specification from numeric `DATA` statements, and React renders that result as an inner React component.
 
 ```text
 Outer React host
@@ -23,7 +23,7 @@ The middle layer is not a fake terminal animation: BASIC parsing and payload rec
 ```sh
 git clone https://github.com/QSOLKCB/HERESY.git
 cd HERESY
-npm install
+npm ci
 npm run dev
 ```
 
@@ -32,6 +32,8 @@ Production verification:
 ```sh
 npm run check
 ```
+
+The committed `package-lock.json` fixes the complete npm dependency graph, and CI uses `npm ci` rather than resolving a fresh toolchain on every run.
 
 The production `dist/` directory must remain at or below **1,474,560 bytes**, the capacity of a 1.44 MB high-density floppy disk.
 
@@ -47,7 +49,7 @@ The production `dist/` directory must remain at or below **1,474,560 bytes**, th
 
 ### v2.0.0 — React inside BASIC inside React
 
-The repo root. A standards-conscious React artwork in which Commodore-style BASIC generates the data that becomes inner React UI.
+The repo root. A standards-conscious React artwork in which Commodore-style BASIC generates the data that becomes inner React UI. Root citation metadata is maintained in [`CITATION.cff`](CITATION.cff).
 
 ### v1.0.0 — C inside Rust inside C
 
@@ -56,7 +58,13 @@ Preserved at [`editions/v1-c-in-rust-in-c/`](editions/v1-c-in-rust-in-c/).
 ```sh
 cd editions/v1-c-in-rust-in-c
 cargo run -q
+./target/heresy_c/heresy_exe
 ```
+
+The v1 directory contains both:
+
+- a byte-for-byte DOI-era snapshot under `original/`;
+- a separately documented runnable repair used by current CI.
 
 The original DOI remains: https://doi.org/10.5281/zenodo.17588734
 
@@ -67,7 +75,8 @@ The original DOI remains: https://doi.org/10.5281/zenodo.17588734
 - BASIC accepts only the fixed bundled program.
 - `DATA` values must be exact bytes from 0 through 255.
 - The reconstructed payload is checked before rendering.
-- CI runs the self-test, production build and floppy-size gate.
+- Exact dependency versions and transitive integrity hashes are committed.
+- CI runs the self-test, production build, floppy-size gate and both v1 executable paths.
 
 ## Files
 
@@ -75,9 +84,10 @@ The original DOI remains: https://doi.org/10.5281/zenodo.17588734
 src/main.jsx                 outer and inner React components
 src/basic.js                 bounded BASIC parser and payload
 src/style.css                asset-free industrial presentation
+package-lock.json            locked complete npm dependency graph
 scripts/selftest.mjs         repeatability and identity checks
 scripts/verify-size.mjs      1.44 MB build gate
-editions/v1-c-in-rust-in-c/  preserved original heresy
+editions/v1-c-in-rust-in-c/  runnable v1 repair and exact historical snapshot
 ```
 
 ## Licence and lineage
