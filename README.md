@@ -1,5 +1,3 @@
-# HERESY v5.0.0 release notes
-
 ## HERESY/64: the immutable desktop that fits before the lockfile
 
 v5 replaces the browser-based current edition with a native Commodore 64
