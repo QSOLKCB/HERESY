@@ -1,6 +1,6 @@
 cff-version: 1.2.0
-title: "HERESY v5.0.0 — HERESY/64"
-message: "If you cite this microkernel, please keep the bibliography smaller than its disk image."
+title: "HERESY v4.0.0 — The Modern Developer Simulator"
+message: "If you cite this COBOL database, please pad your gratitude to exactly 96 characters."
 type: software
 authors:
   - family-names: Slade
@@ -8,39 +8,34 @@ authors:
     affiliation: QSOL-IMC
 repository-code: "https://github.com/QSOLKCB/HERESY"
 license: MIT
-version: "5.0.0"
-date-released: "2026-07-25"
+version: "4.0.0"
+date-released: "2026-07-24"
 keywords:
-  - commodore-64
-  - 6502
-  - 6510
-  - microkernel
-  - demoscene
-  - vic-ii
-  - sid
+  - cobol
+  - fixed-width-records
+  - architecture
   - software-bloat
+  - offline-web-application
+  - dependency-free
   - deterministic-software
   - constrained-computing
   - software-art
+  - technical-debt
+  - developer-tools
 abstract: >
-  HERESY v5.0.0 is a 5,424-byte native Commodore 64 desktop built around a
-  326-byte cooperative 6510 microkernel. Eleven services communicate through
-  32 fixed eight-byte records and receive memory from sixteen brokered pages.
-  Files, Notes, Calculator and System provide practical offline functions;
-  Notes uses a recoverable 1541 scratch/write/scratch/rename transaction. The
-  FORCEOS '38 demoscene application uses real VIC-II raster effects and SID
-  audio to satirise infrastructure bloat and tool-as-religion thinking.
+  HERESY v4.0.0 is a dependency-free offline architecture-budget simulator.
+  Users apply seven engineering choices to a small or custom product brief and
+  receive deterministic estimates for payload, dependencies, latency, cloud
+  cost, risk, meetings, delivery time, user value, resume value and bloat. A
+  real COBOL DATA DIVISION supplies all 28 scoring rules and defines the
+  379-character fixed-record database. Checksummed run records can be listed,
+  inspected, deleted, imported and exported without JSON, SQL, IndexedDB, an
+  ORM, a build step or a network request. The complete production application
+  is limited to 131,072 bytes.
 identifiers:
   - type: url
     value: "https://github.com/QSOLKCB/HERESY"
 references:
-  - type: software
-    title: "HERESY v4.0.0 — The Modern Developer Simulator"
-    authors:
-      - family-names: Slade
-        given-names: Trent
-    version: "4.0.0"
-    repository-code: "https://github.com/QSOLKCB/HERESY/tree/main/editions/v4-modern-developer-simulator"
   - type: software
     title: "HERESY v3.0.0 — Cloud-Native Microservices on an EBCDIC Punch Card"
     authors:
