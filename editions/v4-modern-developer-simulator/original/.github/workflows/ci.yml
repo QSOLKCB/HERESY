@@ -1,4 +1,4 @@
-name: CI Passed (Industry Still Pending)
+name: CI Passed (Database Replaced)
 
 on:
   push:
@@ -8,37 +8,14 @@ permissions:
   contents: read
 
 jobs:
-  c64-microkernel:
+  modern-developer-simulator:
     runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-      - name: Install the complete production platform
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y cc65
-      - name: Boot 1982 and verify the future
-        run: make check
-      - name: Upload both production dependencies
-        uses: actions/upload-artifact@v4
-        with:
-          name: HERESY64
-          path: |
-            dist/HERESY64.PRG
-            dist/HERESY64.D64
-
-  modern-developer-simulator-legacy:
-    runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: editions/v4-modern-developer-simulator/original
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
           node-version: 22
-      - name: Ask the preserved COBOL database what it remembers
+      - name: Ask COBOL what the database thinks
         run: make check
 
   punch-card-mainframe-legacy:

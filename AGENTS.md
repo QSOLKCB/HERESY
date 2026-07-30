@@ -5,65 +5,51 @@ These rules apply to every file and future coding agent in this repository.
 ## Product identity
 
 HERESY is an anthology of executable software blasphemy. Each edition must
-combine languages, runtimes, media or build systems in a technically real,
-deliberately disproportionate and reproducible way.
+combine languages, runtimes, media, or build systems in a technically real,
+deliberately disproportionate, and reproducible way.
 
-The joke must never depend on fake output, inaccessible controls, broken builds
-or misleading claims.
+The joke must never depend on fake output, inaccessible controls, broken builds,
+or misleading claims. Satire targets software choices, infrastructure culture,
+and professional habits, never a contributor's identity.
 
 ## Current main edition
 
-The repository root is HERESY v4: The Modern Developer Simulator.
+The repository root is HERESY v5: HERESY/64.
 
-- It is a genuinely useful architecture-budget teaching tool.
-- It accepts bundled scenarios and a bounded custom production brief.
-- Seven engineering choices produce deterministic consequence metrics.
-- All 28 choice records and their nine numeric metrics come from
-  `programs/modern-developer.cob`.
-- The COBOL `RUN-RECORD` is the actual persistence schema.
-- Saved runs are 379-character fixed records with FNV-1a checksums.
-- The database supports append, list, delete, import and export.
-- `localStorage` is only the virtual disk; do not persist JSON.
-- The application opens directly from `index.html`.
+- It is a native Commodore 64 desktop distributed as both PRG and D64.
+- A cooperative 6510 microkernel owns scheduling, IPC, and sixteen memory pages.
+- Messages are fixed eight-byte records in a bounded 32-slot ring.
+- Hardware is isolated behind INPUTD, VIDEOD, DISKD, and AUDIOD services.
+- Files, Notes, Calculator, System, and the FORCEOS '38 demo are applications.
+- Notes uses a recoverable 1541 scratch/write/scratch/rename transaction.
+- The demoscene application uses genuine VIC-II raster timing and SID audio.
+- Production has no runtime dependency, package manager, network, or telemetry.
 
-Every source layer must materially affect the result. Decorative terminal
-output is not an implementation.
+## Service ownership
+
+- `src/kernel/` alone owns IPC, service registration, and page allocation.
+- `src/servers/video.s` alone owns VIC-II, screen RAM, colour RAM, and charset.
+- `src/servers/audio.s` alone owns SID registers.
+- `src/servers/input.s` alone polls keyboard and joystick hardware.
+- `src/servers/disk.s` alone calls KERNAL disk-channel routines.
+- Applications may call documented video drawing helpers, but may not access
+  VIC-II, SID, CIA, screen RAM, colour RAM, or disk KERNAL entry points.
+- Every service handler must return promptly. The video raster effect may wait
+  for bounded raster positions, but no service may busy-loop indefinitely.
 
 ## Non-negotiable constraints
 
-- Production files must total no more than 131,072 bytes.
-- Production has no package manager, framework, build step or dependency.
-- Use classic directly loaded scripts. Do not introduce module loading.
-- The built application must work offline and from `file://`.
-- No telemetry, analytics, cloud service, CDN, external font or remote asset.
-- Preserve semantic HTML, keyboard access, focus visibility, print output and
-  reduced-motion compatibility.
-- Do not use `eval`, `Function` or arbitrary user-supplied code execution.
-- Bound custom text and all COBOL parsing by fixed grammar and finite work.
-- COBOL source lines must not exceed column 72.
-- The committed browser card deck must exactly match the COBOL source.
-- `RUN-RECORD` widths govern every database field.
-- Versioned records must preserve custom scenario inputs exactly.
-- Legacy values that were never stored must remain unknown, not inferred.
-- Reject record overflow, bad widths, invalid numerics and checksum failure.
-- Blank or malformed rows must be reported and preserved for inspection.
-- Do not replace the COBOL database with JSON, SQL, IndexedDB or an ORM.
-- Do not add a dependency for behaviour clearer and smaller in local code.
-- Every new edition must retain reproducible checks proving the stunt executes.
-
-## Edition preservation
-
-Never overwrite an earlier edition. Preserve the exact historical files beneath
-`editions/<edition>/original/`, including source, build instructions,
-attribution and citation metadata.
-
-If historical defects must be repaired for current execution, keep a separately
-documented runnable repair beside the immutable snapshot. Never silently rewrite
-the archival copy.
-
-- v3 lives under `editions/v3-cloud-native-punch-card/`.
-- v2 lives under `editions/v2-react-in-basic-in-react/`.
-- v1 lives under `editions/v1-c-in-rust-in-c/`.
+- The complete PRG must remain below 64 KiB and load on an unexpanded C64.
+- Kernel core machine code must remain below 4 KiB.
+- The D64 must be a standard 35-track, 174,848-byte disk image.
+- Build artifacts must be deterministic.
+- Do not add generated binary blobs to source.
+- Do not claim emulation where native 6510 code executes.
+- Do not introduce a dependency for behaviour clearer and smaller in local code.
+- Earlier editions remain byte-for-byte preserved under
+  `editions/<edition>/original/`.
+- Satirical copy about LCOS PR #38 must stay focused on forced architecture,
+  infrastructure bloat, and tool-as-religion thinking.
 
 ## Required checks
 
@@ -73,29 +59,10 @@ Before reporting completion, run:
 make check
 ```
 
-For preserved v3:
+Also run the preserved editions where the required toolchains are available:
 
 ```sh
-cd editions/v3-cloud-native-punch-card/original
-npm ci
-npm run check
+make check-editions
 ```
 
-For preserved v2:
-
-```sh
-cd editions/v2-react-in-basic-in-react/original
-npm ci
-npm run check
-```
-
-For preserved v1:
-
-```sh
-cd editions/v1-c-in-rust-in-c
-cargo run -q
-./target/heresy_c/heresy_exe
-```
-
-Do not hide failing checks. CI may pass while sanity fails; the build itself may
-not.
+Do not hide a skipped or failing check.
