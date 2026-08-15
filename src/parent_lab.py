@@ -58,6 +58,7 @@ class ParentLabReceipt:
     seed: int
     temperature: int
     num_ctx: int
+    requested_think: bool
     script_sha256: str
     turns: list[dict[str, Any]]
     transcript_sha256: str
@@ -98,6 +99,7 @@ def render_lecture_markdown(receipt: ParentLabReceipt) -> str:
         f"seed:              {receipt.seed}",
         f"temperature:       {receipt.temperature}",
         f"num_ctx:           {receipt.num_ctx}",
+        f"think requested:   {str(receipt.requested_think).lower()}",
         f"parent script sha: {receipt.script_sha256}",
         f"transcript sha:    {receipt.transcript_sha256}",
         "PARENT-0 params:    0",
@@ -180,6 +182,8 @@ def build_request(model: str, messages: list[dict[str, str]]) -> dict[str, Any]:
     return {
         "model": model,
         "stream": False,
+        "think": False,
+        "keep_alive": "5m",
         "messages": messages,
         "options": {
             "seed": SEED,
@@ -226,6 +230,7 @@ def run_parent_lab(
         seed=SEED,
         temperature=TEMPERATURE,
         num_ctx=NUM_CTX,
+        requested_think=False,
         script_sha256=script_sha256(),
         turns=[asdict(turn) for turn in turns],
         transcript_sha256=hashlib.sha256(transcript).hexdigest(),

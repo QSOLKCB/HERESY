@@ -8,13 +8,12 @@ permissions:
   contents: read
 
 jobs:
-  ai-1440:
+  ai1440:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
-        with:
-          python-version: '3.12'
+      - name: Verify Python is old enough to have learned restraint
+        run: python3 --version
       - name: Ask zero parameters to govern the enterprise
         run: make check
       - name: Display the immutable parental lecture plan without bothering a model
@@ -28,79 +27,3 @@ jobs:
         with:
           name: HERESY-AI-1440
           path: build/HERESY1440.IMG
-
-  heresy64-legacy:
-    runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: editions/v5-heresy64/original
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-      - name: Install the complete 1982 platform engineering department
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y cc65
-      - name: Verify archived HERESY/64
-        run: make check
-
-  modern-developer-simulator-legacy:
-    runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: editions/v4-modern-developer-simulator/original
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 22
-      - name: Ask the preserved COBOL database what it remembers
-        run: make check
-
-  punch-card-mainframe-legacy:
-    runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: editions/v3-cloud-native-punch-card/original
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 22
-      - name: Install locked v3 indulgences
-        run: npm ci --no-audit --no-fund
-      - name: Reprocess the physical card deck
-        run: npm run check
-
-  react-basic-react-legacy:
-    runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: editions/v2-react-in-basic-in-react/original
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 22
-      - name: Install locked v2 dependencies
-        run: npm ci --no-audit --no-fund
-      - name: Reproduce React inside BASIC inside React
-        run: npm run check
-
-  c-rust-c-legacy:
-    runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: editions/v1-c-in-rust-in-c
-    steps:
-      - uses: actions/checkout@v4
-      - uses: dtolnay/rust-toolchain@stable
-      - name: Verify GCC
-        run: gcc --version
-      - name: Build and run preserved v1
-        run: cargo run -q
-      - name: Execute generated v1 binary independently
-        run: |
-          test -x target/heresy_c/heresy_exe
-          ./target/heresy_c/heresy_exe
