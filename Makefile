@@ -34,8 +34,9 @@ parent-lab-dry:
 	$(PYTHON) -m src.cli parent-lab --dry-run
 
 check-editions:
-	@echo "Historical editions are checked independently in CI."
-	@echo "v5 remains capable of running make check with cc65 from editions/v5-heresy64/original."
+	@echo "Historical editions retain their original build/check contracts beneath editions/."
+	@echo "Current CI validates v6 only; run an archived edition's own checks with its required toolchain when auditing history."
+	@echo "v5 example: cd editions/v5-heresy64/original && make check   # requires cc65"
 
 clean:
 	rm -rf $(BUILD_DIR) src/__pycache__ tests/__pycache__
