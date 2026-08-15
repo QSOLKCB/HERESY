@@ -1,0 +1,17 @@
+{
+  "name": "heresy-cloud-native-punch-card",
+  "private": true,
+  "version": "3.0.0",
+  "type": "module",
+  "scripts": {
+    "build": "vite build",
+    "dev": "vite",
+    "lint:cards": "node scripts/punch-card-linter.mjs",
+    "test": "node scripts/selftest.mjs",
+    "verify:size": "node scripts/verify-size.mjs",
+    "check": "npm run lint:cards && npm run test && npm run build && npm run verify:size"
+  },
+  "devDependencies": {
+    "vite": "6.1.0"
+  }
+}

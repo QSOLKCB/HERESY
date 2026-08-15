@@ -1,11 +1,10 @@
-/target/
-/node_modules/
 /build/
 __pycache__/
 *.pyc
+/target/
+/node_modules/
 **/node_modules/
 /editions/**/dist/
 /.idea/
 /.vscode/
 *.o
-*.exe

@@ -1,44 +1,42 @@
-CA65 ?= ca65
-LD65 ?= ld65
 PYTHON ?= python3
+BUILD_DIR ?= build
+RECEIPTS ?= receipts
+IMAGE := $(BUILD_DIR)/HERESY1440.IMG
 
-PRG := dist/HERESY64.PRG
-D64 := dist/HERESY64.D64
-OBJ := build/heresy64.o
-MAP := build/heresy64.map
-LBL := build/heresy64.lbl
+.PHONY: all build check test clean heretic parent parent-lab-dry check-editions
 
-.PHONY: all check clean check-editions
+all: build
 
-all: $(PRG) $(D64)
+build:
+	$(PYTHON) -m src.cli build --receipts $(RECEIPTS) --output $(IMAGE)
 
-$(OBJ): $(shell find src -type f \( -name '*.s' -o -name '*.inc' \)) cfg/heresy64.cfg
-	mkdir -p build dist
-	$(CA65) -I src -g -o $@ src/heresy64.s
+test:
+	$(PYTHON) -m unittest discover -s tests -v
 
-$(PRG): $(OBJ) cfg/heresy64.cfg
-	$(LD65) -C cfg/heresy64.cfg -m $(MAP) -Ln $(LBL) -o $@ $(OBJ)
+check:
+	$(PYTHON) -m compileall -q src tests
+	$(PYTHON) -m unittest discover -s tests -v
+	rm -rf $(BUILD_DIR)/check-a $(BUILD_DIR)/check-b
+	mkdir -p $(BUILD_DIR)/check-a $(BUILD_DIR)/check-b
+	$(PYTHON) -m src.cli build --receipts $(RECEIPTS) --output $(BUILD_DIR)/check-a/HERESY1440.IMG
+	$(PYTHON) -m src.cli build --receipts $(RECEIPTS) --output $(BUILD_DIR)/check-b/HERESY1440.IMG
+	cmp $(BUILD_DIR)/check-a/HERESY1440.IMG $(BUILD_DIR)/check-b/HERESY1440.IMG
+	@test "$$(wc -c < $(BUILD_DIR)/check-a/HERESY1440.IMG)" -eq 1474560
+	@echo "AI/1440 deterministic. Cloud invoice still missing."
 
-$(D64): $(PRG) scripts/make_d64.py
-	$(PYTHON) scripts/make_d64.py $(PRG) $(D64)
+heretic:
+	$(PYTHON) -m src.cli heretic0
 
-check: all
-	$(PYTHON) scripts/verify.py
-	$(PYTHON) scripts/verify_determinism.py "$(CA65)" "$(LD65)"
-	$(PYTHON) scripts/runtime_test.py
+parent:
+	$(PYTHON) -m src.cli parent0
+
+parent-lab-dry:
+	$(PYTHON) -m src.cli parent-lab --dry-run
 
 check-editions:
-	$(MAKE) -C editions/v4-modern-developer-simulator/original check
-	cd editions/v3-cloud-native-punch-card/original && \
-		NPM_CONFIG_CACHE=/tmp/heresy-npm-cache npm ci && npm run check
-	cd editions/v2-react-in-basic-in-react/original && \
-		NPM_CONFIG_CACHE=/tmp/heresy-npm-cache npm ci && npm run check
-	@if command -v cargo >/dev/null; then \
-		cd editions/v1-c-in-rust-in-c && cargo run -q && \
-		./target/heresy_c/heresy_exe; \
-	else \
-		echo "SKIP v1: cargo is not installed"; \
-	fi
+	@echo "Historical editions retain their original build/check contracts beneath editions/."
+	@echo "Current CI validates v6 only; run an archived edition's own checks with its required toolchain when auditing history."
+	@echo "v5 example: cd editions/v5-heresy64/original && make check   # requires cc65"
 
 clean:
-	rm -f $(OBJ) $(MAP) $(LBL) $(PRG) $(D64)
+	rm -rf $(BUILD_DIR) src/__pycache__ tests/__pycache__

@@ -1,0 +1,39 @@
+{
+  "schema": "heresy/ai1440/v1",
+  "version": "6.0.0",
+  "artifact": {
+    "name": "HERESY1440.IMG",
+    "format": "FAT12",
+    "bytes": 1474560,
+    "bootable": true,
+    "generated": true,
+    "committed": false
+  },
+  "upstream": {
+    "project": "QSOLKCB/WHOAMI-18437",
+    "interface": "Report Card Gauntlet result JSON",
+    "network_at_runtime": false,
+    "network_at_build": false,
+    "country_origin_labels_are_causal": false
+  },
+  "baseline": {
+    "id": "heretic-0",
+    "type": "deterministic-non-neural-baseline",
+    "parameters": 0,
+    "weight_bytes": 0,
+    "llm": false
+  },
+  "retrieval": {
+    "type": "deterministic sparse term-frequency cosine",
+    "daemon": false,
+    "shards": 1,
+    "replicas": 0,
+    "monthly_cloud_cost_usd": 0
+  },
+  "doctrine": [
+    "Evidence beats infrastructure.",
+    "A missing fact is not a prompt-engineering opportunity.",
+    "If the answer is not in the receipts, the system says so.",
+    "HERETIC-0 is not an LLM. Management has been informed several times."
+  ]
+}

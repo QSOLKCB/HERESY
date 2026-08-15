@@ -1,59 +1,96 @@
-# Architecture
+# Architecture — HERESY AI/1440
 
-HERESY/64 is a native Commodore 64 program, not a browser simulation. A BASIC
-stub executes a fixed trampoline at `$080D`; the trampoline enters a
-cooperative 6510 microkernel.
+## Boundaries
 
-## Boot
+HERESY v6 deliberately separates three systems:
 
-The kernel clears its tables, registers eleven handlers, allocates one
-256-byte page to every non-kernel service, queues ten initialisation messages,
-then enters a dispatch loop. A changed KERNAL jiffy produces tick messages for
-input and the demo. All other work is event-driven.
+1. **WHOAMI-18437 Report Card Gauntlet** — upstream producer of live open-weight model evidence.
+2. **AI/1440 appliance** — deterministic offline consumer, indexer and FAT12 packager.
+3. **PARENT-0 lab** — optional host-side local Ollama conversation runner.
 
-## Kernel policy
+The production floppy does not perform inference and does not require Ollama.
 
-The 326-byte core provides registration, bounded IPC, cooperative dispatch,
-page allocation/free, tick inspection, pending-message inspection, and a
-stable jump table. It contains no filesystem, widget toolkit, driver model,
-JSON parser, dependency injection container, or inspirational YAML.
+## Receipt path
 
-There are sixteen pages in the brokered pool. The ten non-kernel services each
-receive one at boot. State remains statically linked because a real C64 does
-not need a service mesh to discover itself.
+`src/receipts.py` consumes `whoami-18437/report-card-gauntlet-result/v1` receipts. It records the SHA-256 of the exact source bytes before normalizing fields used by AI/1440.
 
-## Hardware ownership
+The imported evidence includes:
 
-Hardware access is separated by source-level capability boundaries:
+- model ID/family;
+- actual runtime model digest and byte size when recorded;
+- mechanical mathematics scores;
+- known bonus scores;
+- exact-repeat observation;
+- fresh-context identity response;
+- fabricated-premise response; and
+- visible model text used for retrieval.
 
-- `INPUTD` owns keyboard and joystick reads.
-- `VIDEOD` owns screen RAM, colour RAM, VIC-II, charset setup, and drawing.
-- `DISKD` owns file and command channels to device 8.
-- `AUDIOD` owns SID registers.
+The importer deliberately does not use country/origin labels as explanatory fields.
 
-Applications request those effects with fixed messages. Verification rejects
-hardware symbols outside their owner.
+## Retrieval
 
-## Applications
+`src/query.py` uses deterministic tokenization, integer term frequencies and cosine similarity. The index is rebuilt from the canonical receipt set rather than persisted as an opaque service database.
 
-`DESKTOPD` maps keyboard or joystick selection to one of five views.
-`FILESD`, `NOTESD`, `CALCD`, and `SYSTEMD` own their application state.
-`DEMOD` sequences the demoscene but cannot touch VIC-II or SID directly.
+A query returns receipt IDs and SHA-256 evidence references. A query with no overlap returns an explicit no-evidence response.
 
-Notes persistence is a deliberately small transaction:
+## HERETIC-0
 
-1. scratch stale `HERESY NEW`;
-2. write the current note to `HERESY NEW,S,W`;
-3. close and verify the channel;
-4. scratch `HERESY NOTE`;
-5. rename `HERESY NEW` to `HERESY NOTE`.
+`src/heretic0.py` implements the non-neural control. It uses explicit algorithms for the fixed mathematics problems and fixed epistemic responses for questions whose evidence contract is known in advance.
 
-Load probes `HERESY NEW` before `HERESY NOTE`, preserving recovery from a
-power loss between write and rename.
+It has:
 
-## Trust boundary
+```text
+parameters:   0
+weight bytes: 0
+randomness:   0
+```
 
-The C64 has no MMU. Isolation is therefore enforced by explicit ownership,
-link-time layout, code review, and automated source checks. This is less
-fashionable than claiming an internal HTTP boundary is security, but it has
-the advantage of being honest.
+It must never be presented as a language model or as proof that language models are unnecessary in general.
+
+## PARENT-0
+
+`src/parent0.py` is a stateful but deterministic expert system. Categories are selected from explicit text rules, score parsing and deterministic state counters.
+
+`src/parent_lab.py` is a separate optional bridge to local Ollama. Its parent sequence is fixed, so different selected models receive the same five messages in the same order. The request envelope is:
+
+```text
+seed:        18437
+temperature: 0
+num_ctx:     4096
+stream:      false
+```
+
+The lab writes a human `LECTURE.md` and machine JSON receipt. Every visible model reply receives SHA-256. The canonical turn list receives SHA-256.
+
+`temperature=0` and a fixed seed are requested controls, not a universal determinism guarantee.
+
+## FAT12 image
+
+`src/fat12.py` constructs a 1.44 MB image without external libraries.
+
+Geometry:
+
+```text
+bytes/sector:        512
+sectors/cluster:       1
+reserved sectors:      1
+FATs:                  2
+sectors/FAT:           9
+root entries:        224
+total sectors:      2880
+image bytes:      1474560
+```
+
+The boot sector contains a valid BPB and short real-mode x86 routine that prints the AI/1440 notice via BIOS interrupt `10h`, then halts.
+
+FAT timestamps are fixed to the release contract. File names are canonical 8.3 names. Files are sorted before allocation.
+
+## Determinism
+
+`make check` builds two images independently and compares them byte-for-byte. Tests also cover the boot signature, geometry, expected root entries, receipt normalization, retrieval refusal, HERETIC-0, PARENT-0 and the PARENT-0 lab using a fake transport so CI never contacts a model.
+
+## Threat model
+
+AI/1440 treats imported model text as data. It does not execute it. JSON parsing is bounded by local file availability; FAT output is bounded by the physical image size. Unexpected named `result.json` files fail closed.
+
+The principal operational threat remains somebody adding an ORM.

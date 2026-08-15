@@ -1,0 +1,104 @@
+name: PARENT-0 Lecture Lab
+
+on:
+  workflow_dispatch:
+    inputs:
+      model:
+        description: Open-weight student receiving deterministic parental concern
+        required: true
+        default: qwen3:8b
+        type: choice
+        options:
+          - qwen3:8b
+          - deepseek-r1:8b
+
+permissions:
+  contents: read
+
+concurrency:
+  group: parent-zero-lecture-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  lecture:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    env:
+      OLLAMA_VERSION: 0.32.5
+      OLLAMA_HOST: 127.0.0.1:11434
+      OLLAMA_BASE_URL: http://127.0.0.1:11434
+      OLLAMA_MAX_LOADED_MODELS: '1'
+      OLLAMA_NUM_PARALLEL: '1'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Verify the parent before blaming the child
+        run: |
+          make check
+          python3 -m src.cli parent-lab --dry-run
+
+      - name: Install pinned Ollama
+        shell: bash
+        run: |
+          set -euo pipefail
+          curl -fsSL \
+            "https://github.com/ollama/ollama/releases/download/v${OLLAMA_VERSION}/install.sh" \
+            -o /tmp/ollama-install.sh
+          echo '25f64b810b947145095956533e1bdf56eacea2673c55a7e586be4515fc882c9f  /tmp/ollama-install.sh' | sha256sum -c -
+          OLLAMA_VERSION="$OLLAMA_VERSION" sh /tmp/ollama-install.sh
+          ollama --version
+
+      - name: Launch local Ollama
+        shell: bash
+        run: |
+          set -euo pipefail
+          sudo systemctl stop ollama.service || true
+          nohup env \
+            OLLAMA_HOST="$OLLAMA_HOST" \
+            OLLAMA_MAX_LOADED_MODELS="$OLLAMA_MAX_LOADED_MODELS" \
+            OLLAMA_NUM_PARALLEL="$OLLAMA_NUM_PARALLEL" \
+            ollama serve >/tmp/ollama-parent.log 2>&1 &
+          for attempt in $(seq 1 60); do
+            if curl -fsS "$OLLAMA_BASE_URL/api/tags" >/dev/null; then
+              exit 0
+            fi
+            sleep 1
+          done
+          tail -n 200 /tmp/ollama-parent.log || true
+          exit 1
+
+      - name: Pull the student model
+        run: ollama pull "${{ inputs.model }}"
+
+      - name: Conduct deterministic parental intervention
+        run: |
+          mkdir -p runs
+          python3 -m src.cli parent-lab \
+            --model "${{ inputs.model }}" \
+            --lecture LECTURE.md \
+            --json-output runs/parent-lab-result.json
+
+      - name: Put the lecture where humans can read it
+        shell: bash
+        run: |
+          cat LECTURE.md >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Sanitize student name for artifact bureaucracy
+        id: artifact
+        shell: bash
+        env:
+          MODEL: ${{ inputs.model }}
+        run: |
+          safe="${MODEL//:/-}"
+          echo "model=$safe" >> "$GITHUB_OUTPUT"
+
+      - name: Archive lecture evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: PARENT-0-${{ steps.artifact.outputs.model }}-LECTURE
+          path: |
+            LECTURE.md
+            runs/parent-lab-result.json
