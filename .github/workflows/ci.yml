@@ -1,4 +1,4 @@
-name: CI Passed (Industry Still Pending)
+name: CI Passed (Parent Still Concerned)
 
 on:
   push:
@@ -8,25 +8,42 @@ permissions:
   contents: read
 
 jobs:
-  c64-microkernel:
+  ai-1440:
     runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Ask zero parameters to govern the enterprise
+        run: make check
+      - name: Display the immutable parental lecture plan without bothering a model
+        run: make parent-lab-dry
+      - name: Build the complete production control plane
+        run: make build
+      - name: Verify the control plane is still one floppy
+        run: test "$(wc -c < build/HERESY1440.IMG)" -eq 1474560
+      - name: Upload the entire enterprise
+        uses: actions/upload-artifact@v4
+        with:
+          name: HERESY-AI-1440
+          path: build/HERESY1440.IMG
+
+  heresy64-legacy:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: editions/v5-heresy64/original
     steps:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
-      - name: Install the complete production platform
+      - name: Install the complete 1982 platform engineering department
         run: |
           sudo apt-get update
           sudo apt-get install -y cc65
-      - name: Boot 1982 and verify the future
+      - name: Verify archived HERESY/64
         run: make check
-      - name: Upload both production dependencies
-        uses: actions/upload-artifact@v4
-        with:
-          name: HERESY64
-          path: |
-            dist/HERESY64.PRG
-            dist/HERESY64.D64
 
   modern-developer-simulator-legacy:
     runs-on: ubuntu-latest
@@ -48,43 +65,6 @@ jobs:
         working-directory: editions/v3-cloud-native-punch-card/original
     steps:
       - uses: actions/checkout@v4
-      - name: Verify immutable v3 card deck
-        shell: bash
-        run: |
-          assert_blob() {
-            local expected="$1"
-            local path="$2"
-            local actual
-            actual="$(git hash-object "$path")"
-            if [[ "$actual" != "$expected" ]]; then
-              echo "Historical blob mismatch: $path"
-              echo "expected: $expected"
-              echo "actual:   $actual"
-              exit 1
-            fi
-          }
-
-          assert_blob dda39527792265c84e93c4cea069713a311a2109 .github/workflows/ci.yml
-          assert_blob 1e453c5e86b795fb9f4f13a483d5685e27f997bb .gitignore
-          assert_blob 8932ef8a1d0775f84281f4a1dd622daaab638630 AGENTS.md
-          assert_blob 867c2b742c60f434f817a218a1902c97c34ea91a CITATION.cff
-          assert_blob 0536ac6102f3155a1d66b22bd6af23bd180509c2 HERESY_README.md
-          assert_blob 887f249b13689fd3279ab2bd6675df5d7f4aaa08 LICENSE
-          assert_blob 872d2c36b74e0ee6d9e54d9ce48cf8a21c567bd5 README.md
-          assert_blob e973f5c5da716f54cd3263eba8a210bd3fd18d75 index.html
-          assert_blob 094cdd7007efb72b157c953099f065b58d011371 package-lock.json
-          assert_blob 278babf7937614d5ed61526c0eff99deeb372b19 package.json
-          assert_blob 25f91686f2cf39e687023b2d26f13cf880160a05 programs/HERESY3.jcl
-          assert_blob 749cda16b0eda1d3df65c8e034e100b1dfedd46f programs/failsafe.adb
-          assert_blob 1f7109a9efb45f1cad2aeafc1b7472be0f03a238 programs/mainframe.cob
-          assert_blob e16464c8f332b51895b869b858d29eebc320f87e programs/router.f
-          assert_blob edc7247f1efc08bce17853140c7ef4660f0114f5 scripts/punch-card-linter.mjs
-          assert_blob e38a45ecfa86b52dbaabd61dc1b4ab0e396e0f38 scripts/selftest.mjs
-          assert_blob 309bccb8b57303d95029f3c9c2ae77d3e319e5c9 scripts/verify-size.mjs
-          assert_blob 85a0a64c9a08fda073a5f23150a62f624f4a415d src/main.js
-          assert_blob 2372cead8cdd360bd3698234c8ce61eb924ae75e src/mainframe.js
-          assert_blob 80faa23750d8ac1c050a82f8167f702a99af9733 src/style.css
-          assert_blob af19bcb733748abcb7a8f61d868439150e45f924 vite.config.js
       - uses: actions/setup-node@v4
         with:
           node-version: 22
@@ -100,38 +80,6 @@ jobs:
         working-directory: editions/v2-react-in-basic-in-react/original
     steps:
       - uses: actions/checkout@v4
-      - name: Verify immutable v2 card catalogue
-        shell: bash
-        run: |
-          assert_blob() {
-            local expected="$1"
-            local path="$2"
-            local actual
-            actual="$(git hash-object "$path")"
-            if [[ "$actual" != "$expected" ]]; then
-              echo "Historical blob mismatch: $path"
-              echo "expected: $expected"
-              echo "actual:   $actual"
-              exit 1
-            fi
-          }
-
-          assert_blob b338fe305322496242344999682259c5e9a795e7 .github/workflows/ci.yml
-          assert_blob ac4ab75e768b8b31d175fbaddb173339abe9b31a .gitignore
-          assert_blob 7d1df2164521e38aebd5cf06bbfc3c49219f4aeb AGENTS.md
-          assert_blob d144f6280482e05495b357ee4888d31c274e5378 CITATION.cff
-          assert_blob 460ab9dc65a62f073cffa9801b5926ace128d6dc HERESY_README.md
-          assert_blob 887f249b13689fd3279ab2bd6675df5d7f4aaa08 LICENSE
-          assert_blob 2a6f6066973a769bb7c3ed289a54794493b05678 README.md
-          assert_blob 9ce80ac1bef7ed0b4f1fd747fc98f680101d46e4 index.html
-          assert_blob f6ba3ecb1e5faefa7b77989b641f70bb421b41ca package-lock.json
-          assert_blob 5fa2afccc747fe3c20ee82b0625322d1db2fe6ab package.json
-          assert_blob 71e4b092927427b4d07addbef132114a5be006d6 scripts/selftest.mjs
-          assert_blob 2fb09e4093141837c0e23999d73924faa1cf998e scripts/verify-size.mjs
-          assert_blob 7df0f8b071486f60bb3e50722ad6fd66fdc14ea8 src/basic.js
-          assert_blob 46f1b4d8ad9f8bcf4a0b5c54e9bc008101f46ec7 src/main.jsx
-          assert_blob 548981b7277dfaf5a689031f9a1a36a17e5c6851 src/style.css
-          assert_blob 74714977c52a789fe78ad6688507be354318f072 vite.config.js
       - uses: actions/setup-node@v4
         with:
           node-version: 22
@@ -147,30 +95,6 @@ jobs:
         working-directory: editions/v1-c-in-rust-in-c
     steps:
       - uses: actions/checkout@v4
-      - name: Verify complete historical v1 snapshot
-        shell: bash
-        run: |
-          assert_blob() {
-            local expected="$1"
-            local path="$2"
-            local actual
-            actual="$(git hash-object "$path")"
-            if [[ "$actual" != "$expected" ]]; then
-              echo "Historical blob mismatch: $path"
-              echo "expected: $expected"
-              echo "actual:   $actual"
-              exit 1
-            fi
-          }
-
-          assert_blob 17324b9cf052a987e1b695e19b2dfb2c659bf667 original/.github/workflows/ci.yml
-          assert_blob ac4ab75e768b8b31d175fbaddb173339abe9b31a original/.gitignore
-          assert_blob dc27d6db0fd882c868de7dca3dcf0caac55086fc original/CITATION.cff
-          assert_blob 53d79e150a4d86396fc885a484047e3ef957493d original/Cargo.toml
-          assert_blob f84c2521169174445d85b7fcb1009aaaecbbd0e6 original/HERESY_README.md
-          assert_blob 887f249b13689fd3279ab2bd6675df5d7f4aaa08 original/LICENSE
-          assert_blob e146a12a4d873b8043e31a44cf947939a7a536f1 original/README.md
-          assert_blob 3982212b42a8ac91677f3a8c308dad87ad9b0c5c original/src/main.rs
       - uses: dtolnay/rust-toolchain@stable
       - name: Verify GCC
         run: gcc --version

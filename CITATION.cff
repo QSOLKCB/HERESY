@@ -1,6 +1,6 @@
 cff-version: 1.2.0
-title: "HERESY v5.0.0 — HERESY/64"
-message: "If you cite this microkernel, please keep the bibliography smaller than its disk image."
+title: "HERESY v6.0.0 — AI/1440: The Zero-Parameter Enterprise Model Governance Appliance"
+message: "If you cite this floppy, please ensure the bibliography does not require Kubernetes."
 type: software
 authors:
   - family-names: Slade
@@ -8,58 +8,42 @@ authors:
     affiliation: QSOL-IMC
 repository-code: "https://github.com/QSOLKCB/HERESY"
 license: MIT
-version: "5.0.0"
-date-released: "2026-07-25"
+version: "6.0.0"
+date-released: "2026-08-15"
 keywords:
-  - commodore-64
-  - 6502
-  - 6510
-  - microkernel
-  - demoscene
-  - vic-ii
-  - sid
-  - software-bloat
   - deterministic-software
-  - constrained-computing
+  - model-evaluation
+  - reproducibility
+  - fat12
+  - floppy-disk
+  - x86
+  - ollama
+  - rule-based-system
+  - retrieval
+  - software-bloat
   - software-art
+  - constrained-computing
 abstract: >
-  HERESY v5.0.0 is a 5,424-byte native Commodore 64 desktop built around a
-  326-byte cooperative 6510 microkernel. Eleven services communicate through
-  32 fixed eight-byte records and receive memory from sixteen brokered pages.
-  Files, Notes, Calculator and System provide practical offline functions;
-  Notes uses a recoverable 1541 scratch/write/scratch/rename transaction. The
-  FORCEOS '38 demoscene application uses real VIC-II raster effects and SID
-  audio to satirise infrastructure bloat and tool-as-religion thinking.
-identifiers:
-  - type: url
-    value: "https://github.com/QSOLKCB/HERESY"
+  HERESY v6.0.0 AI/1440 is a dependency-free deterministic evidence and model-governance
+  appliance that compacts exported WHOAMI-18437 Report Card Gauntlet receipts into a
+  standard 1,474,560-byte FAT12 floppy image. It includes SHA-256 provenance, deterministic
+  sparse retrieval, HERETIC-0 as a zero-parameter non-neural epistemic and mathematics
+  control, PARENT-0 as a deterministic concerned-parent expert system, and an optional
+  host-side local Ollama lecture harness that records visible responses into a human-readable
+  LECTURE.md and machine-readable JSON receipt. The boot sector contains genuine 16-bit x86
+  code. The production appliance has no hosted inference, runtime dependency, telemetry or
+  network requirement.
 references:
   - type: software
-    title: "HERESY v4.0.0 — The Modern Developer Simulator"
+    title: "WHOAMI-18437 — The Report Card Gauntlet"
     authors:
       - family-names: Slade
         given-names: Trent
-    version: "4.0.0"
-    repository-code: "https://github.com/QSOLKCB/HERESY/tree/main/editions/v4-modern-developer-simulator"
+    repository-code: "https://github.com/QSOLKCB/WHOAMI-18437"
   - type: software
-    title: "HERESY v3.0.0 — Cloud-Native Microservices on an EBCDIC Punch Card"
+    title: "HERESY v5.0.0 — HERESY/64"
     authors:
       - family-names: Slade
         given-names: Trent
-    version: "3.0.0"
-    repository-code: "https://github.com/QSOLKCB/HERESY/tree/main/editions/v3-cloud-native-punch-card"
-  - type: software
-    title: "HERESY v2.0.0 — React inside BASIC inside React"
-    authors:
-      - family-names: Slade
-        given-names: Trent
-    version: "2.0.0"
-    repository-code: "https://github.com/QSOLKCB/HERESY/tree/main/editions/v2-react-in-basic-in-react"
-  - type: software
-    title: "HERESY v1.0.0 — C-in-Rust, Rust-in-C, Makefiles in Tears"
-    authors:
-      - family-names: Slade
-        given-names: Trent
-    version: "1.0.0"
-    doi: "10.5281/zenodo.17588734"
-    repository-code: "https://github.com/QSOLKCB/HERESY/tree/main/editions/v1-c-in-rust-in-c"
+    version: "5.0.0"
+    repository-code: "https://github.com/QSOLKCB/HERESY/tree/v5.0.0"

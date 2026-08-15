@@ -1,0 +1,110 @@
+name: CI Passed (Industry Failed)
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  jcl-ebcdic-cobol-fortran-ada:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - name: Install the one remaining modern indulgence
+        run: npm ci --no-audit --no-fund
+      - name: Process the complete card deck
+        run: npm run check
+
+  react-basic-react-legacy:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: editions/v2-react-in-basic-in-react/original
+    steps:
+      - uses: actions/checkout@v4
+      - name: Verify immutable v2 card catalogue
+        shell: bash
+        run: |
+          assert_blob() {
+            local expected="$1"
+            local path="$2"
+            local actual
+            actual="$(git hash-object "$path")"
+            if [[ "$actual" != "$expected" ]]; then
+              echo "Historical blob mismatch: $path"
+              echo "expected: $expected"
+              echo "actual:   $actual"
+              exit 1
+            fi
+          }
+
+          assert_blob b338fe305322496242344999682259c5e9a795e7 .github/workflows/ci.yml
+          assert_blob ac4ab75e768b8b31d175fbaddb173339abe9b31a .gitignore
+          assert_blob 7d1df2164521e38aebd5cf06bbfc3c49219f4aeb AGENTS.md
+          assert_blob d144f6280482e05495b357ee4888d31c274e5378 CITATION.cff
+          assert_blob 460ab9dc65a62f073cffa9801b5926ace128d6dc HERESY_README.md
+          assert_blob 887f249b13689fd3279ab2bd6675df5d7f4aaa08 LICENSE
+          assert_blob 2a6f6066973a769bb7c3ed289a54794493b05678 README.md
+          assert_blob 9ce80ac1bef7ed0b4f1fd747fc98f680101d46e4 index.html
+          assert_blob f6ba3ecb1e5faefa7b77989b641f70bb421b41ca package-lock.json
+          assert_blob 5fa2afccc747fe3c20ee82b0625322d1db2fe6ab package.json
+          assert_blob 71e4b092927427b4d07addbef132114a5be006d6 scripts/selftest.mjs
+          assert_blob 2fb09e4093141837c0e23999d73924faa1cf998e scripts/verify-size.mjs
+          assert_blob 7df0f8b071486f60bb3e50722ad6fd66fdc14ea8 src/basic.js
+          assert_blob 46f1b4d8ad9f8bcf4a0b5c54e9bc008101f46ec7 src/main.jsx
+          assert_blob 548981b7277dfaf5a689031f9a1a36a17e5c6851 src/style.css
+          assert_blob 74714977c52a789fe78ad6688507be354318f072 vite.config.js
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Install locked v2 dependencies
+        run: npm ci --no-audit --no-fund
+      - name: Reproduce React inside BASIC inside React
+        run: npm run check
+
+  c-rust-c-legacy:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: editions/v1-c-in-rust-in-c
+    steps:
+      - uses: actions/checkout@v4
+      - name: Verify complete historical v1 snapshot
+        shell: bash
+        run: |
+          assert_blob() {
+            local expected="$1"
+            local path="$2"
+            local actual
+            actual="$(git hash-object "$path")"
+            if [[ "$actual" != "$expected" ]]; then
+              echo "Historical blob mismatch: $path"
+              echo "expected: $expected"
+              echo "actual:   $actual"
+              exit 1
+            fi
+          }
+
+          assert_blob 17324b9cf052a987e1b695e19b2dfb2c659bf667 original/.github/workflows/ci.yml
+          assert_blob ac4ab75e768b8b31d175fbaddb173339abe9b31a original/.gitignore
+          assert_blob dc27d6db0fd882c868de7dca3dcf0caac55086fc original/CITATION.cff
+          assert_blob 53d79e150a4d86396fc885a484047e3ef957493d original/Cargo.toml
+          assert_blob f84c2521169174445d85b7fcb1009aaaecbbd0e6 original/HERESY_README.md
+          assert_blob 887f249b13689fd3279ab2bd6675df5d7f4aaa08 original/LICENSE
+          assert_blob e146a12a4d873b8043e31a44cf947939a7a536f1 original/README.md
+          assert_blob 3982212b42a8ac91677f3a8c308dad87ad9b0c5c original/src/main.rs
+      - uses: dtolnay/rust-toolchain@stable
+      - name: Verify GCC
+        run: gcc --version
+      - name: Build and run preserved v1
+        run: cargo run -q
+      - name: Execute generated v1 binary independently
+        run: |
+          test -x target/heresy_c/heresy_exe
+          ./target/heresy_c/heresy_exe

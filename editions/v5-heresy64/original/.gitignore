@@ -1,0 +1,11 @@
+/target/
+/node_modules/
+/build/
+__pycache__/
+*.pyc
+**/node_modules/
+/editions/**/dist/
+/.idea/
+/.vscode/
+*.o
+*.exe
