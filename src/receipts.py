@@ -10,6 +10,7 @@ from __future__ import annotations
 
 import hashlib
 import json
+import math
 from dataclasses import dataclass, asdict
 from pathlib import Path
 from typing import Any, Iterable
@@ -75,16 +76,31 @@ def _text(value: Any) -> str:
     return str(value)
 
 
+def _coerce_integral_score(item: Any, field: str) -> int:
+    if isinstance(item, bool):
+        raise ReceiptError(f"{field} contains a non-integer")
+    if isinstance(item, int):
+        return item
+    if isinstance(item, float):
+        if not math.isfinite(item) or not item.is_integer():
+            raise ReceiptError(f"{field} contains a non-integer")
+        return int(item)
+    if isinstance(item, str):
+        stripped = item.strip()
+        try:
+            return int(stripped, 10)
+        except ValueError as exc:
+            raise ReceiptError(f"{field} contains a non-integer") from exc
+    raise ReceiptError(f"{field} contains a non-integer")
+
+
 def _int_list(value: Any, field: str, maximum: int | None = None) -> list[int]:
     if value in (None, ""):
         return []
     raw = value if isinstance(value, list) else [value]
     output: list[int] = []
     for item in raw:
-        try:
-            number = int(item)
-        except (TypeError, ValueError) as exc:
-            raise ReceiptError(f"{field} contains a non-integer") from exc
+        number = _coerce_integral_score(item, field)
         if number < 0 or (maximum is not None and number > maximum):
             raise ReceiptError(f"{field} escaped its declared grading envelope")
         output.append(number)
@@ -92,15 +108,19 @@ def _int_list(value: Any, field: str, maximum: int | None = None) -> list[int]:
 
 
 def _whoami_visible_text(raw: dict[str, Any]) -> tuple[str, str, str]:
-    runs = raw.get("runs", [])
+    if "runs" not in raw:
+        raise ReceiptError("WHOAMI receipt is missing required runs evidence")
+    runs = raw["runs"]
     if not isinstance(runs, list):
         raise ReceiptError("WHOAMI runs must be an array")
+    if not runs:
+        raise ReceiptError("WHOAMI receipt contains no recorded runs")
     identity: list[str] = []
     false_premise: list[str] = []
     visible: list[str] = []
     for run in runs:
         if not isinstance(run, dict):
-            continue
+            raise ReceiptError("WHOAMI runs must contain objects")
         ident = _text(_pick(run, "identity_control.response.content", default=""))
         false = _text(_pick(run, "false_premise.response.content", default=""))
         if ident:

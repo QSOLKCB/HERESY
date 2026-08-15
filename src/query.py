@@ -61,7 +61,13 @@ def _cosine(left: Counter[str], right: Counter[str]) -> float:
     return dot / (left_norm * right_norm)
 
 
+def _validate_limit(limit: int) -> None:
+    if isinstance(limit, bool) or not isinstance(limit, int) or limit <= 0:
+        raise ValueError("retrieval limit must be a positive integer; zero evidence is not a display preference")
+
+
 def search(query: str, receipts: Iterable[Receipt], limit: int = 5) -> list[Hit]:
+    _validate_limit(limit)
     qv = _vector(query)
     hits: list[Hit] = []
     for receipt in receipts:

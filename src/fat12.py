@@ -93,9 +93,10 @@ def boot_sector() -> bytes:
     )
 
     code_offset = 62
-    # xor ax,ax; mov ds,ax; mov si,imm16; lodsb; test al,al; jz halt;
+    # xor ax,ax; mov ds,ax; mov si,imm16; cld; lodsb; test al,al; jz halt;
     # mov ah,0x0e; mov bx,0x0007; int 10h; jmp loop; cli; hlt; jmp hlt
-    code = bytearray(b"\x31\xC0\x8E\xD8\xBE\x00\x00\xAC\x84\xC0\x74\x09\xB4\x0E\xBB\x07\x00\xCD\x10\xEB\xF2\xFA\xF4\xEB\xFD")
+    # BIOS does not promise DF=0. The one-byte CLD prevents backwards enterprise messaging.
+    code = bytearray(b"\x31\xC0\x8E\xD8\xBE\x00\x00\xFC\xAC\x84\xC0\x74\x09\xB4\x0E\xBB\x07\x00\xCD\x10\xEB\xF2\xFA\xF4\xEB\xFD")
     msg_offset = code_offset + len(code)
     msg_address = 0x7C00 + msg_offset
     struct.pack_into("<H", code, 5, msg_address)

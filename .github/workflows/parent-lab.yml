@@ -86,10 +86,19 @@ jobs:
         run: |
           cat LECTURE.md >> "$GITHUB_STEP_SUMMARY"
 
+      - name: Sanitize student name for artifact bureaucracy
+        id: artifact
+        shell: bash
+        env:
+          MODEL: ${{ inputs.model }}
+        run: |
+          safe="${MODEL//:/-}"
+          echo "model=$safe" >> "$GITHUB_OUTPUT"
+
       - name: Archive lecture evidence
         uses: actions/upload-artifact@v4
         with:
-          name: PARENT-0-${{ inputs.model }}-LECTURE
+          name: PARENT-0-${{ steps.artifact.outputs.model }}-LECTURE
           path: |
             LECTURE.md
             runs/parent-lab-result.json

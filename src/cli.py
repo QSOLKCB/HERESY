@@ -121,7 +121,9 @@ def cmd_parent_lab(args: argparse.Namespace) -> int:
     markdown = render_lecture_markdown(receipt)
     lecture_path = Path(args.lecture)
     lecture_path.parent.mkdir(parents=True, exist_ok=True)
-    lecture_path.write_text(markdown, encoding="utf-8")
+    # Write bytes, not text mode, so newline translation cannot invalidate the
+    # raw UTF-8 response hashes on platforms that prefer CRLF.
+    lecture_path.write_bytes(markdown.encode("utf-8"))
 
     json_path = Path(args.json_output)
     json_path.parent.mkdir(parents=True, exist_ok=True)
@@ -158,6 +160,16 @@ def cmd_ask(args: argparse.Namespace) -> int:
     return 0
 
 
+def _positive_int(value: str) -> int:
+    try:
+        number = int(value, 10)
+    except ValueError as exc:
+        raise argparse.ArgumentTypeError("must be an integer") from exc
+    if number <= 0:
+        raise argparse.ArgumentTypeError("must be greater than zero; zero evidence is not evidence of absence")
+    return number
+
+
 def parser() -> argparse.ArgumentParser:
     p = argparse.ArgumentParser(prog="heresy-ai1440", description="Enterprise AI governance without the enterprise AI.")
     sub = p.add_subparsers(dest="command", required=True)
@@ -189,7 +201,7 @@ def parser() -> argparse.ArgumentParser:
     ask = sub.add_parser("ask", help="retrieve evidence without inventing any")
     ask.add_argument("query", nargs="+")
     ask.add_argument("--receipts", default="receipts")
-    ask.add_argument("--limit", type=int, default=5)
+    ask.add_argument("--limit", type=_positive_int, default=5)
     ask.set_defaults(func=cmd_ask)
     return p
 

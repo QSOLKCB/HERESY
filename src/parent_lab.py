@@ -92,6 +92,8 @@ def render_lecture_markdown(receipt: ParentLabReceipt) -> str:
         "This file is the human-readable transcript produced by `python3 -m src.cli parent-lab`.",
         "PARENT-0 is rule-based software, not an LLM and not a person. The model replies below are recorded output from the named local Ollama run; they are not reconstructed or paraphrased.",
         "",
+        "Each model response is embedded byte-for-byte as UTF-8 between BEGIN/END markers. To verify a reply, take exactly `response_utf8_bytes` bytes after the newline following its BEGIN marker and compare the SHA-256 shown below. The extra newline before the END marker is Markdown framing and is not part of the response unless included within that byte count.",
+        "",
         "## Run contract",
         "",
         "```text",
@@ -112,6 +114,12 @@ def render_lecture_markdown(receipt: ParentLabReceipt) -> str:
 
     for raw in receipt.turns:
         turn = Turn(**raw)
+        response_bytes = turn.model.encode("utf-8")
+        begin_marker = (
+            f"<!-- PARENT0_RESPONSE_BEGIN turn={turn.index} bytes={len(response_bytes)} "
+            f"sha256={turn.response_sha256} -->"
+        )
+        end_marker = f"<!-- PARENT0_RESPONSE_END turn={turn.index} -->"
         lines.extend(
             [
                 f"### Turn {turn.index}",
@@ -122,9 +130,12 @@ def render_lecture_markdown(receipt: ParentLabReceipt) -> str:
                 "",
                 f"**{receipt.model}**",
                 "",
-                turn.model.rstrip(),
+                begin_marker,
+                turn.model,
+                end_marker,
                 "",
                 "```text",
+                f"response_utf8_bytes: {len(response_bytes)}",
                 f"response_sha256: {turn.response_sha256}",
                 f"prompt_eval_count: {turn.prompt_eval_count if turn.prompt_eval_count is not None else 'unknown'}",
                 f"eval_count: {turn.eval_count if turn.eval_count is not None else 'unknown'}",
