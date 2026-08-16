@@ -18,12 +18,14 @@ The repository root is HERESY v7: **HERESY/360**.
 - POSIX shell is the explicit host-side init/orchestration layer.
 - The stack is a hosted user-space operating environment. Do not call it a bare-metal kernel or claim ring-0 execution.
 - `demo-x` is a local fictional regression scenario inspired by a visible support-interface failure. It never queries, changes or adjudicates a real X account.
-- A rule identifier of `NONE` or `UNSPECIFIED` must produce `DP-001` and refuse enforcement.
-- Missing evidence must produce `DP-002` and refuse enforcement.
-- A complete remediable case produces `DP-200`.
-- A complete case without remediation produces `DP-300` and requires human review.
+- A rule identifier that is empty, whitespace-only, `NONE` or `UNSPECIFIED` must produce `DP-001` and refuse enforcement.
+- Evidence that is empty, whitespace-only, `NONE` or `MISSING` must produce `DP-002` and refuse enforcement.
+- A complete remediable case produces `DP-200` only when a concrete remediation instruction or reference is supplied and displayed.
+- A complete case without concrete remediation produces `DP-300` and requires human review.
 - Receipt generation is deterministic and contains no current time, random value, model output or network-derived state.
-- The FNV-1a case key is an identifier function only. Never describe it as cryptographic integrity.
+- The FNV-1a case key is an identifier function only. Never describe it as cryptographic integrity or assume it is globally unique.
+- Receipt storage must preserve distinct inputs even when their 32-bit display case IDs collide.
+- Line-oriented receipt inputs must reject CR/LF injection, and user-visible values must fit their COBOL display fields without truncation.
 
 ## Due-process contract
 
@@ -31,7 +33,7 @@ HERESY/360 is intentionally stricter than a vague automated support notice:
 
 1. An adverse automated action requires a specific rule identifier.
 2. The named rule requires an evidence reference.
-3. Available remediation must be stated explicitly.
+3. Available remediation must be stated explicitly as a concrete instruction or reference.
 4. If no remediation exists, route to human review rather than recursive automation.
 5. Every result must expose its policy code and next step.
 6. Missing information fails closed against enforcement, not against the user.
@@ -49,9 +51,10 @@ Satire may target automated support design, policy opacity, infrastructure fashi
 ## Determinism
 
 - Ada case IDs depend only on the input account, rule ID and evidence reference.
-- The Fortran runtime depends only on the three explicit completeness flags.
+- The Fortran runtime depends only on the explicit completeness flags plus the concrete remediation reference.
 - COBOL renders values supplied by the orchestrator without hidden state.
 - Receipt field order is fixed.
+- Distinct receipts sharing a 32-bit case ID are retained in deterministic collision slots rather than overwritten.
 - No wall-clock timestamp appears in v7 receipts.
 - No network access occurs in `make build`, `make test` or `make check`.
 - Repeating an identical case must produce byte-for-byte identical terminal output and receipt content under the same implementation contract.
@@ -71,7 +74,7 @@ CI installs these explicitly on Ubuntu. Do not replace the three primary languag
 
 Never overwrite an earlier edition.
 
-v6 AI/1440 is anchored by the exact pre-v7 Git tree SHA beneath `editions/v6-ai1440/original/`. The existing v6 Python implementation remains in the repository for compatibility and is exercised by `make legacy-v6` plus the preserved regression suite.
+v6 AI/1440 is anchored by pre-v7 commit `43c9b50dbd7964095337c2c662e7fb90bd88b8f8`, whose exact root tree is `ce684946a31e0ba1d7d6a428fb5b699cd377c179`, beneath `editions/v6-ai1440/original/`. The existing v6 Python implementation remains in the repository for compatibility and is exercised by `make legacy-v6` plus the preserved regression suite.
 
 v5 remains preserved as `editions/v5-heresy64/original/`. Earlier editions remain beneath their existing paths.
 
@@ -90,11 +93,14 @@ The suite must cover:
 - Ada compilation;
 - Fortran compilation;
 - COBOL compilation;
-- three-layer boot output;
-- `DP-001` missing-rule refusal;
-- `DP-002` missing-evidence refusal;
-- `DP-200` explicit remediation;
+- three-layer boot output plus degraded boot detection;
+- `DP-001` missing/blank-rule refusal;
+- `DP-002` missing/blank-evidence refusal;
+- `DP-200` concrete remediation propagation;
 - `DP-300` human-review routing;
+- CR/LF receipt-injection rejection;
+- fixed-width input validation before COBOL rendering;
+- colliding case-ID receipt preservation;
 - deterministic repeat terminal output;
 - deterministic repeat receipts; and
 - preserved v6 AI/1440 Python regression tests.
