@@ -38,12 +38,12 @@ stack: check-tools $(BIN_DIR)/heresy-kernel $(BIN_DIR)/heresy-runtime $(BIN_DIR)
 	@echo "HERESY/360 built: Ada executive + Fortran runtime + COBOL terminal."
 
 test: stack
-	bash tests/test_v7.sh
+	sh tests/test_v7.sh
 
 check: stack
 	$(PYTHON) -m compileall -q src tests
 	$(PYTHON) -m unittest discover -s tests -p 'test_ai1440.py' -v
-	bash tests/test_v7.sh
+	sh tests/test_v7.sh
 	@echo "v7 deterministic cross-language checks passed. Automated system has been asked to name the rule."
 
 boot: stack
@@ -62,7 +62,7 @@ parent-lab-dry:
 
 check-editions:
 	@echo "Historical editions retain their original contracts beneath editions/."
-	@echo "v6 source is anchored by its exact pre-v7 Git tree under editions/v6-ai1440/original/."
+	@echo "v6 source is anchored by its exact pre-v7 Git commit and tree under editions/v6-ai1440/original/."
 	@echo "v5 example: cd editions/v5-heresy64/original && make check   # requires cc65"
 
 clean:
