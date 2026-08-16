@@ -1,6 +1,6 @@
 cff-version: 1.2.0
-title: "HERESY v6.0.0 — AI/1440: The Zero-Parameter Enterprise Model Governance Appliance"
-message: "If you cite this floppy, please ensure the bibliography does not require Kubernetes."
+title: "HERESY v7.0.0 — HERESY/360: The Ada, Fortran and COBOL Automated Due-Process Stack"
+message: "If you cite this software, please name the rule, the evidence, and what the reader can do next."
 type: software
 authors:
   - family-names: Slade
@@ -8,42 +8,42 @@ authors:
     affiliation: QSOL-IMC
 repository-code: "https://github.com/QSOLKCB/HERESY"
 license: MIT
-version: "6.0.0"
-date-released: "2026-08-15"
+version: "7.0.0"
+date-released: "2026-08-16"
 keywords:
   - deterministic-software
-  - model-evaluation
-  - reproducibility
-  - fat12
-  - floppy-disk
-  - x86
-  - ollama
-  - rule-based-system
-  - retrieval
-  - software-bloat
+  - ada
+  - fortran
+  - cobol
+  - due-process
+  - explainable-automation
   - software-art
-  - constrained-computing
+  - reproducibility
+  - legacy-languages
+  - governance
+  - automated-decision-systems
 abstract: >
-  HERESY v6.0.0 AI/1440 is a dependency-free deterministic evidence and model-governance
-  appliance that compacts exported WHOAMI-18437 Report Card Gauntlet receipts into a
-  standard 1,474,560-byte FAT12 floppy image. It includes SHA-256 provenance, deterministic
-  sparse retrieval, HERETIC-0 as a zero-parameter non-neural epistemic and mathematics
-  control, PARENT-0 as a deterministic concerned-parent expert system, and an optional
-  host-side local Ollama lecture harness that records visible responses into a human-readable
-  LECTURE.md and machine-readable JSON receipt. The boot sector contains genuine 16-bit x86
-  code. The production appliance has no hosted inference, runtime dependency, telemetry or
-  network requirement.
+  HERESY v7.0.0 HERESY/360 is a deterministic hosted account-decision operating environment
+  whose primary stack is implemented in Ada, Fortran and COBOL. Ada performs case admission
+  and deterministic case-ID generation, Fortran applies explicit due-process invariants and a
+  mechanical completeness score, and COBOL renders the user-facing decision receipt. A POSIX
+  shell layer provides local orchestration. The reference policy refuses adverse enforcement
+  when a specific rule or evidence reference is missing, exposes explicit remediation or human
+  review routing, performs no network access or model inference, and emits deterministic receipts.
+  A local fictional demo is inspired by the interface failure of an automated support notice that
+  says "specifically:" without supplying a specific rule; the software does not connect to or
+  adjudicate any real platform account.
 references:
+  - type: software
+    title: "HERESY v6.0.0 — AI/1440"
+    authors:
+      - family-names: Slade
+        given-names: Trent
+    version: "6.0.0"
+    repository-code: "https://github.com/QSOLKCB/HERESY"
   - type: software
     title: "WHOAMI-18437 — The Report Card Gauntlet"
     authors:
       - family-names: Slade
         given-names: Trent
     repository-code: "https://github.com/QSOLKCB/WHOAMI-18437"
-  - type: software
-    title: "HERESY v5.0.0 — HERESY/64"
-    authors:
-      - family-names: Slade
-        given-names: Trent
-    version: "5.0.0"
-    repository-code: "https://github.com/QSOLKCB/HERESY/tree/v5.0.0"

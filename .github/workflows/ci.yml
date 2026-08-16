@@ -1,4 +1,4 @@
-name: CI Passed (Parent Still Concerned)
+name: CI Passed (Mainframe Still Disappointed)
 
 on:
   push:
@@ -8,22 +8,41 @@ permissions:
   contents: read
 
 jobs:
-  ai1440:
+  heresy360:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Verify Python is old enough to have learned restraint
-        run: python3 --version
-      - name: Ask zero parameters to govern the enterprise
-        run: make check
-      - name: Display the immutable parental lecture plan without bothering a model
-        run: make parent-lab-dry
-      - name: Build the complete production control plane
+
+      - name: Install the languages management was sure were dead
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y gnat gfortran gnucobol
+
+      - name: Display compiler receipts
+        run: |
+          gnatmake --version | head -1
+          gfortran --version | head -1
+          cobc --version | head -1
+
+      - name: Build Ada executive, Fortran policy runtime and COBOL terminal
         run: make build
-      - name: Verify the control plane is still one floppy
-        run: test "$(wc -c < build/HERESY1440.IMG)" -eq 1474560
-      - name: Upload the entire enterprise
+
+      - name: Run cross-language and preserved v6 regression checks
+        run: make check
+
+      - name: Demonstrate what happens when automation forgets to name the rule
+        run: make demo
+
+      - name: Rebuild the previous AI/1440 appliance as a historical compatibility check
+        run: make legacy-v6
+
+      - name: Upload the entire automated bureaucracy
         uses: actions/upload-artifact@v4
         with:
-          name: HERESY-AI-1440
-          path: build/HERESY1440.IMG
+          name: HERESY-360-v7
+          path: |
+            build/bin/heresy-kernel
+            build/bin/heresy-runtime
+            build/bin/heresy-app
+            build/bin/heresy360
+            build/HERESY1440.IMG
