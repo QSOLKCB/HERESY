@@ -16,10 +16,10 @@ SPECIFICALLY: MUST BE FOLLOWED BY SOMETHING SPECIFIC.
 
 ## Stack
 
-- **Ada executive** — validates the case envelope, detects missing rule/evidence state and derives a deterministic FNV-1a case ID.
-- **Fortran policy runtime** — applies four explicit policy outcomes and calculates a transparent 0–100 completeness score.
+- **Ada executive** — validates the case envelope, treats blank-only rule/evidence fields as missing and derives a deterministic FNV-1a display case ID.
+- **Fortran policy runtime** — applies four explicit policy outcomes, calculates a transparent 0–100 completeness score and propagates the concrete remediation instruction/reference for `DP-200`.
 - **COBOL terminal** — displays the account, rule, evidence reference, decision, policy code, score and next step.
-- **POSIX shell init** — provides deterministic local orchestration and writes canonical receipt files.
+- **POSIX shell init** — verifies companion executables at boot, validates line-oriented/fixed-width inputs, provides deterministic local orchestration and writes collision-preserving receipt files.
 
 The system is a hosted user-space operating environment, not a bare-metal kernel. No ring-0 cosplay has been added to improve the joke.
 
@@ -27,10 +27,16 @@ The system is a hosted user-space operating environment, not a bare-metal kernel
 
 - `DP-001` — enforcement refused because no specific rule is named.
 - `DP-002` — enforcement refused because no evidence reference is supplied.
-- `DP-200` — complete case with explicit remediation path.
-- `DP-300` — complete case without remediation; human review required.
+- `DP-200` — complete case with an explicit concrete remediation instruction or reference.
+- `DP-300` — complete case without concrete remediation; human review required.
 
 Missing information fails closed **against enforcement**, not against the user.
+
+## Input and receipt hardening
+
+v7's user-facing fields are line-oriented and intentionally bounded by the COBOL presentation contract. The orchestrator therefore rejects CR/LF-bearing values and rejects account/rule/evidence values longer than 80 bytes or remediation values longer than 96 bytes instead of allowing the terminal to display a truncated decision context.
+
+The 32-bit FNV case ID remains a compact deterministic display identifier, not a uniqueness or cryptographic primitive. If two distinct cases collide on that ID, receipt storage retains both byte-distinct artifacts in deterministic collision slots rather than overwriting the first one.
 
 ## `demo-x`
 
@@ -57,17 +63,25 @@ gfortran
 gnucobol
 ```
 
-and then builds all three primary components, runs the v7 smoke/determinism suite, runs the preserved v6 Python tests, executes the local demo and rebuilds the historical 1.44 MB AI/1440 floppy.
+and then builds all three primary components, runs the POSIX-`sh` v7 smoke/determinism suite, runs the preserved v6 Python tests, executes the local demo and rebuilds the historical 1.44 MB AI/1440 floppy.
+
+The v7 suite additionally checks blank-only policy fields, concrete remediation propagation, receipt newline-injection rejection, fixed-width validation, known FNV collision preservation and degraded boot status when a companion executable is absent.
 
 ## v6 preservation
 
-The exact pre-v7 root tree is Git tree:
+The exact pre-v7 merge commit is:
 
 ```text
 43c9b50dbd7964095337c2c662e7fb90bd88b8f8
 ```
 
-and is anchored under `editions/v6-ai1440/original/`. The previous Python implementation remains present so `make legacy-v6` can still reconstruct `HERESY1440.IMG`.
+and its exact root Git tree is:
+
+```text
+ce684946a31e0ba1d7d6a428fb5b699cd377c179
+```
+
+Both are documented beneath `editions/v6-ai1440/original/`. The previous Python implementation remains present so `make legacy-v6` can still reconstruct `HERESY1440.IMG`.
 
 ## Important non-claims
 
