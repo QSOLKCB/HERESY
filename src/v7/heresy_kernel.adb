@@ -14,12 +14,12 @@ procedure Heresy_Kernel is
    end FNV1A_32;
 
    function Hex8 (Value : U32) return String is
-      Digits : constant String := "0123456789ABCDEF";
-      Result : String (1 .. 8);
-      V      : U32 := Value;
+      Hex_Chars : constant String := "0123456789ABCDEF";
+      Result    : String (1 .. 8);
+      V         : U32 := Value;
    begin
       for I in reverse Result'Range loop
-         Result (I) := Digits (Integer (V mod 16) + 1);
+         Result (I) := Hex_Chars (Integer (V mod 16) + 1);
          V := V / 16;
       end loop;
       return Result;
