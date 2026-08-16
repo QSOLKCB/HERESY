@@ -1,4 +1,6 @@
 with Ada.Command_Line; use Ada.Command_Line;
+with Ada.Strings;      use Ada.Strings;
+with Ada.Strings.Fixed; use Ada.Strings.Fixed;
 with Ada.Text_IO;      use Ada.Text_IO;
 
 procedure Heresy_Kernel is
@@ -26,17 +28,19 @@ procedure Heresy_Kernel is
    end Hex8;
 
    function Is_Specific (Rule : String) return Boolean is
+      Clean : constant String := Trim (Rule, Both);
    begin
-      return Rule'Length > 0
-        and then Rule /= "NONE"
-        and then Rule /= "UNSPECIFIED";
+      return Clean'Length > 0
+        and then Clean /= "NONE"
+        and then Clean /= "UNSPECIFIED";
    end Is_Specific;
 
    function Is_Present (Evidence : String) return Boolean is
+      Clean : constant String := Trim (Evidence, Both);
    begin
-      return Evidence'Length > 0
-        and then Evidence /= "NONE"
-        and then Evidence /= "MISSING";
+      return Clean'Length > 0
+        and then Clean /= "NONE"
+        and then Clean /= "MISSING";
    end Is_Present;
 
 begin
