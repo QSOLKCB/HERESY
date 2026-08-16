@@ -35,10 +35,11 @@ grep -F "DECISION      : HUMAN_REVIEW_REQUIRED" "$TMP/review.txt"
 grep -F "POLICY CODE   : DP-300" "$TMP/review.txt"
 grep -F "TRANSPARENCY  : 80/100" "$TMP/review.txt"
 
+rm -rf "$TMP/receipts"
 "$BIN" case "@determinism" "RULE-7" "EVIDENCE-9" 1 > "$TMP/run-a.txt"
-cp "$TMP/receipts/H360-"*.receipt "$TMP/receipt-a.txt"
+cp "$TMP"/receipts/H360-*.receipt "$TMP/receipt-a.txt"
 "$BIN" case "@determinism" "RULE-7" "EVIDENCE-9" 1 > "$TMP/run-b.txt"
 cmp "$TMP/run-a.txt" "$TMP/run-b.txt"
-cmp "$TMP/receipt-a.txt" "$TMP/receipts/H360-"*.receipt
+cmp "$TMP/receipt-a.txt" "$TMP"/receipts/H360-*.receipt
 
 echo "HERESY/360 v7 smoke tests passed. Three old languages have located the rule field."
