@@ -1,4 +1,4 @@
-# HERESY v7.2.0 — Public Relations Response Simulator
+# HERESY v7.2.0 — Fictional Public Relations Response Simulator
 
 HERESY v7.2.0 answers one question left hanging by v7.1:
 
@@ -59,6 +59,7 @@ The response generator follows a deliberately ridiculous rule:
 OBSERVATION -> MAY BE QUOTED OR PARAPHRASED
 DERIVED JOKE -> MUST HAVE A SUPPORTED PRECONDITION
 ROOT CAUSE -> MUST NOT BE INVENTED
+PLATFORM-WIDE HEALTH -> MUST NOT BE INFERRED FROM PARTIAL FIELDS
 REAL SPOKESPERSON -> MUST NOT BE IMPLIED
 ACTUAL GITHUB RESPONSE -> MUST NOT BE CLAIMED
 ```
@@ -67,9 +68,18 @@ Examples:
 
 - The `20%` and `50%` figures come from the v7.1 machine projection.
 - The coin-toss joke is emitted only when the raw/archive error rate is exactly `50`.
+- A zero raw/archive error rate receives neutral zero-rate dialogue; it is not described as degraded.
+- A positive raw/archive rate below `50` is described only as a positive observed error rate.
 - The Packages-normal joke is emitted only when `PACKAGES_STATUS=NORMAL`.
 - A non-normal Packages fixture causes the program to explicitly withhold that joke.
-- Missing, duplicate, malformed, or out-of-range required fields fail closed.
+- The program does not infer platform-wide health from the selected fields.
+- Missing, duplicate, malformed, over-width, or out-of-range required fields fail closed.
+
+## Input hardening
+
+Required TSV records must contain exactly one tab-separated value. Duplicate required keys fail closed. Percentage values are checked at full source width before they are copied into fixed-width Fortran buffers, so an over-width value cannot be silently truncated into a different valid number.
+
+Percentages must contain digits only and resolve to an integer in `0..100`.
 
 ## Determinism
 
@@ -77,7 +87,7 @@ For the same specimen bytes and implementation, the output is byte-for-byte dete
 
 There is no network lookup, model inference, random number, current timestamp, API call, or hidden state in the response generator.
 
-The test suite verifies repeated output, factual headers, no-root-cause and no-real-response flags, conditional punchlines, malformed specimen rejection, duplicate-field rejection, and percentage range enforcement.
+The test suite verifies repeated output, factual headers, no-root-cause and no-real-response flags, zero-rate handling, conditional punchlines, malformed single-record rejection, duplicate-field rejection, over-width percentage rejection, percentage range enforcement, and isolated boot regressions.
 
 ## Representative exchange
 
@@ -86,9 +96,9 @@ INTERVIEWER: So a download was, statistically, a coin toss?
 PUBLIC_RELATIONS: That is a very binary description of a cloud service.
 
 INTERVIEWER: Was the platform healthy?
-PUBLIC_RELATIONS: Some services were operating normally.
-INTERVIEWER: That was not the question.
-PUBLIC_RELATIONS: It was adjacent to the question.
+PUBLIC_RELATIONS: The supplied fields do not establish platform-wide health.
+INTERVIEWER: That was almost a direct answer.
+PUBLIC_RELATIONS: We are reviewing the process that allowed it.
 ```
 
 The final line is therefore both a joke and a machine-readable product requirement:
