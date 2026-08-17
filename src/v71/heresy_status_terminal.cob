@@ -30,6 +30,10 @@
            DISPLAY "UPTIME BADGE != CURRENT REALITY"
            DISPLAY "ONE NORMAL SERVICE != HEALTHY PLATFORM"
            DISPLAY "------------------------------------------------------------"
-           DISPLAY "PACKAGES NORMAL: ONE EMPLOYEE HAS REPORTED FOR WORK."
+           IF FUNCTION TRIM(WS-PACKAGES) = "NORMAL"
+               DISPLAY "PACKAGES NORMAL: ONE EMPLOYEE HAS REPORTED FOR WORK."
+           ELSE
+               DISPLAY "PACKAGES NOT NORMAL: PUNCHLINE WITHHELD ON FACTUAL GROUNDS."
+           END-IF
            DISPLAY "============================================================"
            STOP RUN.

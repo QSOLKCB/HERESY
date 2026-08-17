@@ -100,6 +100,13 @@ case "$command" in
             boot_ok=0
         fi
 
+        if [ -x "$BIN_DIR/heresy-github-incident" ]; then
+            echo "POSIX INCIDENT REPLAY ..... ONLINE"
+        else
+            echo "POSIX INCIDENT REPLAY ..... OFFLINE"
+            boot_ok=0
+        fi
+
         echo "NETWORK ................... NOT REQUIRED"
         echo "MYSTERY RULES ............. REJECTED"
         echo "STATUS PAGE ROOT CAUSE .... NOT INVENTED"

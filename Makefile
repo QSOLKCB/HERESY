@@ -5,8 +5,10 @@ COBOL ?= cobc
 BUILD_DIR ?= build
 BIN_DIR := $(BUILD_DIR)/bin
 ADA_OBJ_DIR := $(BUILD_DIR)/obj/ada
+DATA_DIR := $(BUILD_DIR)/share/heresy360
 RECEIPTS ?= receipts
 V6_IMAGE := $(BUILD_DIR)/HERESY1440.IMG
+CANONICAL_INCIDENT := specimens/enterprise-reliability/github-2026-08-17/incident.tsv
 
 .PHONY: all build stack check test demo incident boot clean legacy-v6 parent-lab-dry check-tools check-editions
 
@@ -19,7 +21,7 @@ check-tools:
 	@command -v $(FORTRAN) >/dev/null || { echo "missing Fortran compiler: $(FORTRAN)" >&2; exit 1; }
 	@command -v $(COBOL) >/dev/null || { echo "missing COBOL compiler: $(COBOL)" >&2; exit 1; }
 
-$(BIN_DIR) $(ADA_OBJ_DIR):
+$(BIN_DIR) $(ADA_OBJ_DIR) $(DATA_DIR):
 	mkdir -p $@
 
 $(BIN_DIR)/heresy-kernel: src/v7/heresy_kernel.adb | $(BIN_DIR) $(ADA_OBJ_DIR)
@@ -46,8 +48,12 @@ $(BIN_DIR)/heresy-status-terminal: src/v71/heresy_status_terminal.cob | $(BIN_DI
 $(BIN_DIR)/heresy-github-incident: src/v71/github_incident.sh | $(BIN_DIR)
 	install -m 755 $< $@
 
+$(DATA_DIR)/incident.tsv: $(CANONICAL_INCIDENT) | $(DATA_DIR)
+	install -m 644 $< $@
+
 stack: check-tools $(BIN_DIR)/heresy-kernel $(BIN_DIR)/heresy-runtime $(BIN_DIR)/heresy-app $(BIN_DIR)/heresy360 \
-	$(BIN_DIR)/heresy-reliability-gate $(BIN_DIR)/heresy-reliability-runtime $(BIN_DIR)/heresy-status-terminal $(BIN_DIR)/heresy-github-incident
+	$(BIN_DIR)/heresy-reliability-gate $(BIN_DIR)/heresy-reliability-runtime $(BIN_DIR)/heresy-status-terminal $(BIN_DIR)/heresy-github-incident \
+	$(DATA_DIR)/incident.tsv
 	@echo "HERESY/360 built: Ada + Fortran + COBOL bureaucracy, now with enterprise reliability paperwork."
 
 test: stack
