@@ -3,6 +3,7 @@ set -eu
 
 ROOT=$(CDPATH= cd -- "$(dirname -- "$0")/.." && pwd)
 BIN="$ROOT/build/bin/heresy-pr-response"
+CLI="$ROOT/build/bin/heresy360"
 SPEC="$ROOT/specimens/enterprise-reliability/github-2026-08-17/incident.tsv"
 TMP="$ROOT/build/test-v72"
 
@@ -13,6 +14,14 @@ trap 'rm -rf "$TMP"' EXIT HUP INT TERM
 "$BIN" "$SPEC" > "$TMP/a.txt"
 "$BIN" "$SPEC" > "$TMP/b.txt"
 cmp "$TMP/a.txt" "$TMP/b.txt"
+
+"$CLI" pr-response > "$TMP/cli.txt"
+cmp "$TMP/a.txt" "$TMP/cli.txt"
+
+"$CLI" boot > "$TMP/boot.txt"
+grep -F "FORTRAN PUBLIC RELATIONS .. ONLINE" "$TMP/boot.txt"
+grep -F "ACTUAL PR RESPONSE ........ NOT CLAIMED" "$TMP/boot.txt"
+grep -F "STATUS .................... READY" "$TMP/boot.txt"
 
 grep -F "HERESY/360 v7.2.0 — PUBLIC RELATIONS RESPONSE SIMULATOR" "$TMP/a.txt"
 grep -F "ATTRIBUTION: FICTIONAL SATIRE; NOT A GITHUB STATEMENT OR REAL SPOKESPERSON" "$TMP/a.txt"
