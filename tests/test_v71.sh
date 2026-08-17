@@ -102,7 +102,7 @@ fi
 
 boot_bin="$TMP/boot-bin"
 mkdir -p "$boot_bin"
-for name in heresy360 heresy-kernel heresy-runtime heresy-app heresy-reliability-gate heresy-reliability-runtime heresy-status-terminal; do
+for name in heresy360 heresy-kernel heresy-runtime heresy-app heresy-reliability-gate heresy-reliability-runtime heresy-status-terminal heresy-pr-response; do
     cp "$ROOT/build/bin/$name" "$boot_bin/$name"
 done
 if "$boot_bin/heresy360" boot > "$TMP/degraded-boot.txt" 2>&1; then
@@ -110,6 +110,7 @@ if "$boot_bin/heresy360" boot > "$TMP/degraded-boot.txt" 2>&1; then
     exit 1
 fi
 grep -F "POSIX INCIDENT REPLAY ..... OFFLINE" "$TMP/degraded-boot.txt"
+grep -F "FORTRAN PUBLIC RELATIONS .. ONLINE" "$TMP/degraded-boot.txt"
 grep -F "STATUS .................... DEGRADED" "$TMP/degraded-boot.txt"
 
 custom_build="$TMP/custom-build"
