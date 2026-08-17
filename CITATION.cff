@@ -1,6 +1,6 @@
 cff-version: 1.2.0
-title: "HERESY v7.0.0 — HERESY/360: The Ada, Fortran and COBOL Automated Due-Process Stack"
-message: "If you cite this software, please name the rule, the evidence, and what the reader can do next."
+title: "HERESY v7.1.0 — HERESY/360: Enterprise Reliability Emulator"
+message: "If you cite this software, please distinguish the observed failure rate from the status-page euphemism."
 type: software
 authors:
   - family-names: Slade
@@ -8,32 +8,38 @@ authors:
     affiliation: QSOL-IMC
 repository-code: "https://github.com/QSOLKCB/HERESY"
 license: MIT
-version: "7.0.0"
-date-released: "2026-08-16"
+version: "7.1.0"
+date-released: "2026-08-18"
 keywords:
   - deterministic-software
   - ada
   - fortran
   - cobol
   - due-process
-  - explainable-automation
+  - enterprise-reliability
+  - incident-replay
   - software-art
   - reproducibility
   - legacy-languages
   - governance
   - automated-decision-systems
 abstract: >
-  HERESY v7.0.0 HERESY/360 is a deterministic hosted account-decision operating environment
-  whose primary stack is implemented in Ada, Fortran and COBOL. Ada performs case admission
-  and deterministic case-ID generation, Fortran applies explicit due-process invariants and a
-  mechanical completeness score, and COBOL renders the user-facing decision receipt. A POSIX
-  shell layer provides local orchestration. The reference policy refuses adverse enforcement
-  when a specific rule or evidence reference is missing, exposes explicit remediation or human
-  review routing, performs no network access or model inference, and emits deterministic receipts.
-  A local fictional demo is inspired by the interface failure of an automated support notice that
-  says "specifically:" without supplying a specific rule; the software does not connect to or
-  adjudicate any real platform account.
+  HERESY v7.1.0 extends the deterministic HERESY/360 Ada, Fortran, COBOL and POSIX-shell
+  stack with an offline Enterprise Reliability Emulator. The module replays a checked-in,
+  maintainer-supplied GitHub status-page snapshot from 17 August 2026, preserves source
+  text and a compact machine projection behind SHA-256 receipts, validates error-rate
+  inputs in Ada, classifies the observed incident deterministically in Fortran, and renders
+  the resulting status satire in COBOL. The replay performs no live network lookup and
+  explicitly separates supplied status observations from unknown incident root cause.
+  The v7.0 deterministic due-process stack remains intact.
 references:
+  - type: software
+    title: "HERESY v7.0.0 — HERESY/360"
+    authors:
+      - family-names: Slade
+        given-names: Trent
+    version: "7.0.0"
+    repository-code: "https://github.com/QSOLKCB/HERESY"
   - type: software
     title: "HERESY v6.0.0 — AI/1440"
     authors:

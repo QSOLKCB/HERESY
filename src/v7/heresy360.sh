@@ -35,15 +35,19 @@ validate_value() {
 
 usage() {
     cat <<'EOF'
-HERESY/360 v7.0.0
+HERESY/360 v7.1.0
 
 usage:
   heresy360 boot
   heresy360 case ACCOUNT RULE_ID EVIDENCE_REF [REMEDIATION]
   heresy360 demo-x
+  heresy360 github-incident
 
 REMEDIATION is the concrete human-readable next step or reference. It defaults
 to NONE; a complete case without a concrete remediation is routed to human review.
+
+github-incident replays the checked-in 2026-08-17 service-incident specimen.
+It performs no live network lookup and makes no root-cause claim.
 EOF
 }
 
@@ -75,8 +79,30 @@ case "$command" in
             boot_ok=0
         fi
 
+        if [ -x "$BIN_DIR/heresy-reliability-gate" ]; then
+            echo "ADA RELIABILITY GATE ...... ONLINE"
+        else
+            echo "ADA RELIABILITY GATE ...... OFFLINE"
+            boot_ok=0
+        fi
+
+        if [ -x "$BIN_DIR/heresy-reliability-runtime" ]; then
+            echo "FORTRAN RELIABILITY ....... ONLINE"
+        else
+            echo "FORTRAN RELIABILITY ....... OFFLINE"
+            boot_ok=0
+        fi
+
+        if [ -x "$BIN_DIR/heresy-status-terminal" ]; then
+            echo "COBOL STATUS TERMINAL ..... ONLINE"
+        else
+            echo "COBOL STATUS TERMINAL ..... OFFLINE"
+            boot_ok=0
+        fi
+
         echo "NETWORK ................... NOT REQUIRED"
         echo "MYSTERY RULES ............. REJECTED"
+        echo "STATUS PAGE ROOT CAUSE .... NOT INVENTED"
         if [ "$boot_ok" -eq 1 ]; then
             echo "STATUS .................... READY"
         else
@@ -180,6 +206,14 @@ EOF
         echo "'specifically:' and then supplies no specific rule."
         echo
         exec "$0" case "@qsolimc" "UNSPECIFIED" "NONE"
+        ;;
+
+    github-incident)
+        if [ ! -x "$BIN_DIR/heresy-github-incident" ]; then
+            echo "enterprise reliability module is not installed" >&2
+            exit 69
+        fi
+        exec "$BIN_DIR/heresy-github-incident"
         ;;
 
     help|-h|--help)

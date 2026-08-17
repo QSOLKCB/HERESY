@@ -8,7 +8,7 @@ ADA_OBJ_DIR := $(BUILD_DIR)/obj/ada
 RECEIPTS ?= receipts
 V6_IMAGE := $(BUILD_DIR)/HERESY1440.IMG
 
-.PHONY: all build stack check test demo boot clean legacy-v6 parent-lab-dry check-tools check-editions
+.PHONY: all build stack check test demo incident boot clean legacy-v6 parent-lab-dry check-tools check-editions
 
 all: build
 
@@ -34,23 +34,41 @@ $(BIN_DIR)/heresy-app: src/v7/heresy_app.cob | $(BIN_DIR)
 $(BIN_DIR)/heresy360: src/v7/heresy360.sh | $(BIN_DIR)
 	install -m 755 $< $@
 
-stack: check-tools $(BIN_DIR)/heresy-kernel $(BIN_DIR)/heresy-runtime $(BIN_DIR)/heresy-app $(BIN_DIR)/heresy360
-	@echo "HERESY/360 built: Ada executive + Fortran runtime + COBOL terminal."
+$(BIN_DIR)/heresy-reliability-gate: src/v71/heresy_reliability_gate.adb | $(BIN_DIR) $(ADA_OBJ_DIR)
+	$(GNATMAKE) -q -gnat2022 -D $(ADA_OBJ_DIR) -o $@ $<
+
+$(BIN_DIR)/heresy-reliability-runtime: src/v71/heresy_reliability_runtime.f90 | $(BIN_DIR)
+	$(FORTRAN) -std=f2008 -Wall -Wextra -O2 -o $@ $<
+
+$(BIN_DIR)/heresy-status-terminal: src/v71/heresy_status_terminal.cob | $(BIN_DIR)
+	$(COBOL) -x -free -Wall -o $@ $<
+
+$(BIN_DIR)/heresy-github-incident: src/v71/github_incident.sh | $(BIN_DIR)
+	install -m 755 $< $@
+
+stack: check-tools $(BIN_DIR)/heresy-kernel $(BIN_DIR)/heresy-runtime $(BIN_DIR)/heresy-app $(BIN_DIR)/heresy360 \
+	$(BIN_DIR)/heresy-reliability-gate $(BIN_DIR)/heresy-reliability-runtime $(BIN_DIR)/heresy-status-terminal $(BIN_DIR)/heresy-github-incident
+	@echo "HERESY/360 built: Ada + Fortran + COBOL bureaucracy, now with enterprise reliability paperwork."
 
 test: stack
 	sh tests/test_v7.sh
+	sh tests/test_v71.sh
 
 check: stack
 	$(PYTHON) -m compileall -q src tests
 	$(PYTHON) -m unittest discover -s tests -p 'test_ai1440.py' -v
 	sh tests/test_v7.sh
-	@echo "v7 deterministic cross-language checks passed. Automated system has been asked to name the rule."
+	sh tests/test_v71.sh
+	@echo "v7.1 deterministic checks passed. Status-page euphemisms remain derived output."
 
 boot: stack
 	$(BIN_DIR)/heresy360 boot
 
 demo: stack
 	$(BIN_DIR)/heresy360 demo-x
+
+incident: stack
+	$(BIN_DIR)/heresy360 github-incident
 
 legacy-v6:
 	$(PYTHON) -m src.cli build --receipts $(RECEIPTS) --output $(V6_IMAGE)
