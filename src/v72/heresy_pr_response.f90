@@ -3,15 +3,15 @@ program heresy_pr_response
     implicit none
 
     character(len=1024) :: specimen
-    character(len=2048) :: line
-    character(len=256) :: key, value
+    character(len=2048) :: line, value
+    character(len=256) :: key
     character(len=128) :: source_kind, source_date, packages
     character(len=32) :: web_text, raw_text
     integer :: unit, ios, tab_at
     integer :: source_kind_count, source_date_count
     integer :: web_count, raw_count, packages_count
     integer :: web_rate, raw_rate
-    logical :: malformed
+    logical :: malformed, percentage_too_long
 
     source_kind = ''
     source_date = ''
@@ -24,6 +24,7 @@ program heresy_pr_response
     raw_count = 0
     packages_count = 0
     malformed = .false.
+    percentage_too_long = .false.
 
     call get_command_argument(1, specimen)
     if (len_trim(specimen) == 0) then
@@ -62,19 +63,39 @@ program heresy_pr_response
         select case (trim(key))
         case ('SOURCE_KIND')
             source_kind_count = source_kind_count + 1
-            source_kind = trim(value)
+            if (len_trim(value) > len(source_kind)) then
+                malformed = .true.
+            else
+                source_kind = trim(value)
+            end if
         case ('SOURCE_DATE')
             source_date_count = source_date_count + 1
-            source_date = trim(value)
+            if (len_trim(value) > len(source_date)) then
+                malformed = .true.
+            else
+                source_date = trim(value)
+            end if
         case ('WEB_API_ERROR_RATE_PERCENT')
             web_count = web_count + 1
-            web_text = trim(value)
+            if (len_trim(value) > len(web_text)) then
+                percentage_too_long = .true.
+            else
+                web_text = trim(value)
+            end if
         case ('RAW_DOWNLOAD_ERROR_RATE_PERCENT')
             raw_count = raw_count + 1
-            raw_text = trim(value)
+            if (len_trim(value) > len(raw_text)) then
+                percentage_too_long = .true.
+            else
+                raw_text = trim(value)
+            end if
         case ('PACKAGES_STATUS')
             packages_count = packages_count + 1
-            packages = trim(value)
+            if (len_trim(value) > len(packages)) then
+                malformed = .true.
+            else
+                packages = trim(value)
+            end if
         end select
     end do
     close(unit)
@@ -82,6 +103,11 @@ program heresy_pr_response
     if (malformed .or. source_kind_count /= 1 .or. source_date_count /= 1 .or. &
         web_count /= 1 .or. raw_count /= 1 .or. packages_count /= 1) then
         write(error_unit, '(A)') 'PR_RESPONSE_SPECIMEN_AMBIGUOUS'
+        stop 65
+    end if
+
+    if (percentage_too_long) then
+        write(error_unit, '(A)') 'PR_RESPONSE_PERCENT_INVALID'
         stop 65
     end if
 
@@ -167,21 +193,24 @@ contains
                         trim(raw_s) // '% errors?'
         write(*, '(A)') 'PUBLIC_RELATIONS: Approximately.'
 
-        if (raw == 50) then
+        if (raw == 0) then
+            write(*, '(A)') 'INTERVIEWER: The observed raw/archive error rate was zero?'
+            write(*, '(A)') 'PUBLIC_RELATIONS: For that field in this specimen, yes.'
+        else if (raw == 50) then
             write(*, '(A)') 'INTERVIEWER: So a download was, statistically, a coin toss?'
             write(*, '(A)') 'PUBLIC_RELATIONS: That is a very binary description of a cloud service.'
         else if (raw > 50) then
             write(*, '(A)') 'INTERVIEWER: So failure was more likely than success?'
             write(*, '(A)') 'PUBLIC_RELATIONS: We prefer not to rank the outcomes emotionally.'
         else
-            write(*, '(A)') 'INTERVIEWER: So the download path was degraded?'
-            write(*, '(A)') 'PUBLIC_RELATIONS: The observed percentage is already on the screen.'
+            write(*, '(A)') 'INTERVIEWER: So the download path had a positive observed error rate?'
+            write(*, '(A)') 'PUBLIC_RELATIONS: That is what the supplied percentage says.'
         end if
 
         write(*, '(A)') 'INTERVIEWER: Was the platform healthy?'
-        write(*, '(A)') 'PUBLIC_RELATIONS: Some services were operating normally.'
-        write(*, '(A)') 'INTERVIEWER: That was not the question.'
-        write(*, '(A)') 'PUBLIC_RELATIONS: It was adjacent to the question.'
+        write(*, '(A)') 'PUBLIC_RELATIONS: The supplied fields do not establish platform-wide health.'
+        write(*, '(A)') 'INTERVIEWER: That was almost a direct answer.'
+        write(*, '(A)') 'PUBLIC_RELATIONS: We are reviewing the process that allowed it.'
 
         if (trim(package_state) == 'NORMAL') then
             write(*, '(A)') 'INTERVIEWER: Packages was normal.'
