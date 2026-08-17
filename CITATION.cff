@@ -1,6 +1,6 @@
 cff-version: 1.2.0
-title: "HERESY v7.1.0 — HERESY/360: Enterprise Reliability Emulator"
-message: "If you cite this software, please distinguish the observed failure rate from the status-page euphemism."
+title: "HERESY v7.2.0 — HERESY/360: GitHub PR Response Edition"
+message: "If you cite this software, please distinguish the historical status evidence from the fictional Fortran public-relations response."
 type: software
 authors:
   - family-names: Slade
@@ -8,7 +8,7 @@ authors:
     affiliation: QSOL-IMC
 repository-code: "https://github.com/QSOLKCB/HERESY"
 license: MIT
-version: "7.1.0"
+version: "7.2.0"
 date-released: "2026-08-18"
 keywords:
   - deterministic-software
@@ -18,21 +18,30 @@ keywords:
   - due-process
   - enterprise-reliability
   - incident-replay
+  - public-relations-satire
   - software-art
   - reproducibility
   - legacy-languages
   - governance
-  - automated-decision-systems
 abstract: >
-  HERESY v7.1.0 extends the deterministic HERESY/360 Ada, Fortran, COBOL and POSIX-shell
-  stack with an offline Enterprise Reliability Emulator. The module replays a checked-in,
-  maintainer-supplied GitHub status-page snapshot from 17 August 2026, preserves source
-  text and a compact machine projection behind SHA-256 receipts, validates error-rate
-  inputs in Ada, classifies the observed incident deterministically in Fortran, and renders
-  the resulting status satire in COBOL. The replay performs no live network lookup and
-  explicitly separates supplied status observations from unknown incident root cause.
-  The v7.0 deterministic due-process stack remains intact.
+  HERESY v7.2.0 extends the deterministic HERESY/360 stack with a Fortran Public
+  Relations Response Simulator. The module consumes the checked-in v7.1 machine
+  projection of a maintainer-supplied GitHub status-page snapshot from 17 August
+  2026 and emits an original fictional two-person public-affairs interview. The
+  program exposes the observed source date, error-rate fields and Packages status,
+  explicitly states that no root cause is inferred and no actual GitHub response is
+  claimed, conditions derived jokes on supported input fields, rejects malformed or
+  ambiguous specimens, performs no network access or model inference, and produces
+  deterministic output. The v7.0 due-process stack and v7.1 enterprise-reliability
+  replay remain intact.
 references:
+  - type: software
+    title: "HERESY v7.1.0 — HERESY/360: Enterprise Reliability Emulator"
+    authors:
+      - family-names: Slade
+        given-names: Trent
+    version: "7.1.0"
+    repository-code: "https://github.com/QSOLKCB/HERESY"
   - type: software
     title: "HERESY v7.0.0 — HERESY/360"
     authors:
