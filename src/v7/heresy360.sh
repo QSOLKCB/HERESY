@@ -35,19 +35,24 @@ validate_value() {
 
 usage() {
     cat <<'EOF'
-HERESY/360 v7.1.0
+HERESY/360 v7.2.0
 
 usage:
   heresy360 boot
   heresy360 case ACCOUNT RULE_ID EVIDENCE_REF [REMEDIATION]
   heresy360 demo-x
   heresy360 github-incident
+  heresy360 pr-response
 
 REMEDIATION is the concrete human-readable next step or reference. It defaults
 to NONE; a complete case without a concrete remediation is routed to human review.
 
 github-incident replays the checked-in 2026-08-17 service-incident specimen.
 It performs no live network lookup and makes no root-cause claim.
+
+pr-response feeds that canonical v7.1 machine projection to the v7.2 Fortran
+public-relations simulator. The resulting interview is fictional satire, not an
+actual GitHub statement or real spokesperson transcript.
 EOF
 }
 
@@ -107,9 +112,17 @@ case "$command" in
             boot_ok=0
         fi
 
+        if [ -x "$BIN_DIR/heresy-pr-response" ]; then
+            echo "FORTRAN PUBLIC RELATIONS .. ONLINE"
+        else
+            echo "FORTRAN PUBLIC RELATIONS .. OFFLINE"
+            boot_ok=0
+        fi
+
         echo "NETWORK ................... NOT REQUIRED"
         echo "MYSTERY RULES ............. REJECTED"
         echo "STATUS PAGE ROOT CAUSE .... NOT INVENTED"
+        echo "ACTUAL PR RESPONSE ........ NOT CLAIMED"
         if [ "$boot_ok" -eq 1 ]; then
             echo "STATUS .................... READY"
         else
@@ -221,6 +234,19 @@ EOF
             exit 69
         fi
         exec "$BIN_DIR/heresy-github-incident"
+        ;;
+
+    pr-response)
+        if [ ! -x "$BIN_DIR/heresy-pr-response" ]; then
+            echo "Fortran public-relations module is not installed" >&2
+            exit 69
+        fi
+        specimen="$BIN_DIR/../share/heresy360/incident.tsv"
+        if [ ! -f "$specimen" ]; then
+            echo "canonical public-relations evidence specimen is not installed" >&2
+            exit 66
+        fi
+        exec "$BIN_DIR/heresy-pr-response" "$specimen"
         ;;
 
     help|-h|--help)

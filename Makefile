@@ -10,7 +10,7 @@ RECEIPTS ?= receipts
 V6_IMAGE := $(BUILD_DIR)/HERESY1440.IMG
 CANONICAL_INCIDENT := specimens/enterprise-reliability/github-2026-08-17/incident.tsv
 
-.PHONY: all build stack check test demo incident boot clean legacy-v6 parent-lab-dry check-tools check-editions
+.PHONY: all build stack check test demo incident pr-response boot clean legacy-v6 parent-lab-dry check-tools check-editions
 
 all: build
 
@@ -48,24 +48,29 @@ $(BIN_DIR)/heresy-status-terminal: src/v71/heresy_status_terminal.cob | $(BIN_DI
 $(BIN_DIR)/heresy-github-incident: src/v71/github_incident.sh | $(BIN_DIR)
 	install -m 755 $< $@
 
+$(BIN_DIR)/heresy-pr-response: src/v72/heresy_pr_response.f90 | $(BIN_DIR)
+	$(FORTRAN) -std=f2008 -Wall -Wextra -O2 -o $@ $<
+
 $(DATA_DIR)/incident.tsv: $(CANONICAL_INCIDENT) | $(DATA_DIR)
 	install -m 644 $< $@
 
 stack: check-tools $(BIN_DIR)/heresy-kernel $(BIN_DIR)/heresy-runtime $(BIN_DIR)/heresy-app $(BIN_DIR)/heresy360 \
 	$(BIN_DIR)/heresy-reliability-gate $(BIN_DIR)/heresy-reliability-runtime $(BIN_DIR)/heresy-status-terminal $(BIN_DIR)/heresy-github-incident \
-	$(DATA_DIR)/incident.tsv
-	@echo "HERESY/360 built: Ada + Fortran + COBOL bureaucracy, now with enterprise reliability paperwork."
+	$(BIN_DIR)/heresy-pr-response $(DATA_DIR)/incident.tsv
+	@echo "HERESY/360 built: Ada + Fortran + COBOL bureaucracy, now with a Fortran public-relations department."
 
 test: stack
 	sh tests/test_v7.sh
 	sh tests/test_v71.sh
+	sh tests/test_v72.sh
 
 check: stack
 	$(PYTHON) -m compileall -q src tests
 	$(PYTHON) -m unittest discover -s tests -p 'test_ai1440.py' -v
 	sh tests/test_v7.sh
 	sh tests/test_v71.sh
-	@echo "v7.1 deterministic checks passed. Status-page euphemisms remain derived output."
+	sh tests/test_v72.sh
+	@echo "v7.2 deterministic checks passed. Every joke has a source record and every statement has escaped PR review."
 
 boot: stack
 	$(BIN_DIR)/heresy360 boot
@@ -75,6 +80,9 @@ demo: stack
 
 incident: stack
 	$(BIN_DIR)/heresy360 github-incident
+
+pr-response: stack
+	$(BIN_DIR)/heresy-pr-response $(DATA_DIR)/incident.tsv
 
 legacy-v6:
 	$(PYTHON) -m src.cli build --receipts $(RECEIPTS) --output $(V6_IMAGE)
