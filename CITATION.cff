@@ -1,5 +1,5 @@
 cff-version: 1.2.0
-title: "HERESY v7.2.0 — HERESY/360: GitHub PR Response Edition"
+title: "HERESY v7.2.0 — HERESY/360: Fictional Public Relations Response Simulator"
 message: "If you cite this software, please distinguish the historical status evidence from the fictional Fortran public-relations response."
 type: software
 authors:
@@ -24,8 +24,8 @@ keywords:
   - legacy-languages
   - governance
 abstract: >
-  HERESY v7.2.0 extends the deterministic HERESY/360 stack with a Fortran Public
-  Relations Response Simulator. The module consumes the checked-in v7.1 machine
+  HERESY v7.2.0 extends the deterministic HERESY/360 stack with a fictional Fortran
+  Public Relations Response Simulator. The module consumes the checked-in v7.1 machine
   projection of a maintainer-supplied GitHub status-page snapshot from 17 August
   2026 and emits an original fictional two-person public-affairs interview. The
   program exposes the observed source date, error-rate fields and Packages status,
