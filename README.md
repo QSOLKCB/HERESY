@@ -1,4 +1,4 @@
-# HERESY v7.2.0 — HERESY/360: GitHub PR Response Edition
+# HERESY v7.2.0 — HERESY/360: Fictional Public Relations Response Simulator
 
 > **“We asked Fortran to prepare a public-relations response. It answered every question without accidentally answering the question.”**
 
@@ -8,9 +8,9 @@ The sequence so far:
 
 - **v7.0** replaced vague automated support with a due-process machine that has to name the rule, evidence and next step.
 - **v7.1** preserved a maintainer-supplied GitHub status-page snapshot from 17 August 2026 and replayed it through Ada, Fortran and COBOL without inventing root cause.
-- **v7.2** asks what the fictional public-relations response to that evidence might sound like, then makes **Fortran** conduct the interview.
+- **v7.2** asks what a fictional public-relations response to that evidence might sound like, then makes **Fortran** conduct the interview.
 
-The result is the **Public Relations Response Simulator**: an original Australian deadpan two-person public-affairs satire driven by the canonical v7.1 machine projection.
+The result is the **Fictional Public Relations Response Simulator**: an original Australian deadpan two-person public-affairs satire driven by the canonical v7.1 machine projection.
 
 It is explicitly **not** a real GitHub statement, not a real spokesperson transcript, and not an ABC or Clarke & Dawe transcript. The requested premise uses only the broad structural device associated with classic Australian two-person interview satire; every line of dialogue here is original.
 
@@ -33,7 +33,7 @@ ACTUAL GITHUB PR RESPONSE ........ NOT CLAIMED
 MONTHLY AI GOVERNANCE COST ........ STILL $0.00
 ```
 
-## v7.2 — Public Relations Response Simulator
+## v7.2 — Fictional Public Relations Response Simulator
 
 Build and issue the fictional statement:
 
@@ -75,9 +75,9 @@ INTERVIEWER: So a download was, statistically, a coin toss?
 PUBLIC_RELATIONS: That is a very binary description of a cloud service.
 
 INTERVIEWER: Was the platform healthy?
-PUBLIC_RELATIONS: Some services were operating normally.
-INTERVIEWER: That was not the question.
-PUBLIC_RELATIONS: It was adjacent to the question.
+PUBLIC_RELATIONS: The supplied fields do not establish platform-wide health.
+INTERVIEWER: That was almost a direct answer.
+PUBLIC_RELATIONS: We are reviewing the process that allowed it.
 
 INTERVIEWER: What caused the incident?
 PUBLIC_RELATIONS: The supplied snapshot does not establish root cause.
@@ -91,7 +91,7 @@ And, because Codex accidentally invented evidence-backed comedy engineering duri
 PUNCHLINE_REQUIRES_SUPPORTED_PRECONDITION
 ```
 
-The 50% coin-toss joke is emitted only when the parsed raw/archive rate is exactly 50. The Packages-normal joke is emitted only when `PACKAGES_STATUS=NORMAL`. Unsupported jokes are withheld rather than upgraded into facts by enthusiasm.
+The 50% coin-toss joke is emitted only when the parsed raw/archive rate is exactly 50. A zero raw/archive error observation receives neutral zero-rate dialogue rather than being described as degraded. The Packages-normal joke is emitted only when `PACKAGES_STATUS=NORMAL`. Unsupported jokes and unsupported health claims are withheld rather than upgraded into facts by enthusiasm.
 
 The response ends with:
 
@@ -228,7 +228,7 @@ For fixed inputs and the same implementation contract:
 - v7.2 fictional PR response is byte-for-byte deterministic;
 - no current timestamp, random number or live network lookup participates in those outputs.
 
-The v7.2 Fortran parser also rejects duplicate required fields, malformed records, missing metadata and percentages outside `0..100`.
+The v7.2 Fortran parser also rejects duplicate required fields, malformed records, over-width percentage fields, missing metadata and percentages outside `0..100` before fixed-width conversion can alter their meaning.
 
 ## Checks
 
@@ -238,7 +238,7 @@ Run:
 make check
 ```
 
-The suite compiles the Ada, Fortran and COBOL components; exercises the due-process branches and input hardening; preserves colliding receipt IDs; validates the v7.1 SHA-256-bound incident projection and deterministic replay; verifies the v7.2 factual-attribution headers, conditional jokes and malformed-specimen rejection; and retains the preserved v6 AI/1440 Python regression suite.
+The suite compiles the Ada, Fortran and COBOL components; exercises the due-process branches and input hardening; preserves colliding receipt IDs; validates the v7.1 SHA-256-bound incident projection and deterministic replay; verifies the v7.2 factual-attribution headers, zero-rate handling, conditional jokes, malformed-specimen rejection, over-width percentage rejection and isolated degraded-boot regressions; and retains the preserved v6 AI/1440 Python regression suite.
 
 The GitHub Actions names remain an important part of the scientific method:
 
