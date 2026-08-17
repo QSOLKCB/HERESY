@@ -6,6 +6,7 @@ on:
       - main
     paths:
       - "src/v72/**"
+      - "src/v7/heresy360.sh"
       - "tests/test_v72.sh"
       - "docs/PUBLIC-RELATIONS.md"
       - "Makefile"
@@ -13,6 +14,7 @@ on:
   pull_request:
     paths:
       - "src/v72/**"
+      - "src/v7/heresy360.sh"
       - "tests/test_v72.sh"
       - "docs/PUBLIC-RELATIONS.md"
       - "Makefile"
@@ -27,17 +29,16 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Install the language public relations was assured was obsolete
+      - name: Install the languages public relations was assured were obsolete
         run: |
           sudo apt-get update
-          sudo apt-get install -y gfortran
+          sudo apt-get install -y gnat gfortran gnucobol
 
-      - name: Compile the approved talking points
-        run: |
-          make build/bin/heresy-pr-response build/share/heresy360/incident.tsv
+      - name: Compile the approved talking points and their entire bureaucracy
+        run: make build
 
       - name: Verify the response remains factual enough to be funny
         run: sh tests/test_v72.sh
 
       - name: Issue the statement without a network dependency
-        run: build/bin/heresy-pr-response build/share/heresy360/incident.tsv
+        run: make pr-response
