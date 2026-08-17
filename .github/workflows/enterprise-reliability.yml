@@ -1,0 +1,49 @@
+name: Enterprise Reliability (Cloud Still Concerned)
+
+on:
+  push:
+    paths:
+      - "src/v71/**"
+      - "src/v7/heresy360.sh"
+      - "specimens/enterprise-reliability/**"
+      - "docs/ENTERPRISE-RELIABILITY.md"
+      - "tests/test_v71.sh"
+      - "Makefile"
+      - ".github/workflows/enterprise-reliability.yml"
+  pull_request:
+    paths:
+      - "src/v71/**"
+      - "src/v7/heresy360.sh"
+      - "specimens/enterprise-reliability/**"
+      - "docs/ENTERPRISE-RELIABILITY.md"
+      - "tests/test_v71.sh"
+      - "Makefile"
+      - ".github/workflows/enterprise-reliability.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  paperwork:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install the supposedly obsolete reliability team
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y gnat gfortran gnucobol
+
+      - name: Build HERESY/360 v7.1 paperwork
+        run: make build
+
+      - name: Verify the historical incident receipts
+        run: |
+          cd specimens/enterprise-reliability/github-2026-08-17
+          sha256sum -c SHA256SUMS
+
+      - name: Replay the incident without asking the network how it feels
+        run: make incident
+
+      - name: Run the complete regression bureaucracy
+        run: make check

@@ -10,14 +10,16 @@ The joke must never depend on fake output, inaccessible controls, broken builds 
 
 ## Current main edition
 
-The repository root is HERESY v7: **HERESY/360**.
+The repository root is HERESY v7.1: **HERESY/360**.
 
 - Ada owns case admission and deterministic case-ID generation.
 - Fortran owns the due-process policy runtime and transparency score.
 - COBOL owns the user-facing decision terminal.
 - POSIX shell is the explicit host-side init/orchestration layer.
+- v7.1 additionally uses Ada, Fortran, COBOL and POSIX shell for the deterministic Enterprise Reliability incident replay.
 - The stack is a hosted user-space operating environment. Do not call it a bare-metal kernel or claim ring-0 execution.
 - `demo-x` is a local fictional regression scenario inspired by a visible support-interface failure. It never queries, changes or adjudicates a real X account.
+- `github-incident` is a historical replay of the checked-in 2026-08-17 maintainer-supplied status snapshot. It never fetches current GitHub status.
 - A rule identifier that is empty, whitespace-only, `NONE` or `UNSPECIFIED` must produce `DP-001` and refuse enforcement.
 - Evidence that is empty, whitespace-only, `NONE` or `MISSING` must produce `DP-002` and refuse enforcement.
 - A complete remediable case produces `DP-200` only when a concrete remediation instruction or reference is supplied and displayed.
@@ -40,24 +42,53 @@ HERESY/360 is intentionally stricter than a vague automated support notice:
 
 Do not add hidden scoring, opaque heuristics or probabilistic moderation to v7. The point is inspectability.
 
+## Enterprise reliability contract
+
+The v7.1 incident replay is satire with an evidence boundary.
+
+1. `incident.txt` is the maintainer-supplied status snapshot.
+2. `incident.tsv` is the deterministic machine projection consumed by the replay.
+3. `SHA256SUMS` binds both source artifacts.
+4. The checked-in 20% web/API and 50% raw-download observations may be reproduced exactly.
+5. No code may infer or claim the internal root cause.
+6. No live network lookup may participate in replay or tests.
+7. Derived jokes must remain distinguishable from observed status data.
+8. Malformed or out-of-range percentage fields fail closed.
+9. Repeated replay output must be byte-for-byte identical for the same specimen.
+10. `H360_INCIDENT_SPECIMEN` is a test/debug override; the normal command uses the checked-in specimen.
+
+Required invariants:
+
+```text
+STATUS_SNAPSHOT != ROOT_CAUSE
+STATUS_PAGE_EUPHEMISM != OBSERVED_FAILURE_RATE
+UPTIME_BADGE != CURRENT_REALITY
+ONE_NORMAL_SERVICE != HEALTHY_PLATFORM
+SATIRE != INCIDENT_FORENSICS
+```
+
 ## Claim boundaries
 
-Do not claim HERESY/360 establishes what happened inside X or any other platform. It is a software-art and deterministic governance reference implementation built around visible interface invariants.
+Do not claim HERESY/360 establishes what happened inside X, GitHub or any other platform. It is software art and a deterministic governance/reliability reference implementation built around visible interface or supplied status data.
 
-Do not claim the demo proves illegality, discrimination, intent, motive or internal system design. It demonstrates only that a notice cannot be mechanically specific when no specific rule is present in its visible inputs.
+Do not claim either demo proves illegality, discrimination, intent, motive, negligence, private architecture or internal system design.
 
-Satire may target automated support design, policy opacity, infrastructure fashion and corporate software habits. It must not target protected characteristics or private individuals.
+For the GitHub incident specimen, report only what the supplied snapshot supports. The incident data does not establish root cause.
+
+Satire may target automated support design, policy opacity, infrastructure fashion, status-page euphemism and corporate software habits. It must not target protected characteristics or private individuals.
 
 ## Determinism
 
 - Ada case IDs depend only on the input account, rule ID and evidence reference.
-- The Fortran runtime depends only on the explicit completeness flags plus the concrete remediation reference.
+- The Fortran due-process runtime depends only on explicit completeness flags plus the concrete remediation reference.
+- The reliability gate/runtime depend only on the checked-in incident percentages.
 - COBOL renders values supplied by the orchestrator without hidden state.
 - Receipt field order is fixed.
 - Distinct receipts sharing a 32-bit case ID are retained in deterministic collision slots rather than overwritten.
-- No wall-clock timestamp appears in v7 receipts.
-- No network access occurs in `make build`, `make test` or `make check`.
+- No wall-clock timestamp appears in v7 receipts or v7.1 replay output.
+- No network access occurs in `make build`, `make test`, `make check` or `make incident`.
 - Repeating an identical case must produce byte-for-byte identical terminal output and receipt content under the same implementation contract.
+- Replaying the same incident specimen must produce byte-for-byte identical output.
 
 ## Toolchain
 
@@ -102,7 +133,10 @@ The suite must cover:
 - fixed-width input validation before COBOL rendering;
 - colliding case-ID receipt preservation;
 - deterministic repeat terminal output;
-- deterministic repeat receipts; and
+- deterministic repeat receipts;
+- historical incident SHA-256 receipts;
+- deterministic incident replay;
+- invalid incident percentage rejection; and
 - preserved v6 AI/1440 Python regression tests.
 
 CI must also rebuild the previous 1,474,560-byte v6 floppy through `make legacy-v6`.
