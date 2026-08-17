@@ -2,6 +2,8 @@ name: CI Passed (Mainframe Still Disappointed)
 
 on:
   push:
+    branches:
+      - main
   pull_request:
 
 permissions:
@@ -24,7 +26,7 @@ jobs:
           gfortran --version | head -1
           cobc --version | head -1
 
-      - name: Build Ada executive, Fortran policy runtime and COBOL terminal
+      - name: Build Ada executive, Fortran runtimes and COBOL terminals
         run: make build
 
       - name: Run cross-language and preserved v6 regression checks
@@ -32,6 +34,9 @@ jobs:
 
       - name: Demonstrate what happens when automation forgets to name the rule
         run: make demo
+
+      - name: Let Fortran public relations clarify absolutely everything
+        run: make pr-response
 
       - name: Rebuild the previous AI/1440 appliance as a historical compatibility check
         run: make legacy-v6
@@ -45,4 +50,10 @@ jobs:
             build/bin/heresy-runtime
             build/bin/heresy-app
             build/bin/heresy360
+            build/bin/heresy-reliability-gate
+            build/bin/heresy-reliability-runtime
+            build/bin/heresy-status-terminal
+            build/bin/heresy-github-incident
+            build/bin/heresy-pr-response
+            build/share/heresy360/incident.tsv
             build/HERESY1440.IMG
